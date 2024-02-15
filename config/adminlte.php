@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -293,7 +293,7 @@ return [
         ['header' => 'ЗАТРАТЫ ПО КАНАЛАМ'],
         [
             'text' => 'Наполнение пакетов',
-            'url'  => 'packages',
+            'url'  => 'filling-packages',
             'icon' => 'fas fa-solid fa-clipboard',
         ],
         [
@@ -302,39 +302,39 @@ return [
             'submenu' => [
                 [
                     'text' => 'Справочник валют',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/currency',
                     'icon' => 'fas fa-solid fa-dollar-sign',
                 ],
                 [
                     'text' => 'Справочник периодов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/periods',
                     'icon' => 'fas fa-regular fa-clock',
                 ],
                 [
                     'text' => 'Справочник контрагентов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/counterparties',
                     'icon' => 'fas fa-regular fa-handshake',
                 ],
                 [
                     'text' => 'Справочник каналов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/channels',
                     'icon' => 'fas fa-regular fa-film',
                 ],
                 [
                     'text' => 'Справочник филиалов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/branches',
                     'icon' => 'fas fa-solid fa-book',
                 ],
                 [
                     'text' => 'Справочник пакетов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/packages',
                     'icon' => 'fas fa-regular fa-folder-open',
                 ],
             ]
         ],
         [
             'text' => 'Карточка договора контрагента',
-            'url'  => 'card',
+            'url'  => 'agreement-card',
             'icon' => 'fas fa-regular fa-address-card',
         ],
         [
@@ -349,7 +349,7 @@ return [
         ],
         [
             'text' => 'Расчёты',
-            'url'  => 'coalculations',
+            'url'  => 'calculations',
             'icon' => 'fas fa-solid fa-calculator',
         ],
     ],
