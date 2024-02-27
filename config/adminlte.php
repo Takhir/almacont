@@ -459,6 +459,26 @@ return [
                 ],
             ],
         ],
+        'fontawesome' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+                ],
+            ],
+        ],
+        'custom_styles' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true, // Если ваш файл находится в папке public, установите значение true
+                    'location' => '/css/admin_custom.css', // Путь к вашему кастомному CSS
+                ],
+            ],
+        ],
     ],
 
     /*
