@@ -4,19 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Counterparty extends Model
 {
-    use HasFactory;
-
-    protected $table = 'counterparties';
-
-    protected $fillable = [
-        'name',
-        'bin',
-        'dt_start',
-        'dt_stop',
-        'resident',
-        'deleted',
-    ];
+    use SoftDeletes, HasFactory;
 }

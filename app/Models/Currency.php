@@ -2,21 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Currency extends Model
 {
-    protected $table = 'currencies';
+    use SoftDeletes, HasFactory;
 
-    protected $fillable = [
-        'name',
-        'exchange_start',
-        'exchange_stop',
-        'dt_start',
-        'dt_stop',
-        'deleted',
-        'period_id',
-    ];
+    public function type()
+    {
+        return $this->belongsTo(CurrencyType::class, 'currency_type_id');
+    }
 
     public function period()
     {

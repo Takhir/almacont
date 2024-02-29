@@ -16,10 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->tinyInteger('active');
-            $table->tinyInteger('deleted')->default(0);
-            $table->dateTime('dt_start');
-            $table->dateTime('dt_stop');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -32,9 +32,6 @@ class PeriodRepository
         $period = new Period();
         $period->name = $reportPeriodDTO->name;
 
-        $period->dt_start = Carbon::now();
-        $period->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
-
         return $period->save();
     }
 
@@ -45,9 +42,6 @@ class PeriodRepository
         );
 
         $period->name = $reportPeriodDTO->name;
-
-        $period->dt_start = Carbon::now();
-        $period->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
 
         return $period->save();
     }

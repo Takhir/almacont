@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Period extends Model
+class CurrencyType extends Model
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory;
 
     public static function getNameById($id)
     {

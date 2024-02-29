@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('bin', 12);
-            $table->dateTime('dt_start');
-            $table->dateTime('dt_stop');
             $table->tinyInteger('resident');
-            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

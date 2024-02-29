@@ -10,7 +10,7 @@ class CounterpartyRepository
 {
     public function getAll($perPage)
     {
-        return Counterparty::where('deleted', 0)->orderBy('id', 'desc')->paginate($perPage);
+        return Counterparty::orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function store($request)
@@ -26,9 +26,6 @@ class CounterpartyRepository
         $counterpartyy->bin = $counterpartyyDTO->bin;
         $counterpartyy->resident = $counterpartyyDTO->resident;
 
-        $counterpartyy->dt_start = Carbon::now();
-        $counterpartyy->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
-
         return $counterpartyy->save();
     }
 
@@ -43,9 +40,6 @@ class CounterpartyRepository
         $counterparty->name = $counterpartyyDTO->name;
         $counterparty->bin = $counterpartyyDTO->bin;
         $counterparty->resident = $counterpartyyDTO->resident;
-
-        $counterparty->dt_start = Carbon::now();
-        $counterparty->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
 
         return $counterparty->save();
     }

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('periods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('dt_start');
-            $table->dateTime('dt_stop');
             $table->timestamps();
             $table->softDeletes();
         });

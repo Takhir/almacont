@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\AgreementCard;
+namespace App\Http\Controllers\AgreementsCards;
 
 use App\Http\Controllers\Controller;
 
@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        return view('agreement-card.index');
+        return view('agreements-cards.index');
     }
 }

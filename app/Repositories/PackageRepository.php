@@ -10,7 +10,7 @@ class PackageRepository
 {
     public function getAll($perPage)
     {
-        return Package::where('deleted', 0)->orderBy('id', 'desc')->paginate($perPage);
+        return Package::orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function store($request)
@@ -25,9 +25,6 @@ class PackageRepository
         $package->name = $packageDTO->name;
         $package->description = $packageDTO->description;
         $package->active = $packageDTO->active;
-
-        $package->dt_start = Carbon::now();
-        $package->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
 
         return $package->save();
     }
@@ -44,17 +41,11 @@ class PackageRepository
         $package->description = $packageDTO->description;
         $package->active = $packageDTO->active;
 
-        $package->dt_start = Carbon::now();
-        $package->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
-
         return $package->save();
     }
 
     public function delete($package)
     {
-        $package = Package::findOrFail($package->id);
-        $package->deleted = 1;
-
-        return $package->save();
+        return $package->delete();
     }
 }

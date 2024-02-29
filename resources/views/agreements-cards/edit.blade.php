@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Изменить валюту')
+@section('title', 'Изменить пакет')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Изменить валюту</h4>
+                <h4>Изменить пакет</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('currency.index') }}">Справочник валют</a></li>
-                    <li class="breadcrumb-item active">Изменить валюту</li>
+                    <li class="breadcrumb-item"><a href="{{ route('packages.index') }}">Справочник пакетов</a></li>
+                    <li class="breadcrumb-item active">Изменить пакет</li>
                 </ol>
             </div>
         </div>
@@ -42,39 +42,25 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('currency.update', $currency->id) }}">
+                        <form method="POST" action="{{ route('packages.update', $package->id) }}">
                             @csrf
                             @method('patch')
                             <div class="form-group">
-                                <label for="currency_type_id">Валюта</label>
-                                <select class="form-control" name="currency_type_id" required>
-                                    @foreach($currencies as $value)
-                                        <option value="{{$value->id}}" {{ $currency->currency_type_id == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                <label for="name">Пакет</label>
+                                <input type="text" class="form-control" name="name" required value="{{ $package->name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Дополнительная информация</label>
+                                <input type="text" class="form-control" name="description" required value="{{ $package->description }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="active">Отображать на главной</label>
+                                <select class="form-control" name="active" required>
+                                    @foreach($status as $k => $value)
+                                        <option value="{{$k}}" {{ $package->active == $k ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required>
-                                    <option>...</option>
-                                    @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ $currency->period_id == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exchange_start">Курсы на начало периода</label>
-                                <input type="hidden" class="form-control" name="id" value="{{ $currency->id }}">
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ $currency->exchange_start }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ $currency->exchange_stop }}">
-                            </div>
-
                             <div class="form-group">
                                 <div class="text-right">
                                     <a href="{{ url()->previous() }}" class="btn btn-secondary mr-3"><i class="fa-solid fa-arrow-left"></i> Назад</a>

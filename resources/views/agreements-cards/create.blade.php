@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Добавить валюту')
+@section('title', 'Добавить пакет')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Добавить валюту</h4>
+                <h4>Добавить пакет</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('currency.index') }}">Справочник валют</a></li>
-                    <li class="breadcrumb-item active">Добавить валюту</li>
+                    <li class="breadcrumb-item"><a href="{{ route('packages.index') }}">Справочник пакетов</a></li>
+                    <li class="breadcrumb-item active">Добавить пакет</li>
                 </ol>
             </div>
         </div>
@@ -42,37 +42,24 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('currency.store') }}">
+                        <form method="POST" action="{{ route('packages.store') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Валюта</label>
-                                <select class="form-control" name="currency_type_id" required>
-                                    @foreach($currencies as $value)
-                                        <option value="{{$value->id}}" {{ old('currency_type_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                <label for="name">Пакет</label>
+                                <input type="text" class="form-control" name="name" required value="{{ old('name') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Дополнительная информация</label>
+                                <input type="text" class="form-control" name="description" required value="{{ old('description') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="active">Отображать на главной</label>
+                                <select class="form-control" name="active" required>
+                                    @foreach($status as $k => $value)
+                                        <option value="{{$k}}" {{ old('active') == $value ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required>
-                                    <option>...</option>
-                                    @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ old('period_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_start">Курсы на начало периода</label>
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ old('exchange_start') }}" min="0">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ old('exchange_stop') }}" min="0">
-                            </div>
-
                             <div class="form-group">
                                 <div class="text-right">
                                     <a href="{{ url()->previous() }}" class="btn btn-secondary mr-3"><i class="fa-solid fa-arrow-left"></i> Назад</a>

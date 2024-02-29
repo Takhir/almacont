@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Currency;
 
+use App\Services\CurrencyTypeService;
 use App\Services\PeriodService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -9,9 +10,11 @@ use Illuminate\Validation\Rule;
 class StoreRequest extends FormRequest
 {
     private PeriodService $periodService;
+    private CurrencyTypeService $currencyTypeService;
 
-    public function __construct(PeriodService $periodService) {
+    public function __construct(PeriodService $periodService, CurrencyTypeService $currencyTypeService) {
         $this->periodService = $periodService;
+        $this->currencyTypeService = $currencyTypeService;
     }
 
     /**
@@ -32,10 +35,10 @@ class StoreRequest extends FormRequest
         $periodId = $this->period_id;
 
         return [
-            'name' => [
+            'currency_type_id' => [
                 'required',
                 Rule::unique('currencies')->where(function ($query) use ($periodId) {
-                    return $query->where('period_id', $periodId)->where('deleted', 0);
+                    return $query->where('period_id', $periodId);
                 }),
             ],
             'period_id' => 'required',
@@ -47,7 +50,7 @@ class StoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Валюта',
+            'currency_type_id' => 'Валюта',
             'period_id' => 'Период',
             'exchange_start' => 'Курсы на начало периода',
             'exchange_stop' => 'Курсы на конец периода',
@@ -56,7 +59,7 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.unique' => 'Валюта (:input) за период (' . $this->periodService->getNameById($this->period_id) . ') уже существует.',
+            'currency_type_id.unique' => 'Валюта (' .$this->currencyTypeService->getNameById($this->currency_type_id) . ') за период (' . $this->periodService->getNameById($this->period_id) . ') уже существует.',
             'required' => 'Поле :attribute обязательно для заполнения.',
         ];
     }

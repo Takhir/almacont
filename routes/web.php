@@ -81,8 +81,8 @@ Route::group(['prefix' => 'directory'], function () {
 
 });
 
-Route::group(['prefix' => 'agreement-card'], function () {
-    Route::get('/', \App\Http\Controllers\AgreementCard\IndexController::class)->name('agreement-card.index');
+Route::group(['prefix' => 'agreements-cards'], function () {
+    Route::get('/', \App\Http\Controllers\AgreementsCards\IndexController::class)->name('agreements-cards.index');
 });
 
 Route::group(['prefix' => 'subscribers'], function () {

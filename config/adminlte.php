@@ -338,8 +338,8 @@ return [
             ]
         ],
         [
-            'text' => 'Карточка договора контрагента',
-            'url'  => 'agreement-card',
+            'text' => 'Карточки договоров контрагентов',
+            'url'  => 'agreements-cards',
             'icon' => 'fas fa-regular fa-address-card',
         ],
         [

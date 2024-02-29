@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('currencies', function (Blueprint $table) {
+        Schema::create('currency_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('currencies', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('currency_type_id');
             $table->string('exchange_start');
             $table->string('exchange_stop');
-            $table->dateTime('dt_start');
-            $table->dateTime('dt_stop');
-            $table->tinyInteger('deleted')->default(0);
             $table->unsignedBigInteger('period_id');
             $table->foreign('period_id')->references('id')->on('periods');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

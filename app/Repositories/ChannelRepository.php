@@ -10,7 +10,7 @@ class ChannelRepository
 {
     public function getAll($perPage)
     {
-        return Channel::where('deleted', 0)->orderBy('id', 'desc')->paginate($perPage);
+        return Channel::orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function store($request)
@@ -25,9 +25,6 @@ class ChannelRepository
         $channel->name = $channelDTO->name;
         $channel->description = $channelDTO->description;
         $channel->category_id = $channelDTO->category_id;
-
-        $channel->dt_start = Carbon::now();
-        $channel->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
 
         return $channel->save();
     }
@@ -44,17 +41,11 @@ class ChannelRepository
         $channel->description = $channelDTO->description;
         $channel->category_id = $channelDTO->category_id;
 
-        $channel->dt_start = Carbon::now();
-        $channel->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
-
         return $channel->save();
     }
 
     public function delete($channel)
     {
-        $channel = Channel::findOrFail($channel->id);
-        $channel->deleted = 1;
-
-        return $channel->save();
+        return $channel->delete();
     }
 }

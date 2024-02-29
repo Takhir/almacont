@@ -15,13 +15,8 @@ class ChannelCategoryRepository
 
     public function getAll()
     {
-        return ChannelCategory::orderBy('id', 'desc')->get();
+        return ChannelCategory::all();
     }
-
-//    public function getNameById($id)
-//    {
-//        return ChannelCategory::getNameById($id);
-//    }
 
     public function store($request)
     {
