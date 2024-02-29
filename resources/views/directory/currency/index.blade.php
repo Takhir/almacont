@@ -24,17 +24,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @if(session('success'))
-                            @section('js')
-                                <script>
-                                    $(document).Toasts('create', {
-                                        class: 'bg-success',
-                                        title: 'Уведомление',
-                                        body: `{!! session('success') !!}`
-                                    })
-                                </script>
-                            @stop
-                        @endif
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -52,10 +41,10 @@
                                 @foreach($currencies as $currency)
                                     <tr>
                                         <td>{{ $currency->id }}</td>
-                                        <td>{{ $currency->v_name }}</td>
-                                        <td>{{ $currency->period->v_name }}</td>
-                                        <td>{{ $currency->n_exchange_start }}</td>
-                                        <td>{{ $currency->n_exchange_stop }}</td>
+                                        <td>{{ $currency->name }}</td>
+                                        <td>{{ $currency->period->name }}</td>
+                                        <td>{{ $currency->exchange_start }}</td>
+                                        <td>{{ $currency->exchange_stop }}</td>
                                         <td>
                                             <a href="{{ route('currency.edit', $currency->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
                                             <a href="#" data-toggle="modal" data-target="#modal-delete" data-currency-id="{{ $currency->id }}">
@@ -90,7 +79,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
-                    <form method="post" class="delete-form">
+                    <form method="post" class="delete-form" action="">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger">Да</button>
@@ -105,12 +94,20 @@
     <script>
         $(document).ready(function() {
             $('#modal-delete').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
+                const button = $(event.relatedTarget);
                 const currencyId = button.data('currency-id');
                 const modal = $(this);
                 const url = "{{ route('currency.delete', ':id') }}".replace(':id', currencyId);
                 modal.find('.delete-form').attr('action', url);
             });
+
+            @if(session('success'))
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Уведомление',
+                    body: `{!! session('success') !!}`
+                });
+            @endif
         });
     </script>
 @stop

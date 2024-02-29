@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Добавить валюту')
+@section('title', 'Изменить канал')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Добавить валюту</h4>
+                <h4>Изменить канал</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('currency.index') }}">Справочник валют</a></li>
-                    <li class="breadcrumb-item active">Добавить валюту</li>
+                    <li class="breadcrumb-item"><a href="{{ route('channels.index') }}">Справочник каналов</a></li>
+                    <li class="breadcrumb-item active">Изменить канал</li>
                 </ol>
             </div>
         </div>
@@ -42,41 +42,25 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('currency.store') }}">
+                        <form method="POST" action="{{ route('channels.update', $channel->id) }}">
                             @csrf
+                            @method('patch')
                             <div class="form-group">
-                                <label for="name">Валюта</label>
-                                <select class="form-control" name="name" required>
-                                    @foreach($currencies as $value)
-                                        <option value="{{$value}}" {{ old('name') == $value ? 'selected' : '' }}>{{ $value }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="name">Канал</label>
+                                <input type="text" class="form-control" name="name" required value="{{ $channel->name }}">
                             </div>
-
                             <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required>
-                                    <option>...</option>
-                                    @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ old('period_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="description">Дополнительная информация</label>
+                                <input type="text" class="form-control" name="description" required value="{{ $channel->name }}">
                             </div>
-
                             <div class="form-group">
-                                <label for="n_exchange_start">Курсы на начало периода</label>
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ old('exchange_start') }}" min="0">
+                                <label for="description">Тематика канала</label>
+                                <input type="text" class="form-control" name="theme" required value="{{ $channel->theme }}">
                             </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ old('exchange_stop') }}" min="0">
-                            </div>
-
                             <div class="form-group">
                                 <div class="text-right">
                                     <a href="{{ url()->previous() }}" class="btn btn-secondary mr-3"><i class="fa-solid fa-arrow-left"></i> Назад</a>
-                                    <button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i> Добавить</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i> Сохранить</button>
                                 </div>
                             </div>
                         </form>

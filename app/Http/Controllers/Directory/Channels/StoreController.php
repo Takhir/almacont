@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Periods;
+namespace App\Http\Controllers\Directory\Channels;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Periods\StoreRequest;
-use App\Services\PeriodService;
+use App\Http\Requests\Channel\StoreRequest;
+use App\Services\ChannelService;
 
 class StoreController extends Controller
 {
-    private PeriodService $service;
+    private ChannelService $service;
 
-    public function __construct(PeriodService $service)
+    public function __construct(ChannelService $service)
     {
         $this->service = $service;
     }
@@ -18,7 +18,7 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request)
     {
         if ($this->service->store($request)) {
-            return redirect()->route('periods.index')->with('success', 'Данные успешно сохранены');
+            return redirect()->route('channels.index')->with('success', 'Данные успешно сохранены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при сохранении');

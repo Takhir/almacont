@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Добавить валюту')
+@section('title', 'Добавить период')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Добавить валюту</h4>
+                <h4>Добавить период</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('currency.index') }}">Справочник валют</a></li>
-                    <li class="breadcrumb-item active">Добавить валюту</li>
+                    <li class="breadcrumb-item"><a href="{{ route('periods.index') }}">Справочник периодов</a></li>
+                    <li class="breadcrumb-item active">Добавить период</li>
                 </ol>
             </div>
         </div>
@@ -42,35 +42,11 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('currency.store') }}">
+                        <form method="POST" action="{{ route('periods.store') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Валюта</label>
-                                <select class="form-control" name="name" required>
-                                    @foreach($currencies as $value)
-                                        <option value="{{$value}}" {{ old('name') == $value ? 'selected' : '' }}>{{ $value }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required>
-                                    <option>...</option>
-                                    @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ old('period_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_start">Курсы на начало периода</label>
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ old('exchange_start') }}" min="0">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ old('exchange_stop') }}" min="0">
+                                <label for="v_name">Период</label>
+                                <input type="text" class="form-control" name="name" required value="{{ old('name') }}">
                             </div>
 
                             <div class="form-group">

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Periods;
+namespace App\Http\Requests\Counterparty;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
 
     /**
@@ -24,13 +24,17 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'bin' => 'required|max:12',
+            'resident' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Период',
+            'name' => 'Контрагент',
+            'bin' => 'БИН',
+            'resident' => 'Резидент РК',
         ];
     }
 
@@ -38,6 +42,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'required' => 'Поле :attribute обязательно для заполнения.',
+            'max' => 'Поле :attribute не может содержать более :max символов.',
         ];
     }
 }

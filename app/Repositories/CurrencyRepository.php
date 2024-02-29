@@ -11,7 +11,7 @@ class CurrencyRepository
     public function getAll($perPage)
     {
         return Currency::with('period')
-            ->where('b_deleted', 0)
+            ->where('deleted', 0)
             ->orderBy('id', 'desc')
             ->paginate($perPage);
     }
@@ -19,17 +19,17 @@ class CurrencyRepository
     public function store($request)
     {
         $currencyDTO = new CurrencyDTO(
-            $request->input('v_name'),
-            $request->input('report_period_id'),
-            $request->input('n_exchange_start'),
-            $request->input('n_exchange_stop'),
+            $request->input('name'),
+            $request->input('period_id'),
+            $request->input('exchange_start'),
+            $request->input('exchange_stop'),
         );
 
         $currency = new Currency();
-        $currency->v_name = $currencyDTO->v_name;
-        $currency->report_period_id = $currencyDTO->report_period_id;
-        $currency->n_exchange_start = $currencyDTO->n_exchange_start;
-        $currency->n_exchange_stop = $currencyDTO->n_exchange_stop;
+        $currency->name = $currencyDTO->name;
+        $currency->period_id = $currencyDTO->period_id;
+        $currency->exchange_start = $currencyDTO->exchange_start;
+        $currency->exchange_stop = $currencyDTO->exchange_stop;
 
         $currency->dt_start = Carbon::now();
         $currency->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
@@ -40,16 +40,16 @@ class CurrencyRepository
     public function update($request, $currency)
     {
         $currencyDTO = new CurrencyDTO(
-            $request->input('v_name'),
-            $request->input('report_period_id'),
-            $request->input('n_exchange_start'),
-            $request->input('n_exchange_stop'),
+            $request->input('name'),
+            $request->input('period_id'),
+            $request->input('exchange_start'),
+            $request->input('exchange_stop'),
         );
 
-        $currency->v_name = $currencyDTO->v_name;
-        $currency->report_period_id = $currencyDTO->report_period_id;
-        $currency->n_exchange_start = $currencyDTO->n_exchange_start;
-        $currency->n_exchange_stop = $currencyDTO->n_exchange_stop;
+        $currency->name = $currencyDTO->name;
+        $currency->period_id = $currencyDTO->period_id;
+        $currency->exchange_start = $currencyDTO->exchange_start;
+        $currency->exchange_stop = $currencyDTO->exchange_stop;
 
         $currency->dt_start = Carbon::now();
         $currency->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
@@ -60,7 +60,7 @@ class CurrencyRepository
     public function delete($currency)
     {
         $currency = Currency::findOrFail($currency->id);
-        $currency->b_deleted = 1;
+        $currency->deleted = 1;
 
         return $currency->save();
     }

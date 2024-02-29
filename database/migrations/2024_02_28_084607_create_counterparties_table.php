@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('api_fw_report_period', function (Blueprint $table) {
+        Schema::create('counterparties', function (Blueprint $table) {
             $table->id();
-            $table->string('v_name');
+            $table->string('name');
+            $table->string('bin', 12);
             $table->dateTime('dt_start');
             $table->dateTime('dt_stop');
+            $table->tinyInteger('resident');
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('api_fw_report_period');
+        Schema::dropIfExists('api_rw_counterparties');
     }
 };

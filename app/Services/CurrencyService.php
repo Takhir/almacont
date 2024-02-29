@@ -22,10 +22,12 @@ class CurrencyService
     {
         return $this->repository->store($request);
     }
+
     public function update($request, $currency)
     {
         return $this->repository->update($request, $currency);
     }
+
     public function delete($currency)
     {
         return $this->repository->delete($currency);

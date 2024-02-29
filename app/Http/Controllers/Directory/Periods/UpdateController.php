@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Currency;
+namespace App\Http\Controllers\Directory\Periods;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Currency\UpdateRequest;
-use App\Models\Currency;
-use App\Services\CurrencyService;
+use App\Http\Requests\Periods\UpdateRequest;
+use App\Models\Period;
+use App\Services\PeriodService;
 
 class UpdateController extends Controller
 {
-    private CurrencyService $service;
+    private PeriodService $service;
 
-    public function __construct(CurrencyService $service) {
+    public function __construct(PeriodService $service)
+    {
         $this->service = $service;
     }
 
-    public function __invoke(UpdateRequest $request, Currency $currency)
+    public function __invoke(UpdateRequest $request, Period $period)
     {
-        if ($this->service->update($request, $currency))
-        {
-            return redirect()->route('currency.index')->with('success', 'Данные успешно обновлены');
+        if ($this->service->update($request, $period)) {
+            return redirect()->route('periods.index')->with('success', 'Данные успешно обновлены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при обновлении');

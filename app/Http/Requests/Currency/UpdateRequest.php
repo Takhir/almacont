@@ -29,34 +29,34 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $reportPeriodId = $this->report_period_id;
+        $periodId = $this->period_id;
 
         return [
-            'v_name' => [
+            'name' => [
                 'required',
-                Rule::unique('api_fw_valuta')->where(function ($query) use ($reportPeriodId) {
-                    return $query->where('report_period_id', $reportPeriodId);
-                })->ignore($this->input('id')),
+                Rule::unique('currencies')->where(function ($query) use ($periodId) {
+                    return $query->where('period_id', $periodId)->where('deleted', 0);
+                })->ignore($this->get('id')),
             ],
-            'report_period_id' => 'required',
-            'n_exchange_start' => 'required',
-            'n_exchange_stop' => 'required',
+            'period_id' => 'required',
+            'exchange_start' => 'required',
+            'exchange_stop' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'v_name' => 'Валюта',
-            'report_period_id' => 'Период',
-            'n_exchange_start' => 'Курсы на начало периода',
-            'n_exchange_stop' => 'Курсы на конец периода',
+            'name' => 'Валюта',
+            'period_id' => 'Период',
+            'exchange_start' => 'Курсы на начало периода',
+            'exchange_stop' => 'Курсы на конец периода',
         ];
     }
     public function messages()
     {
         return [
-            'v_name.unique' => 'Валюта (:input) за период (' . $this->periodService->getNameById($this->report_period_id) . ') уже существует.',
+            'name.unique' => 'Валюта (:input) за период (' . $this->periodService->getNameById($this->period_id) . ') уже существует.',
             'required' => 'Поле :attribute обязательно для заполнения.',
         ];
     }

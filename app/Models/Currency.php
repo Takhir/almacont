@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Currency extends Model
 {
-    protected $table = 'api_fw_valuta';
+    protected $table = 'currencies';
 
     protected $fillable = [
-        'v_name',
-        'n_exchange_start',
-        'n_exchange_stop',
+        'name',
+        'exchange_start',
+        'exchange_stop',
         'dt_start',
         'dt_stop',
-        'b_deleted',
-        'report_period_id',
+        'deleted',
+        'period_id',
     ];
 
     public function period()
     {
-        return $this->belongsTo(ReportPeriod::class, 'report_period_id');
+        return $this->belongsTo(Period::class, 'period_id');
     }
 }

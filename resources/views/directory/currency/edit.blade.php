@@ -46,33 +46,33 @@
                             @csrf
                             @method('patch')
                             <div class="form-group">
-                                <label for="v_name">Валюта</label>
-                                <select class="form-control" name="v_name" required>
+                                <label for="name">Валюта</label>
+                                <select class="form-control" name="name" required>
                                     @foreach($currencies as $value)
-                                        <option value="{{$value}}" {{ $currency->v_name == $value ? 'selected' : '' }}>{{ $value }}</option>
+                                        <option value="{{$value}}" {{ $currency->name == $value ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="report_period_id">Период</label>
-                                <select class="form-control" name="report_period_id" required>
+                                <label for="period_id">Период</label>
+                                <select class="form-control" name="period_id" required>
                                     <option>...</option>
                                     @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ $currency->report_period_id == $value->id ? 'selected' : '' }}>{{ $value->v_name }}</option>
+                                        <option value="{{$value->id}}" {{ $currency->period_id == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="n_exchange_start">Курсы на начало периода</label>
+                                <label for="exchange_start">Курсы на начало периода</label>
                                 <input type="hidden" class="form-control" name="id" value="{{ $currency->id }}">
-                                <input id="n_exchange_start" type="number" class="form-control" name="n_exchange_start" required value="{{ $currency->n_exchange_start }}">
+                                <input type="number" class="form-control" name="exchange_start" required value="{{ $currency->exchange_start }}">
                             </div>
 
                             <div class="form-group">
-                                <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input id="n_exchange_stop" type="number" class="form-control" name="n_exchange_stop" required value="{{ $currency->n_exchange_stop }}">
+                                <label for="exchange_stop">Курсы на конец периода</label>
+                                <input type="number" class="form-control" name="exchange_stop" required value="{{ $currency->exchange_stop }}">
                             </div>
 
                             <div class="form-group">

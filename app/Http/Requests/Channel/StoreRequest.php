@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Periods;
+namespace App\Http\Requests\Channel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
 
     /**
@@ -24,13 +24,17 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Период',
+            'name' => 'Канал',
+            'description' => 'Дополнительная информация',
+            'category_id' => 'Тематика канала',
         ];
     }
 

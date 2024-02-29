@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ReportPeriod extends Model
+class Period extends Model
 {
-    protected $table = 'api_fw_report_period';
+    use SoftDeletes;
+
+    protected $table = 'periods';
 
     protected $fillable = [
-        'v_name',
+        'name',
         'dt_start',
         'dt_stop',
     ];
@@ -17,6 +20,6 @@ class ReportPeriod extends Model
     public static function getNameById($id)
     {
         $model = static::find($id);
-        return $model ? $model->v_name : null;
+        return $model ? $model->name : null;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Periods;
+namespace App\Http\Controllers\Directory\Channels;
 
 use App\Http\Controllers\Controller;
 
@@ -8,6 +8,6 @@ class CreateController extends Controller
 {
     public function __invoke()
     {
-        return view('directory.periods.create');
+        return view('directory.channels.create');
     }
 }

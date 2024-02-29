@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Добавить валюту')
+@section('title', 'Изменить Контрагента')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Добавить валюту</h4>
+                <h4>Изменить Контрагента</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('currency.index') }}">Справочник валют</a></li>
-                    <li class="breadcrumb-item active">Добавить валюту</li>
+                    <li class="breadcrumb-item"><a href="{{ route('counterparties.index') }}">Справочник Контрагентов</a></li>
+                    <li class="breadcrumb-item active">Изменить Контрагента</li>
                 </ol>
             </div>
         </div>
@@ -42,41 +42,29 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('currency.store') }}">
+                        <form method="POST" action="{{ route('counterparties.update', $counterparty->id) }}">
                             @csrf
+                            @method('patch')
                             <div class="form-group">
-                                <label for="name">Валюта</label>
-                                <select class="form-control" name="name" required>
-                                    @foreach($currencies as $value)
-                                        <option value="{{$value}}" {{ old('name') == $value ? 'selected' : '' }}>{{ $value }}</option>
+                                <label for="name">Контрагент</label>
+                                <input type="text" class="form-control" name="name" required value="{{ $counterparty->name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="bin">БИН</label>
+                                <input type="number" class="form-control" name="bin" required value="{{ $counterparty->bin }}" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="resident">Резидент РК</label>
+                                <select class="form-control" name="resident" required>
+                                    @foreach($resident as $k => $value)
+                                        <option value="{{$k + 1}}" {{ $counterparty->resident == $k + 1 ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required>
-                                    <option>...</option>
-                                    @foreach($period as $value)
-                                        <option value="{{$value->id}}" {{ old('period_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_start">Курсы на начало периода</label>
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ old('exchange_start') }}" min="0">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ old('exchange_stop') }}" min="0">
-                            </div>
-
                             <div class="form-group">
                                 <div class="text-right">
                                     <a href="{{ url()->previous() }}" class="btn btn-secondary mr-3"><i class="fa-solid fa-arrow-left"></i> Назад</a>
-                                    <button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i> Добавить</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i> Сохранить</button>
                                 </div>
                             </div>
                         </form>

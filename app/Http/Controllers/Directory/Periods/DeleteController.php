@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Currency;
+namespace App\Http\Controllers\Directory\Periods;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Currency\UpdateRequest;
-use App\Models\Currency;
-use App\Services\CurrencyService;
+use App\Models\Period;
+use App\Services\PeriodService;
 
 class DeleteController extends Controller
 {
-    private CurrencyService $service;
+    private PeriodService $service;
 
-    public function __construct(CurrencyService $service) {
+    public function __construct(PeriodService $service)
+    {
         $this->service = $service;
     }
 
-    public function __invoke(Currency $currency)
+    public function __invoke(Period $period)
     {
-        if ($this->service->delete($currency))
-        {
-            return redirect()->route('currency.index')->with('success', 'Данные успешно удалены');
+        if ($this->service->delete($period)) {
+            return redirect()->route('periods.index')->with('success', 'Данные успешно удалены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при удалении');

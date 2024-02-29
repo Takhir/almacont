@@ -13,6 +13,10 @@ class PeriodService
         $this->repository = $repository;
     }
 
+    public function all($perPage)
+    {
+        return $this->repository->all($perPage);
+    }
     public function getAll()
     {
         return $this->repository->getAll();
@@ -23,4 +27,18 @@ class PeriodService
         return $this->repository->getNameById($id);
     }
 
+    public function store($request)
+    {
+        return $this->repository->store($request);
+    }
+
+    public function update($request, $period)
+    {
+        return $this->repository->update($request, $period);
+    }
+
+    public function delete($period)
+    {
+        return $this->repository->delete($period);
+    }
 }
