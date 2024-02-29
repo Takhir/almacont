@@ -57,6 +57,15 @@ Route::group(['prefix' => 'directory'], function () {
         Route::delete('/{channel}', \App\Http\Controllers\Directory\Channels\DeleteController::class)->name('channels.delete');
     });
 
+    Route::group(['prefix' => 'channels-categories'], function () {
+        Route::get('/', \App\Http\Controllers\Directory\ChannelsCategories\IndexController::class)->name('channels-categories.index');
+        Route::get('/create', \App\Http\Controllers\Directory\ChannelsCategories\CreateController::class)->name('channels-categories.create');
+        Route::post('/', \App\Http\Controllers\Directory\ChannelsCategories\StoreController::class)->name('channels-categories.store');
+        Route::get('/{category}/edit', \App\Http\Controllers\Directory\ChannelsCategories\EditController::class)->name('channels-categories.edit');
+        Route::patch('/{category}', \App\Http\Controllers\Directory\ChannelsCategories\UpdateController::class)->name('channels-categories.update');
+        Route::delete('/{category}', \App\Http\Controllers\Directory\ChannelsCategories\DeleteController::class)->name('channels-categories.delete');
+    });
+
     Route::group(['prefix' => 'directory'], function () {
         Route::get('/branches', \App\Http\Controllers\Directory\Branches\IndexController::class)->name('branches.index');
     });

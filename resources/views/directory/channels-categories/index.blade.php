@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Справочник периодов')
+@section('title', 'Справочник категорий каналов')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Справочник периодов</h4>
+                <h4>Справочник категорий каналов</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item active">Справочник периодов</li>
+                    <li class="breadcrumb-item active">Справочник категорий каналов</li>
                 </ol>
             </div>
         </div>
@@ -28,20 +28,20 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Период</th>
+                                    <th>Категория</th>
                                     <th>
-                                        <a href="{{ route('periods.create') }}" class="btn btn-outline-success"><i class="fa-solid fa-plus"></i> Добавить</a>
+                                        <a href="{{ route('channels-categories.create') }}" class="btn btn-outline-success"><i class="fa-solid fa-plus"></i> Добавить</a>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($periods as $period)
+                                @foreach($categories as $category)
                                     <tr>
-                                        <td>{{ $period->id }}</td>
-                                        <td>{{ $period->name }}</td>
+                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $category->name }}</td>
                                         <td>
-                                            <a href="{{ route('periods.edit', $period->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-period-id="{{ $period->id }}">
+                                            <a href="{{ route('channels-categories.edit', $category->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-category-id="{{ $category->id }}">
                                                 <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                             </a>
                                         </td>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="card-footer clearfix">
                         <div class="float-right">
-                            {{ $periods->links('vendor.pagination.bootstrap-4') }}
+                            {{ $categories->links('vendor.pagination.bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -89,9 +89,9 @@
         $(document).ready(function() {
             $('#modal-delete').on('show.bs.modal', function(event) {
                 const button = $(event.relatedTarget);
-                const periodId = button.data('period-id');
+                const categoryId = button.data('category-id');
                 const modal = $(this);
-                const url = "{{ route('periods.delete', ':id') }}".replace(':id', periodId);
+                const url = "{{ route('channels-categories.delete', ':id') }}".replace(':id', categoryId);
                 modal.find('.delete-form').attr('action', url);
             });
 

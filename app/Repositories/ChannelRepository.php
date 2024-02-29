@@ -17,14 +17,14 @@ class ChannelRepository
     {
         $channelDTO = new ChannelDTO(
             $request->input('name'),
-            $request->input('bin'),
-            $request->input('resident')
+            $request->input('description'),
+            $request->input('category_id')
         );
 
         $channel = new Channel();
         $channel->name = $channelDTO->name;
-        $channel->bin = $channelDTO->bin;
-        $channel->resident = $channelDTO->resident;
+        $channel->description = $channelDTO->description;
+        $channel->category_id = $channelDTO->category_id;
 
         $channel->dt_start = Carbon::now();
         $channel->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);
@@ -36,13 +36,13 @@ class ChannelRepository
     {
         $channelDTO = new ChannelDTO(
             $request->input('name'),
-            $request->input('bin'),
-            $request->input('resident'),
+            $request->input('description'),
+            $request->input('category_id'),
         );
 
         $channel->name = $channelDTO->name;
-        $channel->bin = $channelDTO->bin;
-        $channel->resident = $channelDTO->resident;
+        $channel->description = $channelDTO->description;
+        $channel->category_id = $channelDTO->category_id;
 
         $channel->dt_start = Carbon::now();
         $channel->dt_stop = Carbon::createFromDate(2500, 1, 1, 0, 0, 0);

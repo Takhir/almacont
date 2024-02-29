@@ -42,7 +42,7 @@
                                         <td>{{ $channel->id }}</td>
                                         <td>{{ $channel->name }}</td>
                                         <td>{{ $channel->description }}</td>
-                                        <td>{{ $channel->theme }}</td>
+                                        <td>{{ is_null($channel->theme) ? $channel->category?->name : $channel->theme }}</td>
                                         <td>
                                             <a href="{{ route('channels.edit', $channel->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
                                             <a href="#" data-toggle="modal" data-target="#modal-delete" data-channel-id="{{ $channel->id }}">
@@ -93,7 +93,7 @@
         $(document).ready(function() {
             $('#modal-delete').on('show.bs.modal', function(event) {
                 const button = $(event.relatedTarget);
-                const channelId = button.data('counterparty-id');
+                const channelId = button.data('channel-id');
                 const modal = $(this);
                 const url = "{{ route('channels.delete', ':id') }}".replace(':id', channelId);
                 modal.find('.delete-form').attr('action', url);

@@ -321,6 +321,11 @@ return [
                     'icon' => 'fas fa-regular fa-film',
                 ],
                 [
+                    'text' => 'Справочник категорий каналов',
+                    'url'  => 'directory/channels-categories',
+                    'icon' => 'fas fa-solid fa-list',
+                ],
+                [
                     'text' => 'Справочник филиалов',
                     'url'  => 'directory/branches',
                     'icon' => 'fas fa-solid fa-book',

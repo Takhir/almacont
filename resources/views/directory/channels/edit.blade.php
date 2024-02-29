@@ -54,8 +54,13 @@
                                 <input type="text" class="form-control" name="description" required value="{{ $channel->name }}">
                             </div>
                             <div class="form-group">
-                                <label for="description">Тематика канала</label>
-                                <input type="text" class="form-control" name="theme" required value="{{ $channel->theme }}">
+                                <label for="category_id">Тематика канала</label>
+                                <select class="form-control" name="category_id" required>
+                                    <option>...</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" {{ $channel->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <div class="text-right">

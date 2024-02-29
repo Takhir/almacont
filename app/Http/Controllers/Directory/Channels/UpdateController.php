@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Directory\Channels;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Counterparty\UpdateRequest;
+use App\Http\Requests\Channel\UpdateRequest;
 use App\Models\Channel;
 use App\Services\ChannelService;
 
