@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Resident: string
+enum Status: string
 {
     case No = 'Нет';
     case Yes = 'Да';

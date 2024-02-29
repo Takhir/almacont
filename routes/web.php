@@ -66,12 +66,17 @@ Route::group(['prefix' => 'directory'], function () {
         Route::delete('/{category}', \App\Http\Controllers\Directory\ChannelsCategories\DeleteController::class)->name('channels-categories.delete');
     });
 
-    Route::group(['prefix' => 'directory'], function () {
-        Route::get('/branches', \App\Http\Controllers\Directory\Branches\IndexController::class)->name('branches.index');
+    Route::group(['prefix' => 'departments'], function () {
+        Route::get('/', \App\Http\Controllers\Directory\Departments\IndexController::class)->name('departments.index');
     });
 
-    Route::group(['prefix' => 'directory'], function () {
-        Route::get('/packages', \App\Http\Controllers\Directory\Packages\IndexController::class)->name('packages.index');
+    Route::group(['prefix' => 'packages'], function () {
+        Route::get('/', \App\Http\Controllers\Directory\Packages\IndexController::class)->name('packages.index');
+        Route::get('/create', \App\Http\Controllers\Directory\Packages\CreateController::class)->name('packages.create');
+        Route::post('/', \App\Http\Controllers\Directory\Packages\StoreController::class)->name('packages.store');
+        Route::get('/{package}/edit', \App\Http\Controllers\Directory\Packages\EditController::class)->name('packages.edit');
+        Route::patch('/{package}', \App\Http\Controllers\Directory\Packages\UpdateController::class)->name('packages.update');
+        Route::delete('/{package}', \App\Http\Controllers\Directory\Packages\DeleteController::class)->name('packages.delete');
     });
 
 });

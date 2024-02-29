@@ -327,7 +327,7 @@ return [
                 ],
                 [
                     'text' => 'Справочник филиалов',
-                    'url'  => 'directory/branches',
+                    'url'  => 'directory/departments',
                     'icon' => 'fas fa-solid fa-book',
                 ],
                 [

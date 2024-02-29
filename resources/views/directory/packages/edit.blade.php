@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Изменить Контрагента')
+@section('title', 'Изменить пакет')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Изменить Контрагента</h4>
+                <h4>Изменить пакет</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('counterparties.index') }}">Справочник Контрагентов</a></li>
-                    <li class="breadcrumb-item active">Изменить Контрагента</li>
+                    <li class="breadcrumb-item"><a href="{{ route('packages.index') }}">Справочник пакетов</a></li>
+                    <li class="breadcrumb-item active">Изменить пакет</li>
                 </ol>
             </div>
         </div>
@@ -42,22 +42,22 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('counterparties.update', $counterparty->id) }}">
+                        <form method="POST" action="{{ route('packages.update', $package->id) }}">
                             @csrf
                             @method('patch')
                             <div class="form-group">
-                                <label for="name">Контрагент</label>
-                                <input type="text" class="form-control" name="name" required value="{{ $counterparty->name }}">
+                                <label for="name">Пакет</label>
+                                <input type="text" class="form-control" name="name" required value="{{ $package->name }}">
                             </div>
                             <div class="form-group">
-                                <label for="bin">БИН</label>
-                                <input type="number" class="form-control" name="bin" required value="{{ $counterparty->bin }}" min="0">
+                                <label for="description">Дополнительная информация</label>
+                                <input type="text" class="form-control" name="description" required value="{{ $package->description }}">
                             </div>
                             <div class="form-group">
-                                <label for="resident">Резидент РК</label>
-                                <select class="form-control" name="resident" required>
-                                    @foreach($resident as $k => $value)
-                                        <option value="{{$k}}" {{ $counterparty->resident == $k ? 'selected' : '' }}>{{ $value }}</option>
+                                <label for="active">Отображать на главной</label>
+                                <select class="form-control" name="active" required>
+                                    @foreach($status as $k => $value)
+                                        <option value="{{$k}}" {{ $package->active == $k ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>

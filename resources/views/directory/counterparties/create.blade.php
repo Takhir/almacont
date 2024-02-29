@@ -56,7 +56,7 @@
                                 <label for="resident">Резидент РК</label>
                                 <select class="form-control" name="resident" required>
                                     @foreach($resident as $k => $value)
-                                        <option value="{{$k + 1}}" {{ old('resident') == $value ? 'selected' : '' }}>{{ $value }}</option>
+                                        <option value="{{$k}}" {{ old('resident') == $value ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
