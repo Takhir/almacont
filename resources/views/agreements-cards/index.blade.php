@@ -18,13 +18,34 @@
     </div>
 @stop
 
+@php
+use App\Enums\Exchanges;
+@endphp
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <form method="GET" action="{{ route('agreements-cards.index') }}" class="form-inline mb-2 float-right">
+                            <div class="form-group mr-2">
+                                <label class="mr-2" for="period_id">Период</label>
+                                <select class="form-control" name="period_id">
+                                    <option></option>
+                                    @foreach($periods as $k => $period)
+                                        <option value="{{ $period->id }}" @if(request('period_id') == $period->id) selected @endif>{{ $period->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-right">
+                                    <a href="{{ route('agreements-cards.index') }}" class="btn btn-secondary mr-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>
+                                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
+                                </div>
+                            </div>
+                        </form>
+                        <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>№</th>
@@ -42,15 +63,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($packages as $package)
+                            @foreach($agreements as $k => $agreement)
                                 <tr>
-                                    <td>{{ $package->id }}</td>
-                                    <td>{{ $package->name }}</td>
-                                    <td>{{ $package->description }}</td>
-                                    <td>{{ $package->active == 1 ? Status::Yes->value : Status::No->value  }}</td>
+                                    <td>{{ $k + 1 }}</td>
+                                    <td>{{ $agreement->counterparty->name }}</td>
+                                    <td>{{ $agreement->channel->name }}</td>
+                                    <td>{{ $agreement->channel_id }}</td>
+                                    <td>{{ $agreement->sum }}</td>
+                                    <td>{{ $agreement->currency->type->name }}</td>
+                                    <td>{{ $agreement->sum_tenge }}</td>
+                                    <td>{{ $agreement->period->name }}</td>
+                                    <td>{{ $agreement->currency_persence == 0 ? Exchanges::Start : Exchanges::Stop }}</td>
                                     <td>
-                                        <a href="{{ route('agreements-cards.edit', $package->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-package-id="{{ $package->id }}">
+                                        <a href="{{ route('agreements-cards.edit', $agreement->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
+                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-agreement-id="{{ $agreement->id }}">
                                             <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                         </a>
                                     </td>
@@ -61,7 +87,7 @@
                     </div>
                     <div class="card-footer clearfix">
                         <div class="float-right">
-                            {{ $packages->links('vendor.pagination.bootstrap-4') }}
+                            {{ $agreements->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -98,9 +124,9 @@
         $(document).ready(function() {
             $('#modal-delete').on('show.bs.modal', function(event) {
                 const button = $(event.relatedTarget);
-                const packageId = button.data('package-id');
+                const agreementId = button.data('agreement-id');
                 const modal = $(this);
-                const url = "{{ route('packages.delete', ':id') }}".replace(':id', packageId);
+                const url = "{{ route('agreements-cards.delete', ':id') }}".replace(':id', agreementId);
                 modal.find('.delete-form').attr('action', url);
             });
 

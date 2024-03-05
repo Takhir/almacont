@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Periods;
+namespace App\Http\Requests\AgreementsCard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
 
     /**
@@ -23,14 +23,24 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'channel_id' => 'numeric|required',
+            'counterparty_id' => 'numeric|required',
+            'sum' => 'required',
+            'currency_id' => 'required',
+            'period_id' => 'required',
+            'currency_presence' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Период',
+            'channel_id' => 'Канал',
+            'counterparty_id' => 'Контрагент',
+            'sum' => 'Сумма',
+            'currency_id' => 'Валюта',
+            'period_id' => 'Период',
+            'currency_presence' => 'Тип курса',
         ];
     }
 

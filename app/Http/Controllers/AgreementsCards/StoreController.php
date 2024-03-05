@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Periods;
+namespace App\Http\Controllers\AgreementsCards;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Period\StoreRequest;
-use App\Services\PeriodService;
+use App\Http\Requests\AgreementsCard\StoreRequest;
+use App\Services\AgreementCardService;
 
 class StoreController extends Controller
 {
-    private PeriodService $service;
+    private AgreementCardService $service;
 
-    public function __construct(PeriodService $service)
+    public function __construct(AgreementCardService $service)
     {
         $this->service = $service;
     }
@@ -18,7 +18,7 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request)
     {
         if ($this->service->store($request)) {
-            return redirect()->route('periods.index')->with('success', 'Данные успешно сохранены');
+            return redirect()->route('agreements-cards.index')->with('success', 'Данные успешно сохранены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при сохранении');

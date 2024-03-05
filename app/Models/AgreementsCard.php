@@ -9,4 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AgreementsCard extends Model
 {
     use SoftDeletes, HasFactory;
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class, 'channel_id');
+    }
+    public function counterparty()
+    {
+        return $this->belongsTo(Counterparty::class, 'counterparty_id');
+    }
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id');
+    }
+    public function period()
+    {
+        return $this->belongsTo(Period::class, 'period_id');
+    }
 }

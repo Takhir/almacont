@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Directory\Periods;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Periods\UpdateRequest;
+use App\Http\Requests\Period\UpdateRequest;
 use App\Models\Period;
 use App\Services\PeriodService;
 

@@ -65,12 +65,12 @@
 
                             <div class="form-group">
                                 <label for="n_exchange_start">Курсы на начало периода</label>
-                                <input type="number" class="form-control" name="exchange_start" required value="{{ old('exchange_start') }}" min="0">
+                                <input type="number" class="form-control" name="exchange_start" step="any" required value="{{ old('exchange_start') }}" min="0">
                             </div>
 
                             <div class="form-group">
                                 <label for="n_exchange_stop">Курсы на конец периода</label>
-                                <input type="number" class="form-control" name="exchange_stop" required value="{{ old('exchange_stop') }}" min="0">
+                                <input type="number" class="form-control" name="exchange_stop" step="any" required value="{{ old('exchange_stop') }}" min="0">
                             </div>
 
                             <div class="form-group">

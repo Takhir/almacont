@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('channel_id');
             $table->unsignedBigInteger('counterparty_id');
-            $table->integer('sum');
+            $table->string('sum');
             $table->unsignedBigInteger('currency_id');
-            $table->integer('sum_tenge');
+            $table->string('sum_tenge');
             $table->unsignedBigInteger('period_id');
             $table->tinyInteger('currency_presence');
             $table->timestamps();

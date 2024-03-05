@@ -2,12 +2,16 @@
 
 namespace App\Repositories;
 
-use App\DTO\ConterpartyDTO;
+use App\Dto\ConterpartyDTO;
 use App\Models\Counterparty;
 use Illuminate\Support\Carbon;
 
 class CounterpartyRepository
 {
+    public function all()
+    {
+        return Counterparty::orderBy('id', 'desc')->get();
+    }
     public function getAll($perPage)
     {
         return Counterparty::orderBy('id', 'desc')->paginate($perPage);

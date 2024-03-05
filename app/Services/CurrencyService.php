@@ -33,4 +33,24 @@ class CurrencyService
         return $this->repository->delete($currency);
     }
 
+    public function currenciesById($periodId, $request)
+    {
+        $currencies = $this->repository->currenciesById($periodId);
+        $currencyId = $request->get('currency_id') ?? null;
+        $result = '';
+
+        foreach ($currencies as $currency)
+        {
+            if(is_null($currencyId)) {
+                $result .= '<option value=' . $currency->id . '>' . $currency->type->name . '</option>';
+            } else {
+                $result .= '<option value="' . $currency->id . '"';
+                $result .= $currencyId == $currency->id ? ' selected' : '';
+                $result .= '>' . $currency->type->name . '</option>';
+            }
+        }
+
+        return $result;
+    }
+
 }

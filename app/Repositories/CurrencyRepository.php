@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\DTO\CurrencyDTO;
+use App\Dto\CurrencyDTO;
 use App\Models\Currency;
 
 class CurrencyRepository
@@ -27,8 +27,8 @@ class CurrencyRepository
         $currency = new Currency();
         $currency->currency_type_id = $currencyDTO->currency_type_id;
         $currency->period_id = $currencyDTO->period_id;
-        $currency->exchange_start = $currencyDTO->exchange_start;
-        $currency->exchange_stop = $currencyDTO->exchange_stop;
+        $currency->exchange_start = (float)str_replace(',', '.', $currencyDTO->exchange_start);
+        $currency->exchange_stop = (float)str_replace(',', '.', $currencyDTO->exchange_stop);
 
         return $currency->save();
     }
@@ -44,8 +44,8 @@ class CurrencyRepository
 
         $currency->currency_type_id = $currencyDTO->currency_type_id;
         $currency->period_id = $currencyDTO->period_id;
-        $currency->exchange_start = $currencyDTO->exchange_start;
-        $currency->exchange_stop = $currencyDTO->exchange_stop;
+        $currency->exchange_start = (float)str_replace(',', '.', $currencyDTO->exchange_start);
+        $currency->exchange_stop = (float)str_replace(',', '.', $currencyDTO->exchange_stop);
 
         return $currency->save();
     }
@@ -53,5 +53,10 @@ class CurrencyRepository
     public function delete($currency)
     {
         return $currency->delete();
+    }
+
+    public function currenciesById($periodId)
+    {
+        return Currency::where('period_id', $periodId)->get();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\DTO\PackageDTO;
+use App\Dto\PackageDTO;
 use App\Models\Package;
 use Illuminate\Support\Carbon;
 

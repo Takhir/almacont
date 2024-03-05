@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\DTO\ChannelCategoryDTO;
+use App\Dto\ChannelCategoryDTO;
 use App\Models\ChannelCategory;
 use Illuminate\Support\Carbon;
 

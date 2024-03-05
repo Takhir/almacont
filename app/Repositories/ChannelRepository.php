@@ -2,12 +2,17 @@
 
 namespace App\Repositories;
 
-use App\DTO\ChannelDTO;
+use App\Dto\ChannelDTO;
 use App\Models\Channel;
 use Illuminate\Support\Carbon;
 
 class ChannelRepository
 {
+    public function all()
+    {
+        return Channel::orderBy('id', 'desc')->get();
+    }
+
     public function getAll($perPage)
     {
         return Channel::orderBy('id', 'desc')->paginate($perPage);

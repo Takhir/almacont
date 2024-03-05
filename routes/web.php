@@ -83,6 +83,12 @@ Route::group(['prefix' => 'directory'], function () {
 
 Route::group(['prefix' => 'agreements-cards'], function () {
     Route::get('/', \App\Http\Controllers\AgreementsCards\IndexController::class)->name('agreements-cards.index');
+    Route::get('/create', \App\Http\Controllers\AgreementsCards\CreateController::class)->name('agreements-cards.create');
+    Route::post('/', \App\Http\Controllers\AgreementsCards\StoreController::class)->name('agreements-cards.store');
+    Route::get('/{agreement}/edit', \App\Http\Controllers\AgreementsCards\EditController::class)->name('agreements-cards.edit');
+    Route::patch('/{agreement}', \App\Http\Controllers\AgreementsCards\UpdateController::class)->name('agreements-cards.update');
+    Route::delete('/{agreement}', \App\Http\Controllers\AgreementsCards\DeleteController::class)->name('agreements-cards.delete');
+    Route::get('/currencies/{period_id}', \App\Http\Controllers\AgreementsCards\AjaxController::class)->name('agreements-cards.currencies');
 });
 
 Route::group(['prefix' => 'subscribers'], function () {
