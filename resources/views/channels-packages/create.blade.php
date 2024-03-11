@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label for="currency_id">Валюта</label>
                                 <span class="loader" style="display:none;">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                        <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </span>
                                 <select id="currency_id" class="form-control" name="currency_id" required>
                                 </select>

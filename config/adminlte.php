@@ -349,7 +349,7 @@ return [
         ],
         [
             'text' => 'Каналы по пакетам',
-            'url'  => 'channels',
+            'url'  => 'channels-packages',
             'icon' => 'fas fa-light fa-file-video',
         ],
         [
@@ -415,7 +415,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -470,7 +470,27 @@ return [
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+                ],
+            ],
+        ],
+        'Datepicker' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js',
                 ],
             ],
         ],

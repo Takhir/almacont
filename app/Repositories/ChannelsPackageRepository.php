@@ -4,22 +4,68 @@ namespace App\Repositories;
 
 use App\Dto\AgreementCardDTO;
 use App\Models\AgreementsCard;
+use App\Models\ChannelsPackage;
 use App\Models\Currency;
+use Carbon\Carbon;
 
-class AgreementCardRepository
+class ChannelsPackageRepository
 {
     public function getAll($request)
     {
         $perPage = $request->input('per_page', 20);
-        $periodId = $request->input('period_id');
-        $query = AgreementsCard::with('channel')
-            ->with('counterparty')
-            ->with('currency')
-            ->with('period')
+        $channelId = $request->input('channel_id');
+        $packageId = $request->input('package_id');
+        $departmentId = $request->input('department_id');
+        $townId = $request->input('town_id');
+        $dtStartFrom = $request->input('dt_start_from');
+        $dtStartTo = $request->input('dt_start_to');
+        $dtStopFrom = $request->input('dt_stop_from');
+        $dtStopTo = $request->input('dt_stop_to');
+
+        $query = ChannelsPackage::with('channel')
+            ->with('package')
+            ->with('department')
+            ->with('town')
             ->orderBy('id', 'desc');
 
-        if ($periodId) {
-            $query->where('period_id', $periodId);
+        if ($channelId) {
+            $query->whereIn('channel_id', $channelId);
+        }
+
+        if ($packageId) {
+            $query->whereIn('package_id', $packageId);
+        }
+
+        if ($departmentId) {
+            $query->whereIn('department_id', $departmentId);
+        }
+
+        if ($townId) {
+            $query->whereIn('town_id', $townId);
+        }
+
+        if ($dtStartFrom && $dtStartTo) {
+            $dtStartFrom = Carbon::createFromFormat('d.m.Y', $dtStartFrom)->format('Y-m-d');
+            $dtStartTo = Carbon::createFromFormat('d.m.Y', $dtStartTo)->format('Y-m-d');
+            $query->whereBetween('dt_start', [$dtStartFrom, $dtStartTo]);
+        } elseif($dtStartFrom && !$dtStartTo) {
+            $dtStartFrom = Carbon::createFromFormat('d.m.Y', $dtStartFrom)->format('Y-m-d');
+            $query->whereDate('dt_start', '>=', $dtStartFrom);
+        } elseif(!$dtStartFrom && $dtStartTo) {
+            $dtStartTo = Carbon::createFromFormat('d.m.Y', $dtStartTo)->format('Y-m-d');
+            $query->whereDate('dt_start', '<=', $dtStartTo);
+        }
+
+        if ($dtStopFrom && $dtStopTo) {
+            $dtStopFrom = Carbon::createFromFormat('d.m.Y', $dtStopFrom)->format('Y-m-d');
+            $dtStopTo = Carbon::createFromFormat('d.m.Y', $dtStopTo)->format('Y-m-d');
+            $query->whereBetween('dt_stop', [$dtStopFrom, $dtStopTo]);
+        } elseif($dtStopFrom && !$dtStopTo) {
+            $dtStopFrom = Carbon::createFromFormat('d.m.Y', $dtStopFrom)->format('Y-m-d');
+            $query->whereDate('dt_stop', '>=', $dtStopFrom);
+        } elseif(!$dtStopFrom && $dtStopTo) {
+            $dtStopTo = Carbon::createFromFormat('d.m.Y', $dtStopTo)->format('Y-m-d');
+            $query->whereDate('dt_stop', '<=', $dtStopTo);
         }
 
         return $query->paginate($perPage);

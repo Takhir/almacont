@@ -8,6 +8,11 @@ use Illuminate\Support\Carbon;
 
 class PackageRepository
 {
+    public function all()
+    {
+        return Package::all();
+    }
+
     public function getAll($perPage)
     {
         return Package::orderBy('id', 'desc')->paginate($perPage);

@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('agreements_cards', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('channel_id');
+            $table->foreign('channel_id')->references('id')->on('channels');
             $table->unsignedBigInteger('counterparty_id');
+            $table->foreign('counterparty_id')->references('id')->on('counterparties');
             $table->string('sum');
             $table->unsignedBigInteger('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currencies');
             $table->string('sum_tenge');
             $table->unsignedBigInteger('period_id');
+            $table->foreign('period_id')->references('id')->on('periods');
             $table->tinyInteger('currency_presence');
             $table->timestamps();
             $table->softDeletes();

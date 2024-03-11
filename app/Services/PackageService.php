@@ -13,6 +13,11 @@ class PackageService
         $this->repository = $repository;
     }
 
+    public function all()
+    {
+        return $this->repository->all();
+    }
+
     public function getAll($perPage)
     {
         return $this->repository->getAll($perPage);

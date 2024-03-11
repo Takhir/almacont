@@ -6,8 +6,23 @@ use App\Models\Department;
 
 class DepartmentRepository
 {
+    public function all()
+    {
+        return Department::get();
+    }
+
     public function getAll($perPage)
     {
         return Department::orderBy('id', 'desc')->paginate($perPage);
+    }
+
+    public function getTowns()
+    {
+        return Department::get()->pluck('town', 'town_id');
+    }
+
+    public function getDepartments()
+    {
+        return Department::get()->pluck('department', 'department_id');
     }
 }

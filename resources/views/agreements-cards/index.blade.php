@@ -30,7 +30,7 @@ use App\Enums\Exchanges;
                     <div class="card-body">
                         <form method="GET" action="{{ route('agreements-cards.index') }}" class="form-inline mb-2 float-right">
                             <div class="form-group mr-2">
-                                <label class="mr-2" for="period_id">Период</label>
+                                <label class="mr-2" for="period_id">Период:</label>
                                 <select class="form-control" name="period_id">
                                     <option></option>
                                     @foreach($periods as $k => $period)

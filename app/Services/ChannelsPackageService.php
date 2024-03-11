@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\AgreementCardRepository;
+use App\Repositories\ChannelsPackageRepository;
 
-class AgreementCardService
+class ChannelsPackageService
 {
-    private AgreementCardRepository $repository;
+    private ChannelsPackageRepository $repository;
 
-    public function __construct(AgreementCardRepository $repository)
+    public function __construct(ChannelsPackageRepository $repository)
     {
         $this->repository = $repository;
     }
