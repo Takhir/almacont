@@ -30,9 +30,7 @@ class IndexController extends Controller
         $channelsPackages = $this->service->getAll($request);
         $channels = $this->channelService->all();
         $packages = $this->packageService->all();
-        $departments = $this->departmentService->all();//getDepartments();
-
-        //dd($channels);
+        $departments = $this->departmentService->all();
 
         return view('channels-packages.index', compact('channelsPackages', 'channels', 'packages', 'departments'));
     }

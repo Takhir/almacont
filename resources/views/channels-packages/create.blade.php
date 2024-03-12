@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Добавить карточку договора контрагента')
+@section('title', 'Добавить канал по пакетам')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Добавить карточку договора контрагента</h4>
+                <h4>Добавить канал по пакетам</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('agreements-cards.index') }}">Карточки договоров контрагентов</a></li>
-                    <li class="breadcrumb-item active">Добавить карточку договора контрагента</li>
+                    <li class="breadcrumb-item"><a href="{{ route('channels-packages.index') }}">Каналы по пакетам</a></li>
+                    <li class="breadcrumb-item active">Добавить канал по пакетам</li>
                 </ol>
             </div>
         </div>
@@ -42,7 +42,7 @@
                                 </script>
                             @stop
                         @endif
-                        <form method="POST" action="{{ route('agreements-cards.store') }}">
+                        <form method="POST" action="{{ route('channels-packages.store') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="channel_id">Канал</label>
@@ -54,42 +54,46 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="counterparty_id">Контрагент</label>
-                                <select class="form-control" name="counterparty_id" required>
-                                    <option value="" disabled selected>Контрагент</option>
-                                    @foreach($counterparties as $counterparty)
-                                        <option value="{{ $counterparty->id }}" {{ old('counterparty_id') == $counterparty->id ? 'selected' : '' }}>{{ $counterparty->name }}</option>
+                                <label for="package_id">Пакет</label>
+                                <select class="form-control select2" name="package_id" required>
+                                    <option></option>
+                                    @foreach($packages as $package)
+                                        <option value="{{ $package->id }}">{{ $package->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="sum">Сумма</label>
-                                <input type="text" class="form-control" name="sum" step="any" required value="{{ old('sum') }}" placeholder="Сумма">
-                            </div>
-                            <div class="form-group">
-                                <label for="period_id">Период</label>
-                                <select class="form-control" name="period_id" required id="selectPeriod">
-                                    <option value="" disabled selected>Период</option>
-                                    @foreach($periods as $period)
-                                        <option value="{{ $period->id }}" {{ old('period_id') == $period->id ? 'selected' : '' }}>{{ $period->name }}</option>
+                                <label for="package_id">Филиал</label>
+                                <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
+                                    <option></option>
+                                    @foreach($departments->unique('department_id') as $value)
+                                        <option value="{{ $value->department_id }}">{{ $value->department }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="currency_id">Валюта</label>
-                                <span class="loader" style="display:none;">
-                                        <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </span>
-                                <select id="currency_id" class="form-control" name="currency_id" required>
+                                <label for="package_id">Город</label>
+                                <select class="form-control select2" name="town_id" id="town_id" required>
+                                    <option></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="currency_presence">Тип курса</label>
-                                <select class="form-control" name="currency_presence" required>
-                                    @foreach($presence as $k => $value)
-                                        <option value="{{ $k }}" {{ old('currency_presence') == $value ? 'selected' : '' }}>{{ $value }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="package_id">Дата начала</label>
+                                <div class="input-group date picker" data-target-input="nearest">
+                                    <input name="dt_start" value="{{ old('dt_start') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                    <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="package_id">Дата окончания</label>
+                                <div class="input-group date picker" data-target-input="nearest">
+                                    <input name="dt_stop" value="{{ old('dt_stop') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                    <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="text-right">
@@ -110,30 +114,47 @@
 
 @section('js')
     <script>
-        $(document).ready(function(){
-            $('#selectPeriod').change(function(){
-                $('.loader').show();
-                $('#create_btn').hide();
+        $(document).ready(function() {
 
-                const periodId = $(this).val();
+            $('.select2').select2();
 
-                $.ajax({
-                    url: "{{ route('agreements-cards.currencies', ':period_id') }}".replace(':period_id', periodId),
-                    method: 'GET',
-                    success: function(response) {
-                        $('#currency_id').empty();
-                        $('#currency_id').append(response);
-                        $('.loader').hide();
-                        $('#create_btn').show();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                        $('.loader').hide();
-                        $('#create_btn').show();
-                    }
+            let departments =  $('#department_id').data('departments');
+
+            let selectedOptions = [];
+
+            let filteredDepartments = [];
+
+            $('#department_id').change(function() {
+                selectedOptions = [];
+
+                $('#department_id option:selected').each(function() {
+                    selectedOptions.push($(this).val());
+                });
+
+                selectedOptions = selectedOptions.map(Number);
+
+                filteredDepartments = $.grep(departments, function(item) {
+                    return selectedOptions.includes(item.department_id);
+                });
+
+                $('#town_id').empty();
+
+                filteredDepartments.forEach(function(item) {
+                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
                 });
             });
+
         });
+
+        $(function () {
+            $('.picker').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+                language: 'ru'
+            });
+        });
+
     </script>
 @stop
+
 

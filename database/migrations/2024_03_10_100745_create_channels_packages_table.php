@@ -23,7 +23,7 @@ return new class extends Migration
             //$table->foreign('town_id')->references('id')->on('departments');
             $table->timestamp('dt_start')->nullable();
             $table->timestamp('dt_stop')->nullable();
-            $table->tinyInteger('presence');
+            $table->tinyInteger('presence')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

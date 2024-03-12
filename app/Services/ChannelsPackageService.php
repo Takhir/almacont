@@ -23,13 +23,13 @@ class ChannelsPackageService
         return $this->repository->store($request);
     }
 
-    public function update($request, $agreement)
+    public function update($request, $channelsPackage)
     {
-        return $this->repository->update($request, $agreement);
+        return $this->repository->update($request, $channelsPackage);
     }
 
-    public function delete($agreement)
+    public function delete($channelsPackage)
     {
-        return $this->repository->delete($agreement);
+        return $this->repository->delete($channelsPackage);
     }
 }

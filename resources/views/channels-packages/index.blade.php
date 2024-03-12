@@ -222,7 +222,7 @@
         $(function () {
             $('.picker').datepicker({
                 autoclose: true,
-                format: 'dd.mm.yyyy',
+                format: 'yyyy-mm-dd',
                 language: 'ru'
             });
         });

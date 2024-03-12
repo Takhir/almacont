@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\ChannelsPackages;
 
 use App\Http\Controllers\Controller;
-use App\Models\AgreementsCard;
-use App\Services\AgreementCardService;
+use App\Models\ChannelsPackage;
+use App\Services\ChannelsPackageService;
 
 class DeleteController extends Controller
 {
-    private AgreementCardService $service;
+    private ChannelsPackageService $service;
 
-    public function __construct(AgreementCardService $service)
+    public function __construct(ChannelsPackageService $service)
     {
         $this->service = $service;
     }
 
-    public function __invoke(AgreementsCard $agreement)
+    public function __invoke(ChannelsPackage $channelsPackage)
     {
-        if ($this->service->delete($agreement)) {
-            return redirect()->route('agreements-cards.index')->with('success', 'Данные успешно удалены');
+        if ($this->service->delete($channelsPackage)) {
+            return redirect()->route('channels-packages.index')->with('success', 'Данные успешно удалены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при удалении');

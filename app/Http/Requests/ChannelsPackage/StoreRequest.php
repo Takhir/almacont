@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\AgreementsCard;
+namespace App\Http\Requests\ChannelsPackage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,11 +24,11 @@ class StoreRequest extends FormRequest
     {
         return [
             'channel_id' => 'numeric|required',
-            'counterparty_id' => 'numeric|required',
-            'sum' => 'required',
-            'currency_id' => 'required',
-            'period_id' => 'required',
-            'currency_presence' => 'required',
+            'package_id' => 'numeric|required',
+            'department_id' => 'numeric|required',
+            'town_id' => 'numeric|required',
+            //'dt_start' => 'string',
+            //'dt_stop' => 'string',
         ];
     }
 
@@ -36,11 +36,11 @@ class StoreRequest extends FormRequest
     {
         return [
             'channel_id' => 'Канал',
-            'counterparty_id' => 'Контрагент',
-            'sum' => 'Сумма',
-            'currency_id' => 'Валюта',
-            'period_id' => 'Период',
-            'currency_presence' => 'Тип курса',
+            'package_id' => 'Пакет',
+            'department_id' => 'Филиал',
+            'town_id' => 'Город',
+            'dt_start' => 'Дата начала',
+            'dt_stop' => 'Дата окончания',
         ];
     }
 

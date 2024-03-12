@@ -100,10 +100,9 @@ Route::group(['prefix' => 'channels-packages'], function () {
     Route::get('/', \App\Http\Controllers\ChannelsPackages\IndexController::class)->name('channels-packages.index');
     Route::get('/create', \App\Http\Controllers\ChannelsPackages\CreateController::class)->name('channels-packages.create');
     Route::post('/', \App\Http\Controllers\ChannelsPackages\StoreController::class)->name('channels-packages.store');
-    Route::get('/{agreement}/edit', \App\Http\Controllers\ChannelsPackages\EditController::class)->name('channels-packages.edit');
-    Route::patch('/{agreement}', \App\Http\Controllers\ChannelsPackages\UpdateController::class)->name('channels-packages.update');
-    Route::delete('/{agreement}', \App\Http\Controllers\ChannelsPackages\DeleteController::class)->name('channels-packages.delete');
-    Route::get('/currencies/{period_id}', \App\Http\Controllers\ChannelsPackages\AjaxController::class)->name('channels-packages.currencies');
+    Route::get('/{channelsPackage}/edit', \App\Http\Controllers\ChannelsPackages\EditController::class)->name('channels-packages.edit');
+    Route::patch('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\UpdateController::class)->name('channels-packages.update');
+    Route::delete('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\DeleteController::class)->name('channels-packages.delete');
 });
 
 Route::group(['prefix' => 'calculations'], function () {
