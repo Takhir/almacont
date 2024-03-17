@@ -14,3 +14,10 @@
 .select2-container .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: calc(2.25rem + 2px);
 }
+/* Стилизация для собственной кнопки "Выбрать" */
+.custom-file-label::after {
+    content: 'Выбрать';
+}
+.form-inline label {
+    justify-content: left !important;
+}

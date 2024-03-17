@@ -37,4 +37,9 @@ class CounterpartyService
     {
         return $this->repository->delete($counterparty);
     }
+
+    public function import($request)
+    {
+        return $this->repository->import($request);
+    }
 }

@@ -46,6 +46,7 @@ Route::group(['prefix' => 'directory'], function () {
         Route::get('/{counterparty}/edit', \App\Http\Controllers\Directory\Counterparties\EditController::class)->name('counterparties.edit');
         Route::patch('/{counterparty}', \App\Http\Controllers\Directory\Counterparties\UpdateController::class)->name('counterparties.update');
         Route::delete('/{counterparty}', \App\Http\Controllers\Directory\Counterparties\DeleteController::class)->name('counterparties.delete');
+        Route::post('/import', \App\Http\Controllers\Directory\Counterparties\ImportController::class)->name('counterparties.import');
     });
 
     Route::group(['prefix' => 'channels'], function () {

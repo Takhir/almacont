@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Dto\ConterpartyDTO;
+use App\Imports\CounterpartiesImport;
 use App\Models\Counterparty;
-use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CounterpartyRepository
 {
@@ -54,5 +55,10 @@ class CounterpartyRepository
         $counterparty->deleted = 1;
 
         return $counterparty->save();
+    }
+
+    public function import($request)
+    {
+        return Excel::import(new CounterpartiesImport, $request->file('counterparties_import'));
     }
 }

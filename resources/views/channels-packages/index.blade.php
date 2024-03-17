@@ -65,13 +65,13 @@
                                         <th>
                                             <label>Дата начала:</label>
                                             <div class="input-group date picker mb-2" data-target-input="nearest">
-                                                <input name="dt_start_from" value="{{ old('dt_start_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                                <input name="dt_start_from" value="{{ request()->query('dt_start_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                                 <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
                                                 </div>
                                             </div>
                                             <div class="input-group date picker" data-target-input="nearest">
-                                                <input name="dt_start_to" value="{{ old('dt_start_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                                <input name="dt_start_to" value="{{ request()->query('dt_start_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                                 <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
                                                 </div>
@@ -80,13 +80,13 @@
                                         <th>
                                             <label>Дата окончания:</label>
                                             <div class="input-group date picker mb-2" data-target-input="nearest">
-                                                <input name="dt_stop_from" value="{{ old('dt_stop_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                                <input name="dt_stop_from" value="{{ request()->query('dt_stop_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                                 <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
                                                 </div>
                                             </div>
                                             <div class="input-group date picker" data-target-input="nearest">
-                                                <input name="dt_stop_to" value="{{ old('dt_stop_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                                                <input name="dt_stop_to" value="{{ request()->query('dt_stop_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                                 <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
                                                 </div>

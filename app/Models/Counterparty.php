@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Counterparty extends Model
 {
     use SoftDeletes, HasFactory;
+
+    protected $fillable = [
+        'name',
+        'bin',
+        'resident',
+    ];
 }
