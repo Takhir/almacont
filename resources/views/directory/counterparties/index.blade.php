@@ -4,7 +4,7 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Справочник валют')
+@section('title', 'Справочник Контрагентов')
 
 @section('content_header')
     <div class="container-fluid">
@@ -28,6 +28,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @if($errors->any())
+                            @php
+                                $errorMessage = '';
+                                foreach($errors->all() as $error) {
+                                    $errorMessage .= '<p>' . $error . '</p>';
+                                }
+                            @endphp
+                            <input id="error-message" type="hidden" value="{{ $errorMessage }}">
+                        @endif
                         <form method="POST" action="{{ route('counterparties.import') }}" class="form-inline mb-2 float-right" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -124,6 +133,16 @@
                     body: `{!! session('success') !!}`
                 });
             @endif
+
+            const errorMessage = $("#error-message").val();
+            if(errorMessage !== undefined && errorMessage !== "") {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: errorMessage,
+                });
+            }
+
         });
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('exampleInputFile').addEventListener('change', function() {

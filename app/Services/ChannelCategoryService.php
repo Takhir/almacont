@@ -23,10 +23,10 @@ class ChannelCategoryService
         return $this->repository->getAll();
     }
 
-//    public function getNameById($id)
-//    {
-//        return $this->repository->getNameById($id);
-//    }
+    public function getIdByName(string $name)
+    {
+        return $this->repository->getIdByName($name);
+    }
 
     public function store($request)
     {

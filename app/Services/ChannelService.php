@@ -36,4 +36,9 @@ class ChannelService
     {
         return $this->repository->delete($counterpart);
     }
+
+    public function import($request)
+    {
+        return $this->repository->import($request);
+    }
 }

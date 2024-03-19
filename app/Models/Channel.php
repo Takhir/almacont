@@ -10,6 +10,13 @@ class Channel extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'theme',
+        'category_id',
+    ];
+
     public function category()
     {
         return $this->belongsTo(ChannelCategory::class, 'category_id');

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Directory\Counterparties;
+namespace App\Http\Controllers\Directory\Channels;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\CounterpartyService;
+use App\Services\ChannelService;
 
 class ImportController extends Controller
 {
-    private CounterpartyService $service;
+    private ChannelService $service;
 
-    public function __construct(CounterpartyService $service)
+    public function __construct(ChannelService $service)
     {
         $this->service = $service;
     }
@@ -18,7 +18,7 @@ class ImportController extends Controller
     public function __invoke(Request $request)
     {
         if ($this->service->import($request)) {
-            return redirect()->route('counterparties.index')->with('success', 'Данные успешно загружены');
+            return redirect()->route('channels.index')->with('success', 'Данные успешно загружены');
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при загрузки данных');

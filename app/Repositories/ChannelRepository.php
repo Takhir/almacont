@@ -4,7 +4,8 @@ namespace App\Repositories;
 
 use App\Dto\ChannelDTO;
 use App\Models\Channel;
-use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ChannelsImport;
 
 class ChannelRepository
 {
@@ -52,5 +53,10 @@ class ChannelRepository
     public function delete($channel)
     {
         return $channel->delete();
+    }
+
+    public function import($request)
+    {
+        return Excel::import(new ChannelsImport, $request->file('channels_import'));
     }
 }

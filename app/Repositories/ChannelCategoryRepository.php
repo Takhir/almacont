@@ -18,6 +18,11 @@ class ChannelCategoryRepository
         return ChannelCategory::all();
     }
 
+    public function getIdByName(string $name)
+    {
+        return ChannelCategory::getIdByName($name);
+    }
+
     public function store($request)
     {
         $channelCategoryDTO = new ChannelCategoryDTO(
