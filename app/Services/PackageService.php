@@ -28,13 +28,18 @@ class PackageService
         return $this->repository->store($request);
     }
 
-    public function update($request, $counterpart)
+    public function update($request, $package)
     {
-        return $this->repository->update($request, $counterpart);
+        return $this->repository->update($request, $package);
     }
 
-    public function delete($counterpart)
+    public function delete($package)
     {
-        return $this->repository->delete($counterpart);
+        return $this->repository->delete($package);
+    }
+
+    public function import($package)
+    {
+        return $this->repository->import($package);
     }
 }

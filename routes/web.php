@@ -79,6 +79,7 @@ Route::group(['prefix' => 'directory'], function () {
         Route::get('/{package}/edit', \App\Http\Controllers\Directory\Packages\EditController::class)->name('packages.edit');
         Route::patch('/{package}', \App\Http\Controllers\Directory\Packages\UpdateController::class)->name('packages.update');
         Route::delete('/{package}', \App\Http\Controllers\Directory\Packages\DeleteController::class)->name('packages.delete');
+        Route::post('/import', \App\Http\Controllers\Directory\Packages\ImportController::class)->name('packages.import');
     });
 
 });

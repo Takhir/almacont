@@ -134,7 +134,7 @@
             if(errorMessage !== undefined && errorMessage !== "") {
                 $(document).Toasts('create', {
                     class: 'bg-danger',
-                    title: 'Уведомление',
+                    title: 'Ошибка',
                     body: errorMessage,
                 });
             }

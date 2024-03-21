@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Dto\PackageDTO;
+use App\Imports\PackagesImport;
 use App\Models\Package;
-use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PackageRepository
 {
@@ -52,5 +53,10 @@ class PackageRepository
     public function delete($package)
     {
         return $package->delete();
+    }
+
+    public function import($request)
+    {
+        return Excel::import(new PackagesImport, $request->file('packages_import'));
     }
 }

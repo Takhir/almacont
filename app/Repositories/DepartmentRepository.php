@@ -21,8 +21,4 @@ class DepartmentRepository
         return Department::get()->pluck('town', 'town_id');
     }
 
-    public function getDepartments()
-    {
-        return Department::get()->pluck('department', 'department_id');
-    }
 }

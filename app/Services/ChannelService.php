@@ -27,14 +27,14 @@ class ChannelService
         return $this->repository->store($request);
     }
 
-    public function update($request, $counterpart)
+    public function update($request, $channel)
     {
-        return $this->repository->update($request, $counterpart);
+        return $this->repository->update($request, $channel);
     }
 
-    public function delete($counterpart)
+    public function delete($channel)
     {
-        return $this->repository->delete($counterpart);
+        return $this->repository->delete($channel);
     }
 
     public function import($request)

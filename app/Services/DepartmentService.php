@@ -27,9 +27,4 @@ class DepartmentService
     {
         return $this->repository->getTowns();
     }
-
-    public function getDepartments()
-    {
-        return $this->repository->getDepartments();
-    }
 }
