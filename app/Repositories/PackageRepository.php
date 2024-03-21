@@ -55,6 +55,11 @@ class PackageRepository
         return $package->delete();
     }
 
+    public function getIdByName(string $name)
+    {
+        return Package::getIdByName($name);
+    }
+
     public function import($request)
     {
         return Excel::import(new PackagesImport, $request->file('packages_import'));

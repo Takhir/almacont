@@ -10,6 +10,16 @@ class ChannelsPackage extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = [
+        'channel_id',
+        'package_id',
+        'department_id',
+        'town_id',
+        'dt_start',
+        'dt_stop',
+        'presence',
+    ];
+
     public function channel()
     {
         return $this->belongsTo(Channel::class, 'channel_id');

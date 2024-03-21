@@ -37,6 +37,11 @@ class ChannelService
         return $this->repository->delete($channel);
     }
 
+    public function getIdByName(string $name)
+    {
+        return $this->repository->getIdByName($name);
+    }
+
     public function import($request)
     {
         return $this->repository->import($request);

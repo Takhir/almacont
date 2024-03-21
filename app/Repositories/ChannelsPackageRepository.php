@@ -3,10 +3,9 @@
 namespace App\Repositories;
 
 use App\Dto\ChannelsPackageDTO;
-use App\Models\AgreementsCard;
+use App\Imports\ChannelsPackageImport;
 use App\Models\ChannelsPackage;
-use App\Models\Currency;
-use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ChannelsPackageRepository
 {
@@ -107,5 +106,10 @@ class ChannelsPackageRepository
             $request->input('dt_start'),
             $request->input('dt_stop'),
         );
+    }
+
+    public function import($request)
+    {
+        return Excel::import(new ChannelsPackageImport, $request->file('channels_packages_import'));
     }
 }

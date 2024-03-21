@@ -24,6 +24,29 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @if($errors->any())
+                            @php
+                                $errorMessage = '';
+                                foreach($errors->all() as $error) {
+                                    $errorMessage .= '<p>' . $error . '</p>';
+                                }
+                            @endphp
+                            <input id="error-message" type="hidden" value="{{ $errorMessage }}">
+                        @endif
+                        <form method="POST" action="{{ route('channels-packages.import') }}" class="form-inline mb-2 float-right" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input name="channels_packages_import" type="file" class="custom-file-input" id="exampleInputFile" accept=".xlsx, .xls" required>
+                                        <label class="custom-file-label" for="exampleInputFile" id="fileInputLabel">Выберите файл</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-excel"></i> Загрузить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <form method="GET" action="{{ route('channels-packages.index') }}" class="form-inline mb-2 float-right">
@@ -192,11 +215,8 @@
             $('.select2').select2();
 
             let departments =  $('#department_id').data('departments');
-
             let selectedOptions = [];
-
             let filteredDepartments = [];
-
             $('#department_id').change(function() {
                 selectedOptions = [];
 
@@ -217,6 +237,14 @@
                 });
             });
 
+            const errorMessage = $("#error-message").val();
+            if(errorMessage !== undefined && errorMessage !== "") {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: errorMessage,
+                });
+            }
         });
 
         $(function () {
@@ -224,6 +252,12 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd',
                 language: 'ru'
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exampleInputFile').addEventListener('change', function() {
+                document.getElementById('fileInputLabel').textContent = this.files[0].name;
             });
         });
 

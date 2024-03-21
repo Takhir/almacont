@@ -106,6 +106,7 @@ Route::group(['prefix' => 'channels-packages'], function () {
     Route::get('/{channelsPackage}/edit', \App\Http\Controllers\ChannelsPackages\EditController::class)->name('channels-packages.edit');
     Route::patch('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\UpdateController::class)->name('channels-packages.update');
     Route::delete('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\DeleteController::class)->name('channels-packages.delete');
+    Route::post('/import', \App\Http\Controllers\ChannelsPackages\ImportController::class)->name('channels-packages.import');
 });
 
 Route::group(['prefix' => 'calculations'], function () {

@@ -38,6 +38,11 @@ class PackageService
         return $this->repository->delete($package);
     }
 
+    public function getIdByName(string $name)
+    {
+        return $this->repository->getIdByName($name);
+    }
+
     public function import($package)
     {
         return $this->repository->import($package);

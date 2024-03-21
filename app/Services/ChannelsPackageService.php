@@ -32,4 +32,9 @@ class ChannelsPackageService
     {
         return $this->repository->delete($channelsPackage);
     }
+
+    public function import($request)
+    {
+        return $this->repository->import($request);
+    }
 }

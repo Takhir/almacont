@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Department;
+use App\Models\Package;
 
 class DepartmentRepository
 {
@@ -19,6 +20,16 @@ class DepartmentRepository
     public function getTowns()
     {
         return Department::get()->pluck('town', 'town_id');
+    }
+
+    public function getIdByDepartment(string $department)
+    {
+        return Department::getIdByDepartment($department);
+    }
+
+    public function getTownIdByTown(string $town)
+    {
+        return Department::getTownIdByTown($town);
     }
 
 }

@@ -55,6 +55,11 @@ class ChannelRepository
         return $channel->delete();
     }
 
+    public function getIdByName(string $name)
+    {
+        return Channel::getIdByName($name);
+    }
+
     public function import($request)
     {
         return Excel::import(new ChannelsImport, $request->file('channels_import'));

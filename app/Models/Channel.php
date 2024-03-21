@@ -21,4 +21,10 @@ class Channel extends Model
     {
         return $this->belongsTo(ChannelCategory::class, 'category_id');
     }
+
+    public static function getIdByName($name)
+    {
+        $model = static::where('name', $name)->first();
+        return $model ? $model->id : null;
+    }
 }
