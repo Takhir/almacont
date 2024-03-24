@@ -27,6 +27,11 @@ class PeriodService
         return $this->repository->getNameById($id);
     }
 
+    public function getIdByName(string $name)
+    {
+        return $this->repository->getIdByName($name);
+    }
+
     public function store($request)
     {
         return $this->repository->store($request);

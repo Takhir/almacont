@@ -10,6 +10,14 @@ class Subscriber extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = [
+        'period_id',
+        'town_id',
+        'package_name',
+        'package_id',
+        'quantity',
+    ];
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'town_id', 'town_id');
@@ -18,5 +26,10 @@ class Subscriber extends Model
     public function period()
     {
         return $this->belongsTo(Period::class, 'period_id');
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class, 'package_id');
     }
 }

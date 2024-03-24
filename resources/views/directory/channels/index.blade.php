@@ -139,6 +139,7 @@
                 });
             }
         });
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('exampleInputFile').addEventListener('change', function() {
                 document.getElementById('fileInputLabel').textContent = this.files[0].name;

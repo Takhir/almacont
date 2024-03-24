@@ -97,6 +97,7 @@ Route::group(['prefix' => 'agreements-cards'], function () {
 Route::group(['prefix' => 'subscribers'], function () {
     Route::get('/', \App\Http\Controllers\Subscribers\IndexController::class)->name('subscribers.index');
     Route::delete('/{subscriber}', \App\Http\Controllers\Subscribers\DeleteController::class)->name('subscribers.delete');
+    Route::post('/import', \App\Http\Controllers\Subscribers\ImportController::class)->name('subscribers.import');
 });
 
 Route::group(['prefix' => 'channels-packages'], function () {

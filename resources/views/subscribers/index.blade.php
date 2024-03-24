@@ -28,6 +28,30 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @if($errors->any())
+                            @php
+                                $errorMessage = '';
+                                foreach($errors->all() as $error) {
+                                    $errorMessage .= '<p>' . $error . '</p>';
+                                }
+                            @endphp
+                            <input id="error-message" type="hidden" value="{{ $errorMessage }}">
+                        @endif
+                        <form method="POST" action="{{ route('subscribers.import') }}" class="form-inline mb-2 float-right" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input name="subscribers_import" type="file" class="custom-file-input" id="exampleInputFile" accept=".xlsx, .xls" required>
+                                        <label class="custom-file-label" for="exampleInputFile" id="fileInputLabel">Выберите файл</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-success"><i class="fa-regular fa-file-excel"></i> Загрузить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clearfix"></div>
                         <form method="GET" action="{{ route('subscribers.index') }}" class="form-inline mb-2 float-right">
                             <div class="form-group mr-2">
                                 <label class="mr-2" for="period_id">Период:</label>
@@ -48,11 +72,11 @@
                                 </select>
                             </div>
                             <div class="form-group mr-2">
-                                <label class="mr-2" for="service_name">Пакет:</label>
-                                <select class="form-control" name="service_name">
+                                <label class="mr-2" for="package_name">Пакет:</label>
+                                <select class="form-control" name="package_name">
                                     <option></option>
                                     @foreach($packages as $k => $package)
-                                        <option value="{{ $k }}" @if(request('service_name') == $k) selected @endif>{{ $package }}</option>
+                                        <option value="{{ $k }}" @if(request('package_name') == $k) selected @endif>{{ $package }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -80,7 +104,7 @@
                                     <td>{{ $k + 1 }}</td>
                                     <td>{{ $subscriber->period->name }}</td>
                                     <td>{{ $subscriber->department->town }}</td>
-                                    <td>{{ $subscriber->service_name }}</td>
+                                    <td>{{ is_null($subscriber->package_name) ? $subscriber->package?->name : $subscriber->package_name }}</td>
                                     <td>{{ $subscriber->quantity }}</td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#modal-delete" data-subscriber-id="{{ $subscriber->id }}">
@@ -144,6 +168,21 @@
                 body: `{!! session('success') !!}`
             });
             @endif
+
+            const errorMessage = $("#error-message").val();
+            if(errorMessage !== undefined && errorMessage !== "") {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: errorMessage,
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exampleInputFile').addEventListener('change', function() {
+                document.getElementById('fileInputLabel').textContent = this.files[0].name;
+            });
         });
     </script>
 @stop

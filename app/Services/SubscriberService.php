@@ -27,4 +27,9 @@ class SubscriberService
     {
         return $this->repository->delete($subscriber);
     }
+
+    public function import($request)
+    {
+        return $this->repository->import($request);
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Imports\SubscribersImport;
 use App\Models\Subscriber;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubscriberRepository
 {
@@ -11,9 +13,10 @@ class SubscriberRepository
         $perPage = $request->input('per_page', 20);
         $periodId = $request->input('period_id');
         $townId = $request->input('town_id');
-        $package = $request->input('service_name');
+        $package = $request->input('package_name');
         $query = Subscriber::with('department')
             ->with('period')
+            ->with('package')
             ->orderBy('id', 'desc');
 
         if ($periodId) {
@@ -25,7 +28,7 @@ class SubscriberRepository
         }
 
         if ($package) {
-            $query->where('service_name', 'like', $package);
+            $query->where('package_name', 'like', $package);
         }
 
         return $query->paginate($perPage);
@@ -33,12 +36,17 @@ class SubscriberRepository
 
     public function getServices()
     {
-        return Subscriber::get()->pluck('service_name', 'service_name');
+        return Subscriber::get()->pluck('package_name', 'package_name');
     }
 
     public function delete($subscriber)
     {
         return $subscriber->delete();
+    }
+
+    public function import($request)
+    {
+        return Excel::import(new SubscribersImport, $request->file('subscribers_import'));
     }
 
 }

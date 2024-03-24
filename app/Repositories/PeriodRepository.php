@@ -22,6 +22,11 @@ class PeriodRepository
         return Period::getNameById($id);
     }
 
+    public function getIdByName(string $name)
+    {
+        return Period::getIdByName($name);
+    }
+
     public function store($request)
     {
         $reportPeriodDTO = new PeriodDTO(

@@ -15,4 +15,11 @@ class Period extends Model
         $model = static::find($id);
         return $model ? $model->name : null;
     }
+
+    public static function getIdByName($name)
+    {
+        $model = static::where('name', $name)->first();
+        return $model ? $model->id : null;
+    }
+
 }
