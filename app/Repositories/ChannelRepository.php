@@ -69,7 +69,7 @@ class ChannelRepository
     public function export()
     {
         $export = new ChannelsExport;
-        $fileName = 'channel.xlsx';
+        $fileName = 'channels.xlsx';
         $filePath = 'public/' . $fileName;
 
         Excel::store($export, $filePath);
