@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -293,7 +293,7 @@ return [
         ['header' => 'ЗАТРАТЫ ПО КАНАЛАМ'],
         [
             'text' => 'Наполнение пакетов',
-            'url'  => 'packages',
+            'url'  => 'filling-packages',
             'icon' => 'fas fa-solid fa-clipboard',
         ],
         [
@@ -302,39 +302,44 @@ return [
             'submenu' => [
                 [
                     'text' => 'Справочник валют',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/currency',
                     'icon' => 'fas fa-solid fa-dollar-sign',
                 ],
                 [
                     'text' => 'Справочник периодов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/periods',
                     'icon' => 'fas fa-regular fa-clock',
                 ],
                 [
                     'text' => 'Справочник контрагентов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/counterparties',
                     'icon' => 'fas fa-regular fa-handshake',
                 ],
                 [
                     'text' => 'Справочник каналов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/channels',
                     'icon' => 'fas fa-regular fa-film',
                 ],
                 [
+                    'text' => 'Справочник категорий каналов',
+                    'url'  => 'directory/channels-categories',
+                    'icon' => 'fas fa-solid fa-list',
+                ],
+                [
                     'text' => 'Справочник филиалов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/departments',
                     'icon' => 'fas fa-solid fa-book',
                 ],
                 [
                     'text' => 'Справочник пакетов',
-                    'url'  => 'directory/settings',
+                    'url'  => 'directory/packages',
                     'icon' => 'fas fa-regular fa-folder-open',
                 ],
             ]
         ],
         [
-            'text' => 'Карточка договора контрагента',
-            'url'  => 'card',
+            'text' => 'Карточки договоров контрагентов',
+            'url'  => 'agreements-cards',
             'icon' => 'fas fa-regular fa-address-card',
         ],
         [
@@ -344,12 +349,12 @@ return [
         ],
         [
             'text' => 'Каналы по пакетам',
-            'url'  => 'channels',
+            'url'  => 'channels-packages',
             'icon' => 'fas fa-light fa-file-video',
         ],
         [
             'text' => 'Расчёты',
-            'url'  => 'coalculations',
+            'url'  => 'calculations',
             'icon' => 'fas fa-solid fa-calculator',
         ],
     ],
@@ -410,7 +415,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -456,6 +461,46 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'fontawesome' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+                ],
+            ],
+        ],
+        'Datepicker' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js',
+                ],
+            ],
+        ],
+        'custom_styles' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true, // Если ваш файл находится в папке public, установите значение true
+                    'location' => '/css/admin_custom.css', // Путь к вашему кастомному CSS
                 ],
             ],
         ],
