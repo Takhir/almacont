@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </form>
-                            <a href="{{ route('packages.export') }}" class="btn btn-outline-success mr-2 float-right"><i class="fa-regular fa-file-excel"></i> Выгрузить</a>
+                        <a href="{{ route('packages.export') }}" class="btn btn-outline-success mr-2 float-right"><i class="fa-regular fa-file-excel"></i> Выгрузить</a>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
