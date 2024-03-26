@@ -57,6 +57,7 @@ Route::group(['prefix' => 'directory'], function () {
         Route::patch('/{channel}', \App\Http\Controllers\Directory\Channels\UpdateController::class)->name('channels.update');
         Route::delete('/{channel}', \App\Http\Controllers\Directory\Channels\DeleteController::class)->name('channels.delete');
         Route::post('/import', \App\Http\Controllers\Directory\Channels\ImportController::class)->name('channels.import');
+        Route::get('/export', \App\Http\Controllers\Directory\Channels\ExportController::class)->name('channels.export');
     });
 
     Route::group(['prefix' => 'channels-categories'], function () {

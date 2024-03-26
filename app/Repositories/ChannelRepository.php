@@ -6,6 +6,7 @@ use App\Dto\ChannelDTO;
 use App\Models\Channel;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ChannelsImport;
+use App\Exports\ChannelsExport;
 
 class ChannelRepository
 {
@@ -63,5 +64,16 @@ class ChannelRepository
     public function import($request)
     {
         return Excel::import(new ChannelsImport, $request->file('channels_import'));
+    }
+
+    public function export()
+    {
+        $export = new ChannelsExport;
+        $fileName = 'channel.xlsx';
+        $filePath = 'public/' . $fileName;
+
+        Excel::store($export, $filePath);
+
+        return $fileName;
     }
 }

@@ -47,6 +47,7 @@
                                 </div>
                             </div>
                         </form>
+                        <a href="{{ route('channels.export') }}" class="btn btn-outline-success mr-2 float-right"><i class="fa-regular fa-file-excel"></i> Выгрузить</a>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -127,6 +128,14 @@
                     class: 'bg-success',
                     title: 'Уведомление',
                     body: `{!! session('success') !!}`
+                });
+            @endif
+
+            @if(session('error'))
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: `{!! session('error') !!}`
                 });
             @endif
 
