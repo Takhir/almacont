@@ -13,6 +13,11 @@ class ChannelsPackageService
         $this->repository = $repository;
     }
 
+    public function getFilling($request)
+    {
+        return $this->repository->getFilling($request);
+    }
+
     public function getAll($request)
     {
         return $this->repository->getAll($request);

@@ -10,9 +10,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ChannelsPackageRepository
 {
-    public function getAll($request)
+
+    public function channelsPackage($request)
     {
-        $perPage = $request->input('per_page', 20);
         $channelId = $request->input('channel_id');
         $packageId = $request->input('package_id');
         $departmentId = $request->input('department_id');
@@ -59,6 +59,26 @@ class ChannelsPackageRepository
         } elseif(!$dtStopFrom && $dtStopTo) {
             $query->whereDate('dt_stop', '<=', $dtStopTo);
         }
+
+        return $query;
+    }
+
+    public function getFilling($request)
+    {
+        $perPage = $request->input('per_page', 20);
+        $query = $this->channelsPackage($request);
+
+        $query->whereHas('package', function ($query) {
+            $query->where('active', 1);
+        })->whereNull('dt_stop');
+
+        return $query->paginate($perPage);
+    }
+
+    public function getAll($request)
+    {
+        $perPage = $request->input('per_page', 20);
+        $query = $this->channelsPackage($request);
 
         return $query->paginate($perPage);
     }

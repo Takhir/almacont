@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Main\IndexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', IndexController::class);
+Route::get('/', \App\Http\Controllers\FillingPackages\IndexController::class);
 
 Route::group(['prefix' => 'filling-packages'], function () {
     Route::get('/', \App\Http\Controllers\FillingPackages\IndexController::class)->name('filling-packages.index');

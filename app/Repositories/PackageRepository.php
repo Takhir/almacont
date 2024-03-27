@@ -30,7 +30,7 @@ class PackageRepository
 
         $package = new Package();
         $package->name = $packageDTO->name;
-        $package->description = $packageDTO->description;
+        $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
         $package->active = $packageDTO->active;
 
         return $package->save();
@@ -45,7 +45,7 @@ class PackageRepository
         );
 
         $package->name = $packageDTO->name;
-        $package->description = $packageDTO->description;
+        $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
         $package->active = $packageDTO->active;
 
         return $package->save();
