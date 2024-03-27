@@ -13,6 +13,11 @@ class ChannelsPackageService
         $this->repository = $repository;
     }
 
+    public function getFilling($request)
+    {
+        return $this->repository->getFilling($request);
+    }
+
     public function getAll($request)
     {
         return $this->repository->getAll($request);
@@ -36,5 +41,16 @@ class ChannelsPackageService
     public function import($request)
     {
         return $this->repository->import($request);
+    }
+
+    public function export($request)
+    {
+        $file = $this->repository->export($request);
+
+        if ($file) {
+            return $file;
+        }
+
+        return false;
     }
 }

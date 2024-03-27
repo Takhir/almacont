@@ -3,12 +3,34 @@
 namespace App\Http\Controllers\FillingPackages;
 
 use App\Http\Controllers\Controller;
-use App\Models\Currency;
+use App\Services\ChannelService;
+use App\Services\ChannelsPackageService;
+use App\Services\DepartmentService;
+use App\Services\PackageService;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function __invoke()
+    private ChannelsPackageService $service;
+    private ChannelService $channelService;
+    private PackageService $packageService;
+    private DepartmentService $departmentService;
+
+    public function __construct(ChannelsPackageService $service, ChannelService $channelService, PackageService $packageService, DepartmentService $departmentService)
     {
-        return view('filling-packages.index');
+        $this->service = $service;
+        $this->channelService = $channelService;
+        $this->packageService = $packageService;
+        $this->departmentService = $departmentService;
+    }
+
+    public function __invoke(Request $request)
+    {
+        $channelsPackages = $this->service->getFilling($request);
+        $channels = $this->channelService->all();
+        $packages = $this->packageService->all();
+        $departments = $this->departmentService->all();
+
+        return view('filling-packages.index', compact('channelsPackages', 'channels', 'packages', 'departments'));
     }
 }

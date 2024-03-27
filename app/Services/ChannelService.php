@@ -46,6 +46,7 @@ class ChannelService
     {
         return $this->repository->import($request);
     }
+
     public function export()
     {
         $file = $this->repository->export();

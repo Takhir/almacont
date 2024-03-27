@@ -57,6 +57,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $currencies->total() }}
                         <div class="float-right">
                             {{ $currencies->links('vendor.pagination.bootstrap-4') }}
                         </div>

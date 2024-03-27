@@ -51,6 +51,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $periods->total() }}
                         <div class="float-right">
                             {{ $periods->links('vendor.pagination.bootstrap-4') }}
                         </div>

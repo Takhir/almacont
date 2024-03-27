@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Main\IndexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', IndexController::class);
+Route::get('/', \App\Http\Controllers\FillingPackages\IndexController::class);
 
 Route::group(['prefix' => 'filling-packages'], function () {
     Route::get('/', \App\Http\Controllers\FillingPackages\IndexController::class)->name('filling-packages.index');
@@ -47,6 +46,7 @@ Route::group(['prefix' => 'directory'], function () {
         Route::patch('/{counterparty}', \App\Http\Controllers\Directory\Counterparties\UpdateController::class)->name('counterparties.update');
         Route::delete('/{counterparty}', \App\Http\Controllers\Directory\Counterparties\DeleteController::class)->name('counterparties.delete');
         Route::post('/import', \App\Http\Controllers\Directory\Counterparties\ImportController::class)->name('counterparties.import');
+        Route::get('/export', \App\Http\Controllers\Directory\Counterparties\ExportController::class)->name('counterparties.export');
     });
 
     Route::group(['prefix' => 'channels'], function () {
@@ -81,6 +81,7 @@ Route::group(['prefix' => 'directory'], function () {
         Route::patch('/{package}', \App\Http\Controllers\Directory\Packages\UpdateController::class)->name('packages.update');
         Route::delete('/{package}', \App\Http\Controllers\Directory\Packages\DeleteController::class)->name('packages.delete');
         Route::post('/import', \App\Http\Controllers\Directory\Packages\ImportController::class)->name('packages.import');
+        Route::get('/export', \App\Http\Controllers\Directory\Packages\ExportController::class)->name('packages.export');
     });
 
 });
@@ -109,6 +110,7 @@ Route::group(['prefix' => 'channels-packages'], function () {
     Route::patch('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\UpdateController::class)->name('channels-packages.update');
     Route::delete('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\DeleteController::class)->name('channels-packages.delete');
     Route::post('/import', \App\Http\Controllers\ChannelsPackages\ImportController::class)->name('channels-packages.import');
+    Route::get('/export', \App\Http\Controllers\ChannelsPackages\ExportController::class)->name('channels-packages.export');
 });
 
 Route::group(['prefix' => 'calculations'], function () {

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Dto\PackageDTO;
+use App\Exports\PackagesExport;
 use App\Imports\PackagesImport;
 use App\Models\Package;
 use Maatwebsite\Excel\Facades\Excel;
@@ -29,7 +30,7 @@ class PackageRepository
 
         $package = new Package();
         $package->name = $packageDTO->name;
-        $package->description = $packageDTO->description;
+        $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
         $package->active = $packageDTO->active;
 
         return $package->save();
@@ -44,7 +45,7 @@ class PackageRepository
         );
 
         $package->name = $packageDTO->name;
-        $package->description = $packageDTO->description;
+        $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
         $package->active = $packageDTO->active;
 
         return $package->save();
@@ -63,5 +64,16 @@ class PackageRepository
     public function import($request)
     {
         return Excel::import(new PackagesImport, $request->file('packages_import'));
+    }
+
+    public function export()
+    {
+        $export = new PackagesExport;
+        $fileName = 'packages.xlsx';
+        $filePath = 'public/' . $fileName;
+
+        Excel::store($export, $filePath);
+
+        return $fileName;
     }
 }

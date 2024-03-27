@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('adminlte::page')
 
 @section('title', 'Изменить пакет')
 
@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Дополнительная информация</label>
-                                <input type="text" class="form-control" name="description" required value="{{ $package->description }}">
+                                <input type="text" class="form-control" name="description" value="{{ $package->description }}">
                             </div>
                             <div class="form-group">
                                 <label for="active">Отображать на главной</label>

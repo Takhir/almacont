@@ -86,6 +86,7 @@ use App\Enums\Exchanges;
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $agreements->total() }}
                         <div class="float-right">
                             {{ $agreements->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
                         </div>

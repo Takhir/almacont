@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Dto\ConterpartyDTO;
+use App\Exports\CounterpartiesExport;
 use App\Imports\CounterpartiesImport;
 use App\Models\Counterparty;
 use Maatwebsite\Excel\Facades\Excel;
@@ -60,5 +61,16 @@ class CounterpartyRepository
     public function import($request)
     {
         return Excel::import(new CounterpartiesImport, $request->file('counterparties_import'));
+    }
+
+    public function export()
+    {
+        $export = new CounterpartiesExport;
+        $fileName = 'counterparties.xlsx';
+        $filePath = 'public/' . $fileName;
+
+        Excel::store($export, $filePath);
+
+        return $fileName;
     }
 }

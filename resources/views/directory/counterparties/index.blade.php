@@ -51,6 +51,7 @@
                                 </div>
                             </div>
                         </form>
+                        <a href="{{ route('counterparties.export') }}" class="btn btn-outline-success mr-2 float-right"><i class="fa-regular fa-file-excel"></i> Выгрузить</a>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -82,6 +83,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $counterparties->total() }}
                         <div class="float-right">
                             {{ $counterparties->links('vendor.pagination.bootstrap-4') }}
                         </div>
@@ -125,6 +127,14 @@
                 const url = "{{ route('counterparties.delete', ':id') }}".replace(':id', counterpartyId);
                 modal.find('.delete-form').attr('action', url);
             });
+
+            @if(session('error'))
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Ошибка',
+                body: `{!! session('error') !!}`
+            });
+            @endif
 
             @if(session('success'))
                 $(document).Toasts('create', {

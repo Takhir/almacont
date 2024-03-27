@@ -117,7 +117,21 @@
                                         </th>
                                         <th>
                                             <a href="{{ route('channels-packages.index') }}" class="btn btn-secondary mb-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>
-                                            <button type="submit" class="btn btn-success" style="width: 111px;"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
+                                            <button type="submit" class="btn btn-success mb-2" style="width: 111px;"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
+                                            <a href="{{ route('channels-packages.export', [
+                                                'channel_id' => request()->input('channel_id'),
+                                                'package_id' => request()->input('package_id'),
+                                                'department_id' => request()->input('department_id'),
+                                                'town_id' => request()->input('town_id'),
+                                                'dt_start_from' => request()->input('dt_start_from'),
+                                                'dt_start_to' => request()->input('dt_start_to'),
+                                                'dt_stop_from' => request()->input('dt_stop_from'),
+                                                'dt_stop_to' => request()->input('dt_stop_to'),
+                                                'per_page' => 10000,
+                                            ]) }}"
+                                               class="btn btn-outline-success">
+                                                <i class="fa-regular fa-file-excel"></i> Выгрузить
+                                            </a>
                                         </th>
                                     </tr>
                                 </form>
@@ -160,6 +174,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $channelsPackages->total() }}
                         <div class="float-right">
                             {{ $channelsPackages->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
                         </div>
@@ -210,6 +225,14 @@
                     title: 'Уведомление',
                     body: `{!! session('success') !!}`
                 });
+            @endif
+
+            @if(session('error'))
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Ошибка',
+                body: `{!! session('error') !!}`
+            });
             @endif
 
             $('.select2').select2();

@@ -47,4 +47,15 @@ class PackageService
     {
         return $this->repository->import($package);
     }
+
+    public function export()
+    {
+        $file = $this->repository->export();
+
+        if ($file) {
+            return $file;
+        }
+
+        return false;
+    }
 }
