@@ -111,6 +111,7 @@ Route::group(['prefix' => 'channels-packages'], function () {
     Route::patch('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\UpdateController::class)->name('channels-packages.update');
     Route::delete('/{channelsPackage}', \App\Http\Controllers\ChannelsPackages\DeleteController::class)->name('channels-packages.delete');
     Route::post('/import', \App\Http\Controllers\ChannelsPackages\ImportController::class)->name('channels-packages.import');
+    Route::get('/export', \App\Http\Controllers\ChannelsPackages\ExportController::class)->name('channels-packages.export');
 });
 
 Route::group(['prefix' => 'calculations'], function () {

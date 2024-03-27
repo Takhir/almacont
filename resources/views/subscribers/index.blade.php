@@ -117,6 +117,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $subscribers->total() }}
                         <div class="float-right">
                             {{ $subscribers->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
                         </div>

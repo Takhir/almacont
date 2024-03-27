@@ -37,4 +37,15 @@ class ChannelsPackageService
     {
         return $this->repository->import($request);
     }
+
+    public function export($request)
+    {
+        $file = $this->repository->export($request);
+
+        if ($file) {
+            return $file;
+        }
+
+        return false;
+    }
 }

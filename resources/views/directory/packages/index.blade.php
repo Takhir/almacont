@@ -83,6 +83,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $packages->total() }}
                         <div class="float-right">
                             {{ $packages->links('vendor.pagination.bootstrap-4') }}
                         </div>

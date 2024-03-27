@@ -83,6 +83,7 @@
                         </table>
                     </div>
                     <div class="card-footer clearfix">
+                        <label>Общее количество:</label> {{ $counterparties->total() }}
                         <div class="float-right">
                             {{ $counterparties->links('vendor.pagination.bootstrap-4') }}
                         </div>

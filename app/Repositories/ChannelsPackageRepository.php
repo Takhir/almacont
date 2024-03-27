@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Dto\ChannelsPackageDTO;
+use App\Exports\ChannelsPackageExport;
 use App\Imports\ChannelsPackageImport;
 use App\Models\ChannelsPackage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -111,5 +112,16 @@ class ChannelsPackageRepository
     public function import($request)
     {
         return Excel::import(new ChannelsPackageImport, $request->file('channels_packages_import'));
+    }
+
+    public function export($request)
+    {
+        $export = new ChannelsPackageExport($request);
+        $fileName = 'channels-packages.xlsx';
+        $filePath = 'public/' . $fileName;
+
+        Excel::store($export, $filePath);
+
+        return $fileName;
     }
 }
