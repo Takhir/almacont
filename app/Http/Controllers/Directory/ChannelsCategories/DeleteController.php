@@ -19,8 +19,12 @@ class DeleteController extends Controller
 
     public function __invoke(ChannelCategory $category)
     {
-        if ($this->service->delete($category)) {
-            return redirect()->route('channels-categories.index')->with('success', 'Данные успешно удалены');
+        try {
+            if ($this->service->delete($category)) {
+                return redirect()->route('channels-categories.index')->with('success', 'Данные успешно удалены');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
 
         return redirect()->back()->with('error', 'Произошла ошибка при удалении');

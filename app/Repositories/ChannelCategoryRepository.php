@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Dto\ChannelCategoryDTO;
 use App\Models\ChannelCategory;
-use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class ChannelCategoryRepository
 {
@@ -48,6 +48,10 @@ class ChannelCategoryRepository
 
     public function delete($category)
     {
+        if ($category->channels()->exists()) {
+            throw ValidationException::withMessages(['error' => 'Нельзя удалить категорию, к которой привязаны каналы']);
+        }
+
         return $category->delete();
     }
 }

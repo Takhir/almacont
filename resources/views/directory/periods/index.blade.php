@@ -41,7 +41,7 @@
                                         <td>{{ $period->name }}</td>
                                         <td>
                                             <a href="{{ route('periods.edit', $period->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-period-id="{{ $period->id }}">
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-route="{{ route('periods.delete', $period->id) }}">
                                                 <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                             </a>
                                         </td>
@@ -60,42 +60,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa-solid fa-trash-can"></i> Удаление</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Вы уверены что хотите удалить данную запись</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
-                    <form method="post" class="delete-form">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">Да</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('components.modal-delete')
 @stop
 
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#modal-delete').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget);
-                const periodId = button.data('period-id');
-                const modal = $(this);
-                const url = "{{ route('periods.delete', ':id') }}".replace(':id', periodId);
-                modal.find('.delete-form').attr('action', url);
-            });
-
             @if(session('success'))
                 $(document).Toasts('create', {
                     class: 'bg-success',

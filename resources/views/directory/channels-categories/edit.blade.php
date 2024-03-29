@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('adminlte::page')
 
 @section('title', 'Изменить категорию каналов')
 

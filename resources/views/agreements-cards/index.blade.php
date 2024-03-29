@@ -76,7 +76,7 @@ use App\Enums\Exchanges;
                                     <td>{{ $agreement->currency_persence == 0 ? Exchanges::Start : Exchanges::Stop }}</td>
                                     <td>
                                         <a href="{{ route('agreements-cards.edit', $agreement->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-agreement-id="{{ $agreement->id }}">
+                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-route="{{  route('agreements-cards.delete', $agreement->id) }}">
                                             <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                         </a>
                                     </td>
@@ -95,48 +95,18 @@ use App\Enums\Exchanges;
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa-solid fa-trash-can"></i> Удаление</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Вы уверены что хотите удалить данную запись</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
-                    <form method="post" class="delete-form" action="">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">Да</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('components.modal-delete')
 @stop
 
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#modal-delete').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget);
-                const agreementId = button.data('agreement-id');
-                const modal = $(this);
-                const url = "{{ route('agreements-cards.delete', ':id') }}".replace(':id', agreementId);
-                modal.find('.delete-form').attr('action', url);
-            });
-
             @if(session('success'))
-            $(document).Toasts('create', {
-                class: 'bg-success',
-                title: 'Уведомление',
-                body: `{!! session('success') !!}`
-            });
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Уведомление',
+                    body: `{!! session('success') !!}`
+                });
             @endif
         });
     </script>

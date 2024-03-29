@@ -164,7 +164,7 @@
                                     <td>{{ $channelsPackage->dt_stop }}</td>
                                     <td>
                                         <a href="{{ route('channels-packages.edit', $channelsPackage->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-channels-package-id="{{ $channelsPackage->id }}">
+                                        <a href="#" data-toggle="modal" data-target="#modal-delete" data-route="{{  route('channels-packages.delete', $channelsPackage->id) }}">
                                             <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                         </a>
                                     </td>
@@ -183,41 +183,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa-solid fa-trash-can"></i> Удаление</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Вы уверены что хотите удалить данную запись</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
-                    <form method="post" class="delete-form" action="">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">Да</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('components.modal-delete')
 @stop
 
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#modal-delete').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget);
-                const channelsPackageId = button.data('channels-package-id');
-                const modal = $(this);
-                const url = "{{ route('channels-packages.delete', ':id') }}".replace(':id', channelsPackageId);
-                modal.find('.delete-form').attr('action', url);
-            });
 
             @if(session('success'))
                 $(document).Toasts('create', {
@@ -228,14 +199,12 @@
             @endif
 
             @if(session('error'))
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Ошибка',
-                body: `{!! session('error') !!}`
-            });
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: `{!! session('error') !!}`
+                });
             @endif
-
-            $('.select2').select2();
 
             let departments =  $('#department_id').data('departments');
             let selectedOptions = [];
@@ -260,28 +229,6 @@
                 });
             });
 
-            const errorMessage = $("#error-message").val();
-            if(errorMessage !== undefined && errorMessage !== "") {
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Ошибка',
-                    body: errorMessage,
-                });
-            }
-        });
-
-        $(function () {
-            $('.picker').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd',
-                language: 'ru'
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('exampleInputFile').addEventListener('change', function() {
-                document.getElementById('fileInputLabel').textContent = this.files[0].name;
-            });
         });
 
     </script>
