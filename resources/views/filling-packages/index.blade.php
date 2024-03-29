@@ -138,22 +138,20 @@
         $(document).ready(function() {
 
             @if(session('success'))
-            $(document).Toasts('create', {
-                class: 'bg-success',
-                title: 'Уведомление',
-                body: `{!! session('success') !!}`
-            });
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Уведомление',
+                    body: `{!! session('success') !!}`
+                });
             @endif
 
             @if(session('error'))
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Ошибка',
-                body: `{!! session('error') !!}`
-            });
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Ошибка',
+                    body: `{!! session('error') !!}`
+                });
             @endif
-
-            $('.select2').select2();
 
             let departments =  $('#department_id').data('departments');
             let selectedOptions = [];
@@ -178,22 +176,6 @@
                 });
             });
 
-            const errorMessage = $("#error-message").val();
-            if(errorMessage !== undefined && errorMessage !== "") {
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Ошибка',
-                    body: errorMessage,
-                });
-            }
-        });
-
-        $(function () {
-            $('.picker').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd',
-                language: 'ru'
-            });
         });
 
     </script>

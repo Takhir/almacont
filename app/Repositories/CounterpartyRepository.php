@@ -52,10 +52,7 @@ class CounterpartyRepository
 
     public function delete($counterparty)
     {
-        $counterparty = Counterparty::findOrFail($counterparty->id);
-        $counterparty->deleted = 1;
-
-        return $counterparty->save();
+        return $counterparty->delete();
     }
 
     public function import($request)

@@ -499,8 +499,18 @@ return [
             'files' => [
                 [
                     'type' => 'css',
-                    'asset' => true, // Если ваш файл находится в папке public, установите значение true
-                    'location' => '/css/admin_custom.css', // Путь к вашему кастомному CSS
+                    'asset' => true,
+                    'location' => '/css/admin_custom.css',
+                ],
+            ],
+        ],
+        'custom_js' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/js/main.js',
                 ],
             ],
         ],

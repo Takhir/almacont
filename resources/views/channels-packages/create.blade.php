@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('adminlte::page')
 
 @section('title', 'Добавить канал по пакетам')
 
@@ -116,8 +116,6 @@
     <script>
         $(document).ready(function() {
 
-            $('.select2').select2();
-
             let departments =  $('#department_id').data('departments');
 
             let selectedOptions = [];
@@ -144,14 +142,6 @@
                 });
             });
 
-        });
-
-        $(function () {
-            $('.picker').datepicker({
-                autoclose: true,
-                format: 'yyyy-mm-dd',
-                language: 'ru'
-            });
         });
 
     </script>

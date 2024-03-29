@@ -73,7 +73,7 @@
                                         <td>{{ $package->active == 1 ? Status::Yes->value : Status::No->value  }}</td>
                                         <td>
                                             <a href="{{ route('packages.edit', $package->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-package-id="{{ $package->id }}">
+                                            <a href="#" data-toggle="modal" data-target="#modal-delete" data-route="{{ route('packages.delete', $package->id) }}">
                                                 <i class="fa-solid fa-trash-can text-danger" title="Удалить"></i>
                                             </a>
                                         </td>
@@ -92,41 +92,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa-solid fa-trash-can"></i> Удаление</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Вы уверены что хотите удалить данную запись</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
-                    <form method="post" class="delete-form" action="">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">Да</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('components.modal-delete')
 @stop
 
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#modal-delete').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget);
-                const packageId = button.data('package-id');
-                const modal = $(this);
-                const url = "{{ route('packages.delete', ':id') }}".replace(':id', packageId);
-                modal.find('.delete-form').attr('action', url);
-            });
 
             @if(session('success'))
                 $(document).Toasts('create', {
@@ -137,26 +108,13 @@
             @endif
 
             @if(session('error'))
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Ошибка',
-                body: `{!! session('error') !!}`
-            });
-            @endif
-
-            const errorMessage = $("#error-message").val();
-            if(errorMessage !== undefined && errorMessage !== "") {
                 $(document).Toasts('create', {
                     class: 'bg-danger',
                     title: 'Ошибка',
-                    body: errorMessage,
+                    body: `{!! session('error') !!}`
                 });
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('exampleInputFile').addEventListener('change', function() {
-                document.getElementById('fileInputLabel').textContent = this.files[0].name;
-            });
+            @endif
+
         });
     </script>
 @stop
