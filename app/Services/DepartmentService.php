@@ -28,6 +28,11 @@ class DepartmentService
         return $this->repository->getTowns();
     }
 
+    public function getDepartmentIdById(int $id)
+    {
+        return $this->repository->getDepartmentIdById($id);
+    }
+
     public function getIdByDepartment(string $department)
     {
         return $this->repository->getIdByDepartment($department);

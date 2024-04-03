@@ -10,6 +10,12 @@ class Department extends Model
 {
     use SoftDeletes, HasFactory;
 
+    public static function getDepartmentIdById($id)
+    {
+        $model = static::find($id);
+        return $model ? $model->department_id : null;
+    }
+
     public static function getIdByDepartment($department)
     {
         $model = static::where('department', $department)->first();

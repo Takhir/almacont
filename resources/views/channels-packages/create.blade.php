@@ -62,8 +62,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" name="all_department" type="checkbox" id="all_department">
+                                <label for="all_department">
+                                    Добавить во все филиалы
+                                </label>
+                            </div>
                             <div class="form-group">
-                                <label for="package_id">Филиал</label>
+                                <label for="department_id">Филиал</label>
                                 <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
                                     <option></option>
                                     @foreach($departments->unique('department_id') as $value)
@@ -72,13 +78,13 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Город</label>
+                                <label for="town_id">Город</label>
                                 <select class="form-control select2" name="town_id" id="town_id" required>
                                     <option></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Дата начала</label>
+                                <label for="dt_start">Дата начала</label>
                                 <div class="input-group date picker" data-target-input="nearest">
                                     <input name="dt_start" value="{{ old('dt_start') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                     <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
@@ -87,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Дата окончания</label>
+                                <label for="dt_stop">Дата окончания</label>
                                 <div class="input-group date picker" data-target-input="nearest">
                                     <input name="dt_stop" value="{{ old('dt_stop') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                     <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
@@ -140,6 +146,16 @@
                 filteredDepartments.forEach(function(item) {
                     $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
                 });
+            });
+
+            $("#all_department").on('change', function(){
+                if($(this).is(":checked")) {
+                    $("#department_id").removeAttr("required");
+                    $("#town_id").removeAttr("required");
+                } else {
+                    $("#department_id").attr("required", "required");
+                    $("#town_id").attr("required", "required");
+                }
             });
 
         });

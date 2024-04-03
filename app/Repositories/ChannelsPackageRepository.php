@@ -10,6 +10,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ChannelsPackageRepository
 {
+    private DepartmentRepository $departmentRepository;
+
+    public function __construct(DepartmentRepository $departmentRepository)
+    {
+        $this->departmentRepository = $departmentRepository;
+    }
 
     public function channelsPackage($request)
     {
@@ -87,29 +93,26 @@ class ChannelsPackageRepository
     {
         $channelsPackageDto = $this->dto($request);
 
-        $channelsPackage = new ChannelsPackage();
-        $channelsPackage->channel_id = $channelsPackageDto->channel_id;
-        $channelsPackage->package_id = $channelsPackageDto->package_id;
-        $channelsPackage->department_id = $channelsPackageDto->department_id;
-        $channelsPackage->town_id = $channelsPackageDto->town_id;
-        $channelsPackage->dt_start = $channelsPackageDto->dt_start;
-        $channelsPackage->dt_stop = $channelsPackageDto->dt_stop;
+        if(isset($channelsPackageDto->all_department))
+        {
+            return $this->saveForAllDepartments($channelsPackageDto);
+        }
 
-        return $channelsPackage->save();
+        return $this->saveChannelsPackage(new ChannelsPackage(), $channelsPackageDto);
     }
 
     public function update($request, $channelsPackage)
     {
         $channelsPackageDto = $this->dto($request);
 
-        $channelsPackage->channel_id = $channelsPackage->channel_id;
-        $channelsPackage->package_id = $channelsPackageDto->package_id;
-        $channelsPackage->department_id = $channelsPackageDto->department_id;
-        $channelsPackage->town_id = $channelsPackageDto->town_id;
-        $channelsPackage->dt_start = $channelsPackageDto->dt_start;
-        $channelsPackage->dt_stop = $channelsPackageDto->dt_stop;
+        if(isset($channelsPackageDto->all_department))
+        {
+            $this->delete($channelsPackage);
 
-        return $channelsPackage->save();
+            return $this->saveForAllDepartments($channelsPackageDto);
+        }
+
+        return $this->saveChannelsPackage($channelsPackage, $channelsPackageDto);
     }
 
     public function delete($channelsPackage)
@@ -122,11 +125,37 @@ class ChannelsPackageRepository
         return new ChannelsPackageDTO(
             $request->input('channel_id'),
             $request->input('package_id'),
+            $request->input('all_department'),
             $request->input('department_id'),
             $request->input('town_id'),
             $request->input('dt_start'),
             $request->input('dt_stop'),
         );
+    }
+
+    public function saveChannelsPackage($channelsPackage, $channelsPackageDto)
+    {
+        $channelsPackage->channel_id = $channelsPackageDto->channel_id;
+        $channelsPackage->package_id = $channelsPackageDto->package_id;
+        $channelsPackage->department_id = $channelsPackageDto->department_id;
+        $channelsPackage->town_id = $channelsPackageDto->town_id;
+        $channelsPackage->dt_start = $channelsPackageDto->dt_start;
+        $channelsPackage->dt_stop = $channelsPackageDto->dt_stop;
+
+        return $channelsPackage->save();
+    }
+
+    public function saveForAllDepartments($channelsPackageDto)
+    {
+        $departments = $this->departmentRepository->all();
+        foreach ($departments as $department) {
+            $channelsPackageDto->department_id = $department->department_id;
+            $channelsPackageDto->town_id = $department->town_id;
+
+            $this->saveChannelsPackage(new ChannelsPackage(), $channelsPackageDto);
+        }
+
+        return true;
     }
 
     public function import($request)

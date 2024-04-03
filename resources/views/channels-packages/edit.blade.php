@@ -63,6 +63,12 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" name="all_department" type="checkbox" id="all_department">
+                                <label for="all_department">
+                                    Добавить во все филиалы
+                                </label>
+                            </div>
                             <div class="form-group">
                                 <label for="package_id">Филиал</label>
                                 <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
@@ -144,6 +150,16 @@
                 filteredDepartments.forEach(function(item) {
                     $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
                 });
+            });
+
+            $("#all_department").on('change', function(){
+                if($(this).is(":checked")) {
+                    $("#department_id").removeAttr("required");
+                    $("#town_id").removeAttr("required");
+                } else {
+                    $("#department_id").attr("required", "required");
+                    $("#town_id").attr("required", "required");
+                }
             });
 
         });

@@ -11,6 +11,7 @@ class ChannelsPackage extends Model
     use SoftDeletes, HasFactory;
 
     protected $fillable = [
+        'id',
         'channel_id',
         'package_id',
         'department_id',

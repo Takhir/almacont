@@ -11,6 +11,7 @@ class Subscriber extends Model
     use SoftDeletes, HasFactory;
 
     protected $fillable = [
+        'id',
         'period_id',
         'town_id',
         'package_name',
