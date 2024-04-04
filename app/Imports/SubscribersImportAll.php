@@ -28,7 +28,6 @@ class SubscribersImportAll implements ToCollection
 
     public function collection(Collection $rows)
     {
-        dd(1);
         $rows->shift();
 
         foreach ($rows as $row) {
