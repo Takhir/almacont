@@ -1,18 +1,18 @@
 @extends('adminlte::page')
 
-@section('title', 'Изменить категорию каналов')
+@section('title', 'Изменить тематику каналов')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Изменить категорию каналов</h4>
+                <h4>Изменить тематику каналов</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('channels-categories.index') }}">Справочник категорий каналов</a></li>
-                    <li class="breadcrumb-item active">Изменить категорию каналов</li>
+                    <li class="breadcrumb-item"><a href="{{ route('channels-categories.index') }}">Справочник тематик каналов</a></li>
+                    <li class="breadcrumb-item active">Изменить тематику каналов</li>
                 </ol>
             </div>
         </div>
@@ -46,7 +46,7 @@
                             @csrf
                             @method('patch')
                             <div class="form-group">
-                                <label for="v_name">Категория</label>
+                                <label for="v_name">Тематика</label>
                                 <input type="text" class="form-control" name="name" required value="{{ $category->name }}">
                             </div>
 

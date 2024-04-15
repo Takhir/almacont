@@ -69,10 +69,10 @@
                             </div>
                             <div class="form-group mr-2">
                                 <label class="mr-2" for="package_name">Пакет:</label>
-                                <select class="form-control" name="package_name">
+                                <select class="form-control" name="package_id">
                                     <option></option>
-                                    @foreach($packages as $k => $package)
-                                        <option value="{{ $k }}" @if(request('package_name') == $k) selected @endif>{{ $package }}</option>
+                                    @foreach($packages as $package)
+                                        <option value="{{ $package->id }}" @if(request('package_id') == $package->id) selected @endif>{{ $package->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -99,7 +99,7 @@
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
                                     <td>{{ $subscriber->period->name }}</td>
-                                    <td>{{ $subscriber->department->town }}</td>
+                                    <td>{{ $subscriber->town }}</td>
                                     <td>{{ is_null($subscriber->package_name) ? $subscriber->package?->name : $subscriber->package_name }}</td>
                                     <td>{{ $subscriber->quantity }}</td>
                                     <td>

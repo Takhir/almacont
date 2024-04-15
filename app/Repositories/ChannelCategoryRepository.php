@@ -10,7 +10,7 @@ class ChannelCategoryRepository
 {
     public function all($perPage)
     {
-        return ChannelCategory::orderBy('id', 'desc')->paginate($perPage);
+        return ChannelCategory::orderBy('name')->paginate($perPage);
     }
 
     public function getAll()

@@ -10,6 +10,8 @@ class ChannelsPackage extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $table = 'channels_packages';
+
     protected $fillable = [
         'id',
         'channel_id',

@@ -20,6 +20,7 @@ class ChannelsPackageRepository
     public function channelsPackage($request)
     {
         $channelId = $request->input('channel_id');
+        $categoryId = $request->input('category_id');
         $packageId = $request->input('package_id');
         $departmentId = $request->input('department_id');
         $townId = $request->input('town_id');
@@ -28,14 +29,22 @@ class ChannelsPackageRepository
         $dtStopFrom = $request->input('dt_stop_from');
         $dtStopTo = $request->input('dt_stop_to');
 
-        $query = ChannelsPackage::with('channel')
-            ->with('package')
-            ->with('department')
+        $query = ChannelsPackage::join('channels', 'channels.id', '=', 'channels_packages.channel_id')
+            ->join('packages', 'packages.id', '=', 'channels_packages.package_id')
+            ->join('departments', 'departments.department_id', '=', 'channels_packages.department_id')
             ->with('town')
-            ->orderBy('id', 'desc');
+            ->orderBy('channels.name')
+            ->orderBy('departments.department')
+            ->orderBy('packages.name');
 
         if ($channelId) {
             $query->whereIn('channel_id', $channelId);
+        }
+
+        if ($categoryId) {
+            $query = $query->whereHas('channel', function ($query) use ($categoryId) {
+                $query->whereIn('category_id', $categoryId);
+            });
         }
 
         if ($packageId) {
@@ -43,7 +52,7 @@ class ChannelsPackageRepository
         }
 
         if ($departmentId) {
-            $query->whereIn('department_id', $departmentId);
+            $query->whereIn('channels_packages.department_id', $departmentId);
         }
 
         if ($townId) {

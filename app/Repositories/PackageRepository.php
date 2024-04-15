@@ -12,12 +12,12 @@ class PackageRepository
 {
     public function all()
     {
-        return Package::all();
+        return Package::orderBy('name')->get();
     }
 
     public function getAll($perPage)
     {
-        return Package::orderBy('id', 'desc')->paginate($perPage);
+        return Package::orderBy('name')->paginate($perPage);
     }
 
     public function store($request)

@@ -17,9 +17,9 @@ class ChannelService
     {
         return $this->repository->all();
     }
-    public function getAll($perPage)
+    public function getAll($request)
     {
-        return $this->repository->getAll($perPage);
+        return $this->repository->getAll($request);
     }
 
     public function store($request)

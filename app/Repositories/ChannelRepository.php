@@ -12,12 +12,20 @@ class ChannelRepository
 {
     public function all()
     {
-        return Channel::orderBy('id', 'desc')->get();
+        return Channel::orderBy('name')->get();
     }
 
-    public function getAll($perPage)
+    public function getAll($request)
     {
-        return Channel::orderBy('id', 'desc')->paginate($perPage);
+        $perPage = $request->input('per_page', 20);
+        $channelId = $request->input('channel_id');
+        $query = Channel::orderBy('name');
+
+        if ($channelId) {
+            $query->where('id', $channelId);
+        }
+
+        return $query->paginate($perPage);
     }
 
     public function store($request)

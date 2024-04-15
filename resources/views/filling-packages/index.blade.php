@@ -47,7 +47,16 @@
                                                 @endforeach
                                             </select>
                                         </th>
-                                        <th colspan="2">
+                                        <th>
+                                            <label for="package_id">Тематика канала:</label>
+                                            <select class="form-control select2" name="category_id[]" multiple>
+                                                <option></option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </th>
+                                        <th>
                                             <label for="package_id">Пакет:</label>
                                             <select class="form-control select2" name="package_id[]" multiple>
                                                 <option></option>
@@ -72,21 +81,6 @@
                                             </select>
                                         </th>
                                         <th>
-                                            <label>Дата начала:</label>
-                                            <div class="input-group date picker mb-2" data-target-input="nearest">
-                                                <input name="dt_start_from" value="{{ request()->query('dt_start_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
-                                                <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
-                                                </div>
-                                            </div>
-                                            <div class="input-group date picker" data-target-input="nearest">
-                                                <input name="dt_start_to" value="{{ request()->query('dt_start_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
-                                                <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
                                             <a href="{{ route('filling-packages.index') }}" class="btn btn-secondary mb-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>
                                             <button type="submit" class="btn btn-success mb-2" style="width: 111px;"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
                                         </th>
@@ -94,37 +88,34 @@
                                 </form>
                                 <tr>
                                     <th>№</th>
-                                    <th>ID канала</th>
                                     <th>Канал</th>
-                                    <th>ID пакета</th>
+                                    <th>Дополнительная информация</th>
+                                    <th>Тематика канала</th>
                                     <th>Пакет</th>
                                     <th>Филиал</th>
                                     <th>Город</th>
-                                    <th>Дата начала</th>
-                                    <th>Дата окончания</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($channelsPackages as $k => $channelsPackage)
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
-                                    <td>{{ $channelsPackage->channel_id }}</td>
                                     <td>{{ $channelsPackage->channel?->name }}</td>
-                                    <td>{{ $channelsPackage->package_id }}</td>
+                                    <td>{{ $channelsPackage->channel?->description }}</td>
+                                    <td>{{ $channelsPackage->channel?->category?->name }}</td>
                                     <td>{{ $channelsPackage->package->name }}</td>
-                                    <td>{{ $channelsPackage->department->department }}</td>
-                                    <td>{{ $channelsPackage->town->town }}</td>
-                                    <td>{{ $channelsPackage->dt_start }}</td>
-                                    <td>{{ $channelsPackage->dt_stop }}</td>
+                                    <td>{{ $channelsPackage->department }}</td>
+                                    <td>{{ $channelsPackage->town }}</td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer clearfix">
-                        <label>Общее количество:</label> {{ $channelsPackages->total() }}
+                        <label>Общее количество:</label> {{ count($channelsPackages) > 0 ? $channelsPackages->total() : 0 }}
                         <div class="float-right">
-                            {{ $channelsPackages->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
+                            {{ count($channelsPackages) > 0 ?? $channelsPackages->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
                         </div>
                     </div>
                 </div>

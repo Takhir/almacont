@@ -158,8 +158,8 @@
                                     <td>{{ $channelsPackage->channel?->name }}</td>
                                     <td>{{ $channelsPackage->package_id }}</td>
                                     <td>{{ $channelsPackage->package->name }}</td>
-                                    <td>{{ $channelsPackage->department->department }}</td>
-                                    <td>{{ $channelsPackage->town->town }}</td>
+                                    <td>{{ $channelsPackage->department }}</td>
+                                    <td>{{ $channelsPackage->town }}</td>
                                     <td>{{ $channelsPackage->dt_start }}</td>
                                     <td>{{ $channelsPackage->dt_stop }}</td>
                                     <td>

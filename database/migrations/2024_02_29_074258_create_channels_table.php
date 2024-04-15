@@ -21,8 +21,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('theme')->comment('category name')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable()->default(null);
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('channel_categories');
             $table->timestamps();
             $table->softDeletes();

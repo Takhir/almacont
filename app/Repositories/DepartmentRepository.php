@@ -13,12 +13,12 @@ class DepartmentRepository
 
     public function getAll($perPage)
     {
-        return Department::orderBy('id', 'desc')->paginate($perPage);
+        return Department::orderBy('department')->paginate($perPage);
     }
 
     public function getTowns()
     {
-        return Department::get()->pluck('town', 'town_id');
+        return Department::orderBy('town')->get()->pluck('town', 'town_id');
     }
 
     public function getDepartmentIdById(int $id)
