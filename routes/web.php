@@ -73,6 +73,10 @@ Route::group(['prefix' => 'directory'], function () {
         Route::get('/', \App\Http\Controllers\Directory\Departments\IndexController::class)->name('departments.index');
     });
 
+    Route::group(['prefix' => 'towns'], function () {
+        Route::get('/{department_id}', \App\Http\Controllers\Directory\Towns\IndexController::class)->name('towns.index');
+    });
+
     Route::group(['prefix' => 'packages'], function () {
         Route::get('/', \App\Http\Controllers\Directory\Packages\IndexController::class)->name('packages.index');
         Route::get('/create', \App\Http\Controllers\Directory\Packages\CreateController::class)->name('packages.create');

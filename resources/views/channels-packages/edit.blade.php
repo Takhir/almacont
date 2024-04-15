@@ -73,17 +73,18 @@
                                 <label for="package_id">Филиал</label>
                                 <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
                                     <option></option>
-                                    @foreach($departments->unique('department_id') as $value)
-                                        <option value="{{ $value->department_id }}" {{ $channelsPackage->department_id == $value->department_id ? 'selected' : '' }}>{{ $value->department }}</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->id }}" {{ $channelsPackage->department_id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="package_id">Город</label>
+                                <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
                                 <select class="form-control select2" name="town_id" id="town_id" required>
                                     <option></option>
-                                    @foreach($towns as $k => $value)
-                                        <option value="{{ $k }}" {{ $channelsPackage->town_id == $k ? 'selected' : '' }}>{{ $value }}</option>
+                                    @foreach($towns as $town)
+                                        <option value="{{ $town->id }}" {{ $channelsPackage->town_id == $town->id ? 'selected' : '' }}>{{ $town->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -126,29 +127,23 @@
     <script>
         $(document).ready(function() {
 
-            let departments =  $('#department_id').data('departments');
-
-            let selectedOptions = [];
-
-            let filteredDepartments = [];
-
             $('#department_id').change(function() {
-                selectedOptions = [];
-
-                $('#department_id option:selected').each(function() {
-                    selectedOptions.push($(this).val());
-                });
-
-                selectedOptions = selectedOptions.map(Number);
-
-                filteredDepartments = $.grep(departments, function(item) {
-                    return selectedOptions.includes(item.department_id);
-                });
-
                 $('#town_id').empty();
-
-                filteredDepartments.forEach(function(item) {
-                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
+                $('#spinner').show();
+                $.ajax({
+                    url: '/directory/towns/' + $(this).val(),
+                    method: 'GET',
+                    success: function(response) {
+                        response.forEach(function(town) {
+                            $('#town_id').append('<option value="'+town.id+'">'+town.name+'</option>')
+                        })
+                    },
+                    error: function(error) {
+                        console.error('Произошла ошибка при запросе:', error);
+                    },
+                    complete: function() {
+                        $('#spinner').hide();
+                    }
                 });
             });
 

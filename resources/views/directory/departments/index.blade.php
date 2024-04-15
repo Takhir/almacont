@@ -36,10 +36,10 @@
                             <tbody>
                             @foreach($departments as $department)
                                 <tr>
-                                    <td>{{ $department->department_id }}</td>
-                                    <td>{{ $department->department }}</td>
-                                    <td>{{ $department->town_id }}</td>
-                                    <td>{{ $department->town }}</td>
+                                    <td>{{ $department->id }}</td>
+                                    <td>{{ $department->name }}</td>
+                                    <td>{{ $department->town->id }}</td>
+                                    <td>{{ $department->town->name }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

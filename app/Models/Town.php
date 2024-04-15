@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class Town extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $table = 'departments2';
-
-    public function town()
+    public static function getTownIdByTown($town)
     {
-        return $this->belongsTo(Town::class, 'id', 'department_id');
+        $model = static::where('town', $town)->first();
+        return $model ? $model->town_id : null;
     }
 }

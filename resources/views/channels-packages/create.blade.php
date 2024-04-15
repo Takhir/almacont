@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="package_id">Пакет</label>
-                                <select class="form-control select2" name="package_id" required>
+                                <select class="form-control select2" name="package_id[]" multiple required>
                                     <option></option>
                                     @foreach($packages as $package)
                                         <option value="{{ $package->id }}">{{ $package->name }}</option>
@@ -70,16 +70,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="department_id">Филиал</label>
-                                <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
+                                <select class="form-control select2" name="department_id[]" id="department_id" multiple required>
                                     <option></option>
-                                    @foreach($departments->unique('department_id') as $value)
-                                        <option value="{{ $value->department_id }}">{{ $value->department }}</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="town_id">Город</label>
-                                <select class="form-control select2" name="town_id" id="town_id" required>
+                                <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
+                                <select class="form-control select2" name="town_id[]" id="town_id" multiple required>
                                     <option></option>
                                 </select>
                             </div>
@@ -122,29 +123,23 @@
     <script>
         $(document).ready(function() {
 
-            let departments =  $('#department_id').data('departments');
-
-            let selectedOptions = [];
-
-            let filteredDepartments = [];
-
             $('#department_id').change(function() {
-                selectedOptions = [];
-
-                $('#department_id option:selected').each(function() {
-                    selectedOptions.push($(this).val());
-                });
-
-                selectedOptions = selectedOptions.map(Number);
-
-                filteredDepartments = $.grep(departments, function(item) {
-                    return selectedOptions.includes(item.department_id);
-                });
-
                 $('#town_id').empty();
-
-                filteredDepartments.forEach(function(item) {
-                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
+                $('#spinner').show();
+                $.ajax({
+                    url: '/directory/towns/' + $(this).val(),
+                    method: 'GET',
+                    success: function(response) {
+                        response.forEach(function(town) {
+                            $('#town_id').append('<option value="'+town.id+'">'+town.name+'</option>')
+                        })
+                    },
+                    error: function(error) {
+                        console.error('Произошла ошибка при запросе:', error);
+                    },
+                    complete: function() {
+                        $('#spinner').hide();
+                    }
                 });
             });
 

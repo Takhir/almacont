@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Subscribers;
 
 use App\Http\Controllers\Controller;
-use App\Services\DepartmentService;
+use App\Services\TownService;
 use App\Services\PackageService;
 use App\Services\PeriodService;
 use App\Services\SubscriberService;
@@ -13,15 +13,15 @@ class IndexController extends Controller
 {
     private SubscriberService $service;
     private PeriodService $periodService;
-    private DepartmentService $departmentService;
+    private TownService $townService;
 
     private PackageService $packageService;
 
-    public function __construct(SubscriberService $service, PeriodService $periodService, DepartmentService $departmentService, PackageService $packageService)
+    public function __construct(SubscriberService $service, PeriodService $periodService, TownService $townService, PackageService $packageService)
     {
         $this->service = $service;
         $this->periodService = $periodService;
-        $this->departmentService = $departmentService;
+        $this->townService = $townService;
         $this->packageService = $packageService;
     }
 
@@ -29,7 +29,7 @@ class IndexController extends Controller
     {
         $subscribers = $this->service->getAll($request);
         $periods = $this->periodService->getAll();
-        $towns = $this->departmentService->getTowns();
+        $towns = $this->townService->all();
         $packages = $this->packageService->all();
 
         return view('subscribers.index', compact('subscribers', 'periods', 'towns', 'packages'));
