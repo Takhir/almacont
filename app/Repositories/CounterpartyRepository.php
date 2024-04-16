@@ -16,7 +16,7 @@ class CounterpartyRepository
     }
     public function getAll($perPage)
     {
-        return Counterparty::orderBy('id', 'desc')->paginate($perPage);
+        return Counterparty::orderBy('name')->paginate($perPage);
     }
 
     public function store($request)

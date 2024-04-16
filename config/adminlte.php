@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Alma</b>Cont',
+    'logo' => '<b>Alma</b>Content',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -290,7 +290,6 @@ return [
     */
 
     'menu' => [
-        ['header' => 'ЗАТРАТЫ ПО КАНАЛАМ'],
         [
             'text' => 'Наполнение пакетов',
             'url'  => 'filling-packages',
@@ -321,7 +320,7 @@ return [
                     'icon' => 'fas fa-regular fa-film',
                 ],
                 [
-                    'text' => 'Справочник категорий каналов',
+                    'text' => 'Справочник тематик каналов',
                     'url'  => 'directory/channels-categories',
                     'icon' => 'fas fa-solid fa-list',
                 ],

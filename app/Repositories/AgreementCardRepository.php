@@ -12,11 +12,14 @@ class AgreementCardRepository
     {
         $perPage = $request->input('per_page', 20);
         $periodId = $request->input('period_id');
-        $query = AgreementsCard::with('channel')
-            ->with('counterparty')
+        $query = AgreementsCard::join('periods', 'periods.id', '=', 'agreements_cards.period_id')
+            ->join('counterparties', 'counterparties.id', '=', 'agreements_cards.counterparty_id')
+            ->join('channels', 'channels.id', '=', 'agreements_cards.channel_id')
             ->with('currency')
             ->with('period')
-            ->orderBy('id', 'desc');
+            ->orderBy('periods.id')
+            ->orderBy('counterparties.name')
+            ->orderBy('channels.name');
 
         if ($periodId) {
             $query->where('period_id', $periodId);

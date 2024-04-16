@@ -13,30 +13,27 @@ class SubscriberRepository
         $perPage = $request->input('per_page', 20);
         $periodId = $request->input('period_id');
         $townId = $request->input('town_id');
-        $package = $request->input('package_name');
-        $query = Subscriber::with('department')
-            ->with('period')
-            ->with('package')
-            ->orderBy('id', 'desc');
+        $packageId = $request->input('package_id');
+        $query = Subscriber::join('towns', 'towns.id', '=', 'subscribers.town_id')
+            ->join('periods', 'periods.id', '=', 'subscribers.period_id')
+            ->join('packages', 'packages.id', '=', 'subscribers.package_id')
+            ->orderBy('periods.id')
+            ->orderBy('towns.name')
+            ->orderBy('packages.name');
 
         if ($periodId) {
             $query->where('period_id', $periodId);
         }
 
         if ($townId) {
-            $query->where('town_id', $townId);
+            $query->where('subscribers.town_id', $townId);
         }
 
-        if ($package) {
-            $query->where('package_name', 'like', $package);
+        if ($packageId) {
+            $query->where('package_id', $packageId);
         }
 
         return $query->paginate($perPage);
-    }
-
-    public function getServices()
-    {
-        return Subscriber::get()->pluck('package_name', 'package_name');
     }
 
     public function delete($subscriber)

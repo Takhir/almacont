@@ -36,10 +36,21 @@
                             <tbody>
                             @foreach($departments as $department)
                                 <tr>
-                                    <td>{{ $department->department_id }}</td>
-                                    <td>{{ $department->department }}</td>
-                                    <td>{{ $department->town_id }}</td>
-                                    <td>{{ $department->town }}</td>
+                                    <td>{{ $department->id }}</td>
+                                    <td>{{ $department->name }}</td>
+                                    @foreach($department->towns as $k => $town)
+                                        @if($k === 0)
+                                            <td>{{ $town->id }}</td>
+                                            <td>{{ $town->name }}</td>
+                                        @else
+                                            <tr>
+                                                <td>{{ $department->id }}</td>
+                                                <td>{{ $department->name }}</td>
+                                                <td>{{ $town->id }}</td>
+                                                <td>{{ $town->name }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 </tr>
                             @endforeach
                             </tbody>

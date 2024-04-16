@@ -10,10 +10,11 @@ class Channel extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $table = 'channels';
+
     protected $fillable = [
         'name',
         'description',
-        'theme',
         'category_id',
     ];
 

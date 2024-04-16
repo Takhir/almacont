@@ -40,16 +40,25 @@
                                         <th></th>
                                         <th colspan="2">
                                             <label for="channel_id">Канал:</label>
-                                            <select class="form-control select2" name="channel_id[]" multiple>
+                                            <select class="form-control select2" name="channel_id" id="channel_id">
                                                 <option></option>
                                                 @foreach($channels as $channel)
                                                     <option value="{{ $channel->id }}">{{ $channel->name }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
-                                        <th colspan="2">
+                                        <th>
+                                            <label for="category_id">Тематика канала:</label>
+                                            <select class="form-control select2" name="category_id" id="category_id">
+                                                <option></option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </th>
+                                        <th>
                                             <label for="package_id">Пакет:</label>
-                                            <select class="form-control select2" name="package_id[]" multiple>
+                                            <select class="form-control select2" name="package_id" id="package_id">
                                                 <option></option>
                                                 @foreach($packages as $package)
                                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
@@ -58,73 +67,56 @@
                                         </th>
                                         <th>
                                             <label for="department_id">Филиал:</label>
-                                            <select class="form-control select2" name="department_id[]" id="department_id" multiple data-departments="{{ $departments }}">
+                                            <select class="form-control select2" name="department_id" id="department_id" required>
                                                 <option></option>
-                                                @foreach($departments->unique('department_id') as $value)
-                                                    <option value="{{ $value->department_id }}">{{ $value->department }}</option>
+                                                @foreach($departments as $department)
+                                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
                                         <th>
                                             <label for="town_id">Город:</label>
-                                            <select class="form-control select2" name="town_id[]" id="town_id" multiple>
+                                            <select class="form-control select2" name="town_id" id="town_id" required>
                                                 <option></option>
                                             </select>
-                                        </th>
-                                        <th>
-                                            <label>Дата начала:</label>
-                                            <div class="input-group date picker mb-2" data-target-input="nearest">
-                                                <input name="dt_start_from" value="{{ request()->query('dt_start_from') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
-                                                <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
-                                                </div>
-                                            </div>
-                                            <div class="input-group date picker" data-target-input="nearest">
-                                                <input name="dt_start_to" value="{{ request()->query('dt_start_to') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
-                                                <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa-regular fa-calendar-days"></i></div>
-                                                </div>
-                                            </div>
+                                            <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
                                         </th>
                                         <th>
                                             <a href="{{ route('filling-packages.index') }}" class="btn btn-secondary mb-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>
-                                            <button type="submit" class="btn btn-success mb-2" style="width: 111px;"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
+                                            <button id="search" type="submit" class="btn btn-success mb-2" style="width: 111px;"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
                                         </th>
                                     </tr>
                                 </form>
                                 <tr>
                                     <th>№</th>
-                                    <th>ID канала</th>
                                     <th>Канал</th>
-                                    <th>ID пакета</th>
+                                    <th>Дополнительная информация</th>
+                                    <th>Тематика канала</th>
                                     <th>Пакет</th>
                                     <th>Филиал</th>
                                     <th>Город</th>
-                                    <th>Дата начала</th>
-                                    <th>Дата окончания</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($channelsPackages as $k => $channelsPackage)
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
-                                    <td>{{ $channelsPackage->channel_id }}</td>
                                     <td>{{ $channelsPackage->channel?->name }}</td>
-                                    <td>{{ $channelsPackage->package_id }}</td>
+                                    <td>{{ $channelsPackage->channel?->description }}</td>
+                                    <td>{{ $channelsPackage->channel?->category?->name }}</td>
                                     <td>{{ $channelsPackage->package->name }}</td>
-                                    <td>{{ $channelsPackage->department->department }}</td>
-                                    <td>{{ $channelsPackage->town->town }}</td>
-                                    <td>{{ $channelsPackage->dt_start }}</td>
-                                    <td>{{ $channelsPackage->dt_stop }}</td>
+                                    <td>{{ $channelsPackage->departmentName }}</td>
+                                    <td>{{ $channelsPackage->townName }}</td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer clearfix">
-                        <label>Общее количество:</label> {{ $channelsPackages->total() }}
+                        <label>Общее количество:</label> {{ count($channelsPackages) > 0 ? $channelsPackages->total() : 0 }}
                         <div class="float-right">
-                            {{ $channelsPackages->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
+                            {{ count($channelsPackages) > 0 ? $channelsPackages->appends(request()->query())->links('vendor.pagination.bootstrap-4') : '' }}
                         </div>
                     </div>
                 </div>
@@ -153,27 +145,68 @@
                 });
             @endif
 
-            let departments =  $('#department_id').data('departments');
-            let selectedOptions = [];
-            let filteredDepartments = [];
             $('#department_id').change(function() {
-                selectedOptions = [];
-
-                $('#department_id option:selected').each(function() {
-                    selectedOptions.push($(this).val());
-                });
-
-                selectedOptions = selectedOptions.map(Number);
-
-                filteredDepartments = $.grep(departments, function(item) {
-                    return selectedOptions.includes(item.department_id);
-                });
-
                 $('#town_id').empty();
-
-                filteredDepartments.forEach(function(item) {
-                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
+                $('#spinner').show();
+                $.ajax({
+                    url: '/directory/towns/' + $(this).val(),
+                    method: 'GET',
+                    success: function(response) {
+                        response.forEach(function(town) {
+                            $('#town_id').append('<option value="'+town.id+'">'+town.name+'</option>')
+                        })
+                    },
+                    error: function(error) {
+                        console.error('Произошла ошибка при запросе:', error);
+                    },
+                    complete: function() {
+                        $('#spinner').hide();
+                    }
                 });
+            });
+
+            if ($('#channel_id').val() === '' && $('#category_id').val() === '' && $('#package_id').val() === '')  {
+                $('#search').prop('disabled', true);
+            }
+
+            $('#channel_id').change(function() {
+                if ($('#department_id').val() !== '' && $('#town_id').val() !== '' && ($('#channel_id').val() !== '' || $('#category_id').val() !== '' || $('#package_id').val() !== ''))  {
+                    $('#search').prop('disabled', false);
+                } else {
+                    $('#search').prop('disabled', true);
+                }
+            });
+
+            $('#category_id').change(function() {
+                if ($('#department_id').val() !== '' && $('#town_id').val() !== '' && ($('#channel_id').val() !== '' || $('#category_id').val() !== '' || $('#package_id').val() !== ''))  {
+                    $('#search').prop('disabled', false);
+                } else {
+                    $('#search').prop('disabled', true);
+                }
+            });
+
+            $('#package_id').change(function() {
+                if ($('#department_id').val() !== '' && $('#town_id').val() !== '' && ($('#channel_id').val() !== '' || $('#category_id').val() !== '' || $('#package_id').val() !== ''))  {
+                    $('#search').prop('disabled', false);
+                } else {
+                    $('#search').prop('disabled', true);
+                }
+            });
+
+            $('#department_id').change(function() {
+                if ($('#department_id').val() !== '' && $('#town_id').val() !== '' && ($('#channel_id').val() !== '' || $('#category_id').val() !== '' || $('#package_id').val() !== ''))  {
+                    $('#search').prop('disabled', false);
+                } else {
+                    $('#search').prop('disabled', true);
+                }
+            });
+
+            $('#town_id').change(function() {
+                if ($('#department_id').val() !== '' && $('#town_id').val() !== '' && ($('#channel_id').val() !== '' || $('#category_id').val() !== '' || $('#package_id').val() !== ''))  {
+                    $('#search').prop('disabled', false);
+                } else {
+                    $('#search').prop('disabled', true);
+                }
             });
 
         });

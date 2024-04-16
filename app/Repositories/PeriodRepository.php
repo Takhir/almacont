@@ -14,7 +14,7 @@ class PeriodRepository
 
     public function getAll()
     {
-        return Period::orderBy('id', 'desc')->get();
+        return Period::orderBy('name')->get();
     }
 
     public function getNameById($id)

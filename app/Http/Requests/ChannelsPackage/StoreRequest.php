@@ -24,11 +24,20 @@ class StoreRequest extends FormRequest
     {
         return [
             'channel_id' => 'numeric|required',
-            'package_id' => 'numeric|required',
-            'department_id' => 'numeric|required',
-            'town_id' => 'numeric|required',
-            //'dt_start' => 'string',
-            //'dt_stop' => 'string',
+            'package_id' => 'array|required',
+            'all_department' => 'nullable|in:on',
+            'department_id' => [
+                'array',
+                'required_if:all_department,null',
+                'nullable',
+            ],
+            'town_id' => [
+                'array',
+                'required_if:all_department,null',
+                'nullable',
+            ],
+            'dt_start' => 'nullable|string',
+            'dt_stop' => 'nullable|string',
         ];
     }
 

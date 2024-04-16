@@ -55,30 +55,37 @@
                             </div>
                             <div class="form-group">
                                 <label for="package_id">Пакет</label>
-                                <select class="form-control select2" name="package_id" required>
+                                <select class="form-control select2" name="package_id[]" multiple required>
                                     <option></option>
                                     @foreach($packages as $package)
                                         <option value="{{ $package->id }}">{{ $package->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" name="all_department" type="checkbox" id="all_department">
+                                <label for="all_department">
+                                    Добавить во все филиалы
+                                </label>
+                            </div>
                             <div class="form-group">
-                                <label for="package_id">Филиал</label>
-                                <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
+                                <label for="department_id">Филиал</label>
+                                <select class="form-control select2" name="department_id[]" id="department_id" multiple required>
                                     <option></option>
-                                    @foreach($departments->unique('department_id') as $value)
-                                        <option value="{{ $value->department_id }}">{{ $value->department }}</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Город</label>
-                                <select class="form-control select2" name="town_id" id="town_id" required>
+                                <label for="town_id">Город</label>
+                                <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
+                                <select class="form-control select2" name="town_id[]" id="town_id" multiple required>
                                     <option></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Дата начала</label>
+                                <label for="dt_start">Дата начала</label>
                                 <div class="input-group date picker" data-target-input="nearest">
                                     <input name="dt_start" value="{{ old('dt_start') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                     <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
@@ -87,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="package_id">Дата окончания</label>
+                                <label for="dt_stop">Дата окончания</label>
                                 <div class="input-group date picker" data-target-input="nearest">
                                     <input name="dt_stop" value="{{ old('dt_stop') }}" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
                                     <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
@@ -116,30 +123,34 @@
     <script>
         $(document).ready(function() {
 
-            let departments =  $('#department_id').data('departments');
-
-            let selectedOptions = [];
-
-            let filteredDepartments = [];
-
             $('#department_id').change(function() {
-                selectedOptions = [];
-
-                $('#department_id option:selected').each(function() {
-                    selectedOptions.push($(this).val());
-                });
-
-                selectedOptions = selectedOptions.map(Number);
-
-                filteredDepartments = $.grep(departments, function(item) {
-                    return selectedOptions.includes(item.department_id);
-                });
-
                 $('#town_id').empty();
-
-                filteredDepartments.forEach(function(item) {
-                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
+                $('#spinner').show();
+                $.ajax({
+                    url: '/directory/towns/' + $(this).val(),
+                    method: 'GET',
+                    success: function(response) {
+                        response.forEach(function(town) {
+                            $('#town_id').append('<option value="'+town.id+'">'+town.name+'</option>')
+                        })
+                    },
+                    error: function(error) {
+                        console.error('Произошла ошибка при запросе:', error);
+                    },
+                    complete: function() {
+                        $('#spinner').hide();
+                    }
                 });
+            });
+
+            $("#all_department").on('change', function(){
+                if($(this).is(":checked")) {
+                    $("#department_id").removeAttr("required");
+                    $("#town_id").removeAttr("required");
+                } else {
+                    $("#department_id").attr("required", "required");
+                    $("#town_id").attr("required", "required");
+                }
             });
 
         });

@@ -18,11 +18,6 @@ class SubscriberService
         return $this->repository->getAll($request);
     }
 
-    public function getServices()
-    {
-        return $this->repository->getServices();
-    }
-
     public function delete($subscriber)
     {
         return $this->repository->delete($subscriber);

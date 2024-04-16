@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class Town extends Model
 {
     use SoftDeletes, HasFactory;
 
-    public function towns()
+    public function department()
     {
-        return $this->hasMany(Town::class)->orderBy('name');
+        return $this->belongsTo(Department::class, 'department_id');
     }
-
 }

@@ -15,8 +15,7 @@ class IndexController extends Controller
     }
     public function __invoke(Request $request)
     {
-        $perPage = $request->input('per_page', 20);
-        $departments = $this->service->getAll($perPage);
+        $departments = $this->service->getAll($request);
 
         return view('directory.departments.index', compact('departments'));
     }

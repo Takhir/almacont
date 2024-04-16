@@ -54,7 +54,7 @@
                                         <th></th>
                                         <th colspan="2">
                                             <label for="channel_id">Канал:</label>
-                                            <select class="form-control select2" name="channel_id[]" multiple>
+                                            <select class="form-control select2" name="channel_id">
                                                 <option></option>
                                                 @foreach($channels as $channel)
                                                     <option value="{{ $channel->id }}">{{ $channel->name }}</option>
@@ -63,7 +63,7 @@
                                         </th>
                                         <th colspan="2">
                                             <label for="package_id">Пакет:</label>
-                                            <select class="form-control select2" name="package_id[]" multiple>
+                                            <select class="form-control select2" name="package_id">
                                                 <option></option>
                                                 @foreach($packages as $package)
                                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
@@ -72,18 +72,19 @@
                                         </th>
                                         <th>
                                             <label for="department_id">Филиал:</label>
-                                            <select class="form-control select2" name="department_id[]" id="department_id" multiple data-departments="{{ $departments }}">
+                                            <select class="form-control select2" name="department_id" id="department_id" data-departments="{{ $departments }}" required>
                                                 <option></option>
-                                                @foreach($departments->unique('department_id') as $value)
-                                                    <option value="{{ $value->department_id }}">{{ $value->department }}</option>
+                                                @foreach($departments as $department)
+                                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
                                                 @endforeach
                                             </select>
                                         </th>
                                         <th>
                                             <label for="town_id">Город:</label>
-                                            <select class="form-control select2" name="town_id[]" id="town_id" multiple>
+                                            <select class="form-control select2" name="town_id" id="town_id" required>
                                                 <option></option>
                                             </select>
+                                            <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
                                         </th>
                                         <th>
                                             <label>Дата начала:</label>
@@ -155,11 +156,11 @@
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
                                     <td>{{ $channelsPackage->channel_id }}</td>
-                                    <td>{{ $channelsPackage->channel?->name }}</td>
+                                    <td>{{ $channelsPackage->channelName }}</td>
                                     <td>{{ $channelsPackage->package_id }}</td>
-                                    <td>{{ $channelsPackage->package->name }}</td>
-                                    <td>{{ $channelsPackage->department->department }}</td>
-                                    <td>{{ $channelsPackage->town->town }}</td>
+                                    <td>{{ $channelsPackage->packageName }}</td>
+                                    <td>{{ $channelsPackage->departmentName }}</td>
+                                    <td>{{ $channelsPackage->townName }}</td>
                                     <td>{{ $channelsPackage->dt_start }}</td>
                                     <td>{{ $channelsPackage->dt_stop }}</td>
                                     <td>
@@ -206,26 +207,23 @@
                 });
             @endif
 
-            let departments =  $('#department_id').data('departments');
-            let selectedOptions = [];
-            let filteredDepartments = [];
             $('#department_id').change(function() {
-                selectedOptions = [];
-
-                $('#department_id option:selected').each(function() {
-                    selectedOptions.push($(this).val());
-                });
-
-                selectedOptions = selectedOptions.map(Number);
-
-                filteredDepartments = $.grep(departments, function(item) {
-                    return selectedOptions.includes(item.department_id);
-                });
-
                 $('#town_id').empty();
-
-                filteredDepartments.forEach(function(item) {
-                    $('#town_id').append('<option value="'+item.town_id+'">'+item.town+'</option>')
+                $('#spinner').show();
+                $.ajax({
+                    url: '/directory/towns/' + $(this).val(),
+                    method: 'GET',
+                    success: function(response) {
+                        response.forEach(function(town) {
+                            $('#town_id').append('<option value="'+town.id+'">'+town.name+'</option>')
+                        })
+                    },
+                    error: function(error) {
+                        console.error('Произошла ошибка при запросе:', error);
+                    },
+                    complete: function() {
+                        $('#spinner').hide();
+                    }
                 });
             });
 

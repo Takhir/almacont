@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\DepartmentRepository;
+use App\Repositories\TownRepository;
 
-class DepartmentService
+class TownService
 {
-    private DepartmentRepository $repository;
+    private TownRepository $repository;
 
-    public function __construct(DepartmentRepository $repository)
+    public function __construct(TownRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -18,14 +18,13 @@ class DepartmentService
         return $this->repository->all();
     }
 
-    public function getAll($request)
+    public function getTowns($departmentId)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getTowns($departmentId);
     }
 
     public function getId(string $name)
     {
         return $this->repository->getId($name);
     }
-
 }
