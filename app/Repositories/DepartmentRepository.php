@@ -22,7 +22,7 @@ class DepartmentRepository
     {
         $perPage = $request->input('per_page', 20);
 
-        return Department::with('town')->orderBy('name')->paginate($perPage);
+        return Department::with('towns')->orderBy('name')->paginate($perPage);
     }
 
     public function getId(string $name)

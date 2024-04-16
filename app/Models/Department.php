@@ -10,10 +10,9 @@ class Department extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $table = 'departments2';
-
-    public function town()
+    public function towns()
     {
-        return $this->belongsTo(Town::class, 'id', 'department_id');
+        return $this->hasMany(Town::class)->orderBy('name');
     }
+
 }

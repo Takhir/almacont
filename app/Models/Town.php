@@ -10,9 +10,8 @@ class Town extends Model
 {
     use SoftDeletes, HasFactory;
 
-    public static function getTownIdByTown($town)
+    public function department()
     {
-        $model = static::where('town', $town)->first();
-        return $model ? $model->town_id : null;
+        return $this->belongsTo(Department::class, 'department_id');
     }
 }

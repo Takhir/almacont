@@ -14,11 +14,11 @@ class SubscriberRepository
         $periodId = $request->input('period_id');
         $townId = $request->input('town_id');
         $packageId = $request->input('package_id');
-        $query = Subscriber::join('departments', 'departments.town_id', '=', 'subscribers.town_id')
+        $query = Subscriber::join('towns', 'towns.id', '=', 'subscribers.town_id')
             ->join('periods', 'periods.id', '=', 'subscribers.period_id')
             ->join('packages', 'packages.id', '=', 'subscribers.package_id')
             ->orderBy('periods.id')
-            ->orderBy('departments.town')
+            ->orderBy('towns.name')
             ->orderBy('packages.name');
 
         if ($periodId) {
@@ -35,11 +35,6 @@ class SubscriberRepository
 
         return $query->paginate($perPage);
     }
-
-//    public function getServices()
-//    {
-//        return Subscriber::get()->pluck('package_name', 'package_name');
-//    }
 
     public function delete($subscriber)
     {

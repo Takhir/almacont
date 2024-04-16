@@ -99,7 +99,7 @@
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
                                     <td>{{ $subscriber->period->name }}</td>
-                                    <td>{{ $subscriber->town }}</td>
+                                    <td>{{ $subscriber->town->name }}</td>
                                     <td>{{ is_null($subscriber->package_name) ? $subscriber->package?->name : $subscriber->package_name }}</td>
                                     <td>{{ $subscriber->quantity }}</td>
                                     <td>

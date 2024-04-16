@@ -38,8 +38,19 @@
                                 <tr>
                                     <td>{{ $department->id }}</td>
                                     <td>{{ $department->name }}</td>
-                                    <td>{{ $department->town->id }}</td>
-                                    <td>{{ $department->town->name }}</td>
+                                    @foreach($department->towns as $k => $town)
+                                        @if($k === 0)
+                                            <td>{{ $town->id }}</td>
+                                            <td>{{ $town->name }}</td>
+                                        @else
+                                            <tr>
+                                                <td>{{ $department->id }}</td>
+                                                <td>{{ $department->name }}</td>
+                                                <td>{{ $town->id }}</td>
+                                                <td>{{ $town->name }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 </tr>
                             @endforeach
                             </tbody>

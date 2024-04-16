@@ -34,11 +34,11 @@ class ChannelsPackageRepository
 
         $query = ChannelsPackage::join('channels', 'channels.id', '=', 'channels_packages.channel_id')
             ->join('packages', 'packages.id', '=', 'channels_packages.package_id')
-            ->join('departments2', 'departments2.id', '=', 'channels_packages.department_id')
+            ->join('departments', 'departments.id', '=', 'channels_packages.department_id')
             ->join('towns', 'towns.id', '=', 'channels_packages.town_id')
-            ->select('channels_packages.*', 'channels.name as channelName', 'departments2.name as departmentName', 'towns.name as townName', 'packages.name as packageName')
+            ->select('channels_packages.*', 'channels.name as channelName', 'departments.name as departmentName', 'towns.name as townName', 'packages.name as packageName')
             ->orderBy('channels.name')
-            ->orderBy('departments2.name')
+            ->orderBy('departments.name')
             ->orderBy('towns.name')
             ->orderBy('packages.name');
 

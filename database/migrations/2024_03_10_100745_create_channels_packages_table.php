@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('channels_packages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('channel_id');
-            //$table->foreign('channel_id')->references('id')->on('channels');
+            $table->foreign('channel_id')->references('id')->on('channels');
             $table->unsignedBigInteger('package_id');
-            //$table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_id')->references('id')->on('packages');
             $table->unsignedBigInteger('department_id');
-            //$table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('department_id')->references('id')->on('departments');
             $table->unsignedBigInteger('town_id');
-            //$table->foreign('town_id')->references('id')->on('departments');
+            $table->foreign('town_id')->references('id')->on('towns');
             $table->timestamp('dt_start')->nullable();
             $table->timestamp('dt_stop')->nullable();
             $table->tinyInteger('presence')->default(1);
