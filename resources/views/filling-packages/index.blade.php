@@ -39,8 +39,8 @@
                                     <tr>
                                         <th></th>
                                         <th colspan="2">
-                                            <label for="channel_id">Канал:</label>
-                                            <select class="form-control select2" name="channel_id" id="channel_id">
+                                            <label for="channel_id">* Канал:</label>
+                                            <select class="form-control select2" name="channel_id[]" id="channel_id">
                                                 <option></option>
                                                 @foreach($channels as $channel)
                                                     <option value="{{ $channel->id }}">{{ $channel->name }}</option>
@@ -48,8 +48,8 @@
                                             </select>
                                         </th>
                                         <th>
-                                            <label for="category_id">Тематика канала:</label>
-                                            <select class="form-control select2" name="category_id" id="category_id">
+                                            <label for="category_id">* Тематика канала:</label>
+                                            <select class="form-control select2" name="category_id[]" id="category_id">
                                                 <option></option>
                                                 @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -57,8 +57,8 @@
                                             </select>
                                         </th>
                                         <th>
-                                            <label for="package_id">Пакет:</label>
-                                            <select class="form-control select2" name="package_id" id="package_id">
+                                            <label for="package_id">* Пакет:</label>
+                                            <select class="form-control select2" name="package_id[]" id="package_id">
                                                 <option></option>
                                                 @foreach($packages as $package)
                                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
@@ -66,8 +66,8 @@
                                             </select>
                                         </th>
                                         <th>
-                                            <label for="department_id">Филиал:</label>
-                                            <select class="form-control select2" name="department_id" id="department_id" required>
+                                            <label for="department_id"><span class="text-danger">*</span> Филиал:</label>
+                                            <select class="form-control select2" name="department_id[]" id="department_id" required>
                                                 <option></option>
                                                 @foreach($departments as $department)
                                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -75,11 +75,11 @@
                                             </select>
                                         </th>
                                         <th>
-                                            <label for="town_id">Город:</label>
-                                            <select class="form-control select2" name="town_id" id="town_id" required>
+                                            <label for="town_id"><span class="text-danger">*</span> Город:</label>
+                                            <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
+                                            <select class="form-control select2" name="town_id[]" id="town_id" required>
                                                 <option></option>
                                             </select>
-                                            <i id="spinner" class="fa-solid fa-spinner" style="display: none;"></i>
                                         </th>
                                         <th>
                                             <a href="{{ route('filling-packages.index') }}" class="btn btn-secondary mb-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>

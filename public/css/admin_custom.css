@@ -21,3 +21,6 @@
 .form-inline label {
     justify-content: left !important;
 }
+#department_id, #town_id {
+    min-width: 150px;
+}

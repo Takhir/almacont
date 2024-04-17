@@ -42,26 +42,26 @@ class ChannelsPackageRepository
             ->orderBy('towns.name')
             ->orderBy('packages.name');
 
-        if ($channelId) {
-            $query->where('channel_id', $channelId);
+        if (isset($channelId[0])) {
+            $query->whereIn('channel_id', $channelId);
         }
 
-        if ($categoryId) {
+        if (isset($categoryId[0])) {
             $query = $query->whereHas('channel', function ($query) use ($categoryId) {
-                $query->where('category_id', $categoryId);
+                $query->whereIn('category_id', $categoryId);
             });
         }
 
-        if ($packageId) {
-            $query->where('package_id', $packageId);
+        if (isset($packageId[0])) {
+            $query->whereIn('package_id', $packageId);
         }
 
-        if ($departmentId) {
-            $query->where('channels_packages.department_id', $departmentId);
+        if (isset($departmentId[0])) {
+            $query->whereIn('channels_packages.department_id', $departmentId);
         }
 
-        if ($townId) {
-            $query->where('town_id', $townId);
+        if (isset($townId[0])) {
+            $query->whereIn('town_id', $townId);
         }
 
         if ($dtStartFrom && $dtStartTo) {
