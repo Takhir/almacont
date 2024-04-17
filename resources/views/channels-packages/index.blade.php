@@ -50,7 +50,7 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <form method="GET" action="{{ route('channels-packages.index') }}" class="form-inline mb-2 float-right">
-                                    <tr>
+                                    <tr class="channels-packages">
                                         <th></th>
                                         <th colspan="2">
                                             <label for="channel_id">* Канал:</label>
