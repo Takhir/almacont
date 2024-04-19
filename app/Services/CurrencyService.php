@@ -18,14 +18,14 @@ class CurrencyService
         return $this->repository->getAll($perPage);
     }
 
-    public function store($request)
+    public function store($currencyDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($currencyDTO);
     }
 
-    public function update($request, $currency)
+    public function update($currencyDTO, $currency)
     {
-        return $this->repository->update($request, $currency);
+        return $this->repository->update($currencyDTO, $currency);
     }
 
     public function delete($currency)
