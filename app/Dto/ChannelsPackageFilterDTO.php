@@ -18,7 +18,8 @@ class ChannelsPackageFilterDTO
         ?string $dt_start_from,
         ?string $dt_start_to,
         ?string $dt_stop_from,
-        ?string $dt_stop_to)
+        ?string $dt_stop_to
+    )
     {
         $this->per_page = $per_page;
         $this->channel_id = $channel_id;

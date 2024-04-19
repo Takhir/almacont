@@ -2,19 +2,18 @@
 
 namespace App\Dto;
 
-class ChannelsPackageDTO
+class ChannelsPackageUpdateDTO
 {
-    public int $channel_id;
-    public array $package_id;
-    public ?array $department_id, $town_id;
+    public int $channel_id, $package_id;
+    public ?int $department_id, $town_id;
     public ?string $all_department, $dt_start, $dt_stop;
 
     public function __construct(
         int $channel_id,
-        array $package_id,
+        int $package_id,
         ?string $all_department,
-        ?array $department_id,
-        ?array $town_id,
+        ?int $department_id,
+        ?int $town_id,
         ?string $dt_start,
         ?string $dt_stop
     )

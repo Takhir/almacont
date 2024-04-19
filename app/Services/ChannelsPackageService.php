@@ -23,14 +23,14 @@ class ChannelsPackageService
         return $this->repository->getAll($channelsPackageFilterDTO);
     }
 
-    public function store($request)
+    public function store($channelsPackageDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($channelsPackageDTO);
     }
 
-    public function update($request, $channelsPackage)
+    public function update($channelsPackageDTO, $channelsPackage)
     {
-        return $this->repository->update($request, $channelsPackage);
+        return $this->repository->update($channelsPackageDTO, $channelsPackage);
     }
 
     public function delete($channelsPackage)
