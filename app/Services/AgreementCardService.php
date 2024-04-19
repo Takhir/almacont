@@ -13,19 +13,19 @@ class AgreementCardService
         $this->repository = $repository;
     }
 
-    public function getAll($request)
+    public function getAll($perPage, $periodId)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getAll($perPage, $periodId);
     }
 
-    public function store($request)
+    public function store($agreementCardDto)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($agreementCardDto);
     }
 
-    public function update($request, $agreement)
+    public function update($agreementCardDto, $agreement)
     {
-        return $this->repository->update($request, $agreement);
+        return $this->repository->update($agreementCardDto, $agreement);
     }
 
     public function delete($agreement)

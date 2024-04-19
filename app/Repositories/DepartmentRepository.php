@@ -18,10 +18,8 @@ class DepartmentRepository
         return Department::orderBy('name')->get();
     }
 
-    public function getAll($request)
+    public function getAll($perPage)
     {
-        $perPage = $request->input('per_page', 20);
-
         return Department::with('towns')->orderBy('name')->paginate($perPage);
     }
 

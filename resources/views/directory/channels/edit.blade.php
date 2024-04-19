@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Дополнительная информация</label>
-                                <input type="text" class="form-control" name="description" required value="{{ $channel->name }}">
+                                <input type="text" class="form-control" name="description" required value="{{ $channel->description }}">
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Тематика канала</label>

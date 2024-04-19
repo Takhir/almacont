@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Periods;
 
+use App\Dto\PeriodDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Period\UpdateRequest;
 use App\Models\Period;
@@ -18,7 +19,11 @@ class UpdateController extends Controller
 
     public function __invoke(UpdateRequest $request, Period $period)
     {
-        if ($this->service->update($request, $period)) {
+        $validated = $request->validated();
+
+        $reportPeriodDTO = new PeriodDTO($validated['name']);
+
+        if ($this->service->update($reportPeriodDTO, $period)) {
             return redirect()->route('periods.index')->with('success', 'Данные успешно обновлены');
         }
 

@@ -15,10 +15,8 @@ class ChannelRepository
         return Channel::orderBy('name')->get();
     }
 
-    public function getAll($request)
+    public function getAll($perPage, $channelId)
     {
-        $perPage = $request->input('per_page', 20);
-        $channelId = $request->input('channel_id');
         $query = Channel::orderBy('name');
 
         if ($channelId) {
@@ -28,14 +26,8 @@ class ChannelRepository
         return $query->paginate($perPage);
     }
 
-    public function store($request)
+    public function store(ChannelDTO $channelDTO)
     {
-        $channelDTO = new ChannelDTO(
-            $request->input('name'),
-            $request->input('description'),
-            $request->input('category_id')
-        );
-
         $channel = new Channel();
         $channel->name = $channelDTO->name;
         $channel->description = $channelDTO->description;
@@ -44,14 +36,8 @@ class ChannelRepository
         return $channel->save();
     }
 
-    public function update($request, $channel)
+    public function update(ChannelDTO $channelDTO, Channel $channel)
     {
-        $channelDTO = new ChannelDTO(
-            $request->input('name'),
-            $request->input('description'),
-            $request->input('category_id'),
-        );
-
         $channel->name = $channelDTO->name;
         $channel->description = $channelDTO->description;
         $channel->category_id = $channelDTO->category_id;
@@ -59,7 +45,7 @@ class ChannelRepository
         return $channel->save();
     }
 
-    public function delete($channel)
+    public function delete(Channel $channel)
     {
         return $channel->delete();
     }
@@ -69,9 +55,9 @@ class ChannelRepository
         return Channel::getIdByName($name);
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new ChannelsImport, $request->file('channels_import'));
+        return Excel::import(new ChannelsImport, $file);
     }
 
     public function export()

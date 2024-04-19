@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description'=>'string',
+            'description'=>'string|nullable',
             'active' => ['required', Rule::in([1, 0])],
         ];
     }

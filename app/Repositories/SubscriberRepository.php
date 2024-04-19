@@ -8,12 +8,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SubscriberRepository
 {
-    public function getAll($request)
+    public function getAll($subscribeDTO)
     {
-        $perPage = $request->input('per_page', 20);
-        $periodId = $request->input('period_id');
-        $townId = $request->input('town_id');
-        $packageId = $request->input('package_id');
         $query = Subscriber::join('towns', 'towns.id', '=', 'subscribers.town_id')
             ->join('periods', 'periods.id', '=', 'subscribers.period_id')
             ->join('packages', 'packages.id', '=', 'subscribers.package_id')
@@ -21,29 +17,29 @@ class SubscriberRepository
             ->orderBy('towns.name')
             ->orderBy('packages.name');
 
-        if ($periodId) {
-            $query->where('period_id', $periodId);
+        if ($subscribeDTO->period_id) {
+            $query->where('period_id', $subscribeDTO->period_id);
         }
 
-        if ($townId) {
-            $query->where('subscribers.town_id', $townId);
+        if ($subscribeDTO->town_id) {
+            $query->where('subscribers.town_id', $subscribeDTO->town_id);
         }
 
-        if ($packageId) {
-            $query->where('package_id', $packageId);
+        if ($subscribeDTO->package_id) {
+            $query->where('package_id', $subscribeDTO->package_id);
         }
 
-        return $query->paginate($perPage);
+        return $query->paginate($subscribeDTO->per_page);
     }
 
-    public function delete($subscriber)
+    public function delete(Subscriber $subscriber)
     {
         return $subscriber->delete();
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new SubscribersImport, $request->file('subscribers_import'));
+        return Excel::import(new SubscribersImport, $file);
     }
 
 }

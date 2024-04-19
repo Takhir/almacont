@@ -4,7 +4,7 @@ namespace App\Http\Requests\ChannelsPackage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
 
     /**
@@ -23,13 +23,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'channel_id' => 'integer|required',
-            'package_id' => 'integer|required',
-            'all_department' => 'nullable|in:on',
-            'department_id' => 'integer|nullable',
-            'town_id' => 'integer|nullable',
-            'dt_start' => 'nullable|string',
-            'dt_stop' => 'nullable|string',
+            'channel_id' => 'array|nullable',
+            'category_id' => 'array|nullable',
+            'package_id' => 'array|nullable',
+            'department_id' => 'array|nullable',
+            'town_id' => 'array|nullable',
+            'dt_start_from' => 'string|nullable',
+            'dt_start_to' => 'string|nullable',
+            'dt_stop_from' => 'string|nullable',
+            'dt_stop_to' => 'string|nullable',
         ];
     }
 
@@ -40,8 +42,10 @@ class UpdateRequest extends FormRequest
             'package_id' => 'Пакет',
             'department_id' => 'Филиал',
             'town_id' => 'Город',
-            'dt_start' => 'Дата начала',
-            'dt_stop' => 'Дата окончания',
+            'dt_start_from' => 'Дата начала',
+            'dt_start_to' => 'Дата начала',
+            'dt_stop_from' => 'Дата окончания',
+            'dt_stop_to' => 'Дата окончания',
         ];
     }
 

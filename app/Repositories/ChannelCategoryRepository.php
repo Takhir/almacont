@@ -23,24 +23,16 @@ class ChannelCategoryRepository
         return ChannelCategory::getIdByName($name);
     }
 
-    public function store($request)
+    public function store(ChannelCategoryDTO $channelCategoryDTO)
     {
-        $channelCategoryDTO = new ChannelCategoryDTO(
-            $request->input('name'),
-        );
-
         $category = new ChannelCategory();
         $category->name = $channelCategoryDTO->name;
 
         return $category->save();
     }
 
-    public function update($request, $category)
+    public function update(ChannelCategoryDTO $channelCategoryDTO, $category)
     {
-        $channelCategoryDTO = new ChannelCategoryDTO(
-            $request->input('name'),
-        );
-
         $category->name = $channelCategoryDTO->name;
 
         return $category->save();

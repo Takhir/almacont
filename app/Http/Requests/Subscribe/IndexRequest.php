@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ChannelsPackage;
+namespace App\Http\Requests\Subscribe;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
 
     /**
@@ -23,25 +23,19 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'channel_id' => 'integer|required',
-            'package_id' => 'integer|required',
-            'all_department' => 'nullable|in:on',
-            'department_id' => 'integer|nullable',
-            'town_id' => 'integer|nullable',
-            'dt_start' => 'nullable|string',
-            'dt_stop' => 'nullable|string',
+            'per_page' => '20',
+            'period_id' => 'nullable|integer',
+            'town_id' => 'nullable|integer',
+            'package_id' => 'nullable|integer',
         ];
     }
 
     public function attributes()
     {
         return [
-            'channel_id' => 'Канал',
-            'package_id' => 'Пакет',
-            'department_id' => 'Филиал',
+            'period_id' => 'Период',
             'town_id' => 'Город',
-            'dt_start' => 'Дата начала',
-            'dt_stop' => 'Дата окончания',
+            'package_id' => 'Пакет',
         ];
     }
 

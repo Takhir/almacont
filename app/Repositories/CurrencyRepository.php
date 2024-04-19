@@ -15,15 +15,8 @@ class CurrencyRepository
             ->paginate($perPage);
     }
 
-    public function store($request)
+    public function store(CurrencyDTO $currencyDTO)
     {
-        $currencyDTO = new CurrencyDTO(
-            $request->input('currency_type_id'),
-            $request->input('period_id'),
-            $request->input('exchange_start'),
-            $request->input('exchange_stop'),
-        );
-
         $currency = new Currency();
         $currency->currency_type_id = $currencyDTO->currency_type_id;
         $currency->period_id = $currencyDTO->period_id;
@@ -33,15 +26,8 @@ class CurrencyRepository
         return $currency->save();
     }
 
-    public function update($request, $currency)
+    public function update(CurrencyDTO $currencyDTO, Currency $currency)
     {
-        $currencyDTO = new CurrencyDTO(
-            $request->input('currency_type_id'),
-            $request->input('period_id'),
-            $request->input('exchange_start'),
-            $request->input('exchange_stop'),
-        );
-
         $currency->currency_type_id = $currencyDTO->currency_type_id;
         $currency->period_id = $currencyDTO->period_id;
         $currency->exchange_start = (float)str_replace(',', '.', $currencyDTO->exchange_start);
@@ -50,7 +36,7 @@ class CurrencyRepository
         return $currency->save();
     }
 
-    public function delete($currency)
+    public function delete(Currency $currency)
     {
         return $currency->delete();
     }

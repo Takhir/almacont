@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Dto\ChannelsPackageDTO;
 use App\Exports\ChannelsPackageExport;
 use App\Imports\ChannelsPackageImport;
 use App\Models\ChannelsPackage;
@@ -20,17 +19,17 @@ class ChannelsPackageRepository
         $this->townRepository = $townRepository;
     }
 
-    public function channelsPackage($request)
+    public function channelsPackage($channelsPackageFilterDTO)
     {
-        $channelId = $request->input('channel_id');
-        $categoryId = $request->input('category_id');
-        $packageId = $request->input('package_id');
-        $departmentId = $request->input('department_id');
-        $townId = $request->input('town_id');
-        $dtStartFrom = $request->input('dt_start_from');
-        $dtStartTo = $request->input('dt_start_to');
-        $dtStopFrom = $request->input('dt_stop_from');
-        $dtStopTo = $request->input('dt_stop_to');
+        $channelId = $channelsPackageFilterDTO->channel_id;
+        $categoryId = $channelsPackageFilterDTO->category_id;
+        $packageId = $channelsPackageFilterDTO->package_id;
+        $departmentId = $channelsPackageFilterDTO->department_id;
+        $townId = $channelsPackageFilterDTO->town_id;
+        $dtStartFrom = $channelsPackageFilterDTO->dt_start_from;
+        $dtStartTo = $channelsPackageFilterDTO->dt_start_to;
+        $dtStopFrom = $channelsPackageFilterDTO->dt_stop_from;
+        $dtStopTo = $channelsPackageFilterDTO->dt_stop_to;
 
         $query = ChannelsPackage::join('channels', 'channels.id', '=', 'channels_packages.channel_id')
             ->join('packages', 'packages.id', '=', 'channels_packages.package_id')
@@ -42,26 +41,26 @@ class ChannelsPackageRepository
             ->orderBy('towns.name')
             ->orderBy('packages.name');
 
-        if ($channelId) {
-            $query->where('channel_id', $channelId);
+        if (isset($channelId[0])) {
+            $query->whereIn('channel_id', $channelId);
         }
 
-        if ($categoryId) {
+        if (isset($categoryId[0])) {
             $query = $query->whereHas('channel', function ($query) use ($categoryId) {
-                $query->where('category_id', $categoryId);
+                $query->whereIn('category_id', $categoryId);
             });
         }
 
-        if ($packageId) {
-            $query->where('package_id', $packageId);
+        if (isset($packageId[0])) {
+            $query->whereIn('package_id', $packageId);
         }
 
-        if ($departmentId) {
-            $query->where('channels_packages.department_id', $departmentId);
+        if (isset($departmentId[0])) {
+            $query->whereIn('channels_packages.department_id', $departmentId);
         }
 
-        if ($townId) {
-            $query->where('town_id', $townId);
+        if (isset($townId[0])) {
+            $query->whereIn('town_id', $townId);
         }
 
         if ($dtStartFrom && $dtStartTo) {
@@ -83,10 +82,9 @@ class ChannelsPackageRepository
         return $query;
     }
 
-    public function getFilling($request)
+    public function getFilling($channelsPackageFilterDTO)
     {
-        $perPage = $request->input('per_page', 20);
-        $query = $this->channelsPackage($request);
+        $query = $this->channelsPackage($channelsPackageFilterDTO);
 
         $query->whereHas('package', function ($query) {
             $query->where('active', 1);
@@ -100,27 +98,27 @@ class ChannelsPackageRepository
                 ->orWhereNull('dt_stop');
         });
 
-        return $query->paginate($perPage);
+        return $query->paginate($channelsPackageFilterDTO->per_page);
     }
 
-    public function getAll($request)
+    public function getAll($channelsPackageFilterDTO)
     {
-        $perPage = $request->input('per_page', 20);
-        $query = $this->channelsPackage($request);
-        return $query->paginate($perPage);
+        $query = $this->channelsPackage($channelsPackageFilterDTO);
+
+        return $query->paginate($channelsPackageFilterDTO->per_page);
     }
 
-    public function store($request)
+    public function store($channelsPackageDTO)
     {
         $data = [
             [
-                'channel_id' => $request->input('channel_id'),
-                'package_id' => $request->input('package_id'),
-                'all_department' => $request->input('all_department'),
-                'department_id' => $request->input('department_id'),
-                'town_id' => $request->input('town_id'),
-                'dt_start' => $request->input('dt_start'),
-                'dt_stop' => $request->input('dt_stop'),
+                'channel_id' => $channelsPackageDTO->channel_id,
+                'package_id' => $channelsPackageDTO->package_id,
+                'all_department' => $channelsPackageDTO->all_department,
+                'department_id' => $channelsPackageDTO->department_id,
+                'town_id' => $channelsPackageDTO->town_id,
+                'dt_start' => $channelsPackageDTO->dt_start,
+                'dt_stop' => $channelsPackageDTO->dt_stop,
             ]
         ];
 
@@ -153,68 +151,44 @@ class ChannelsPackageRepository
             }
         }
 
-        foreach ($result as $v) {
-            $channelsPackageDto = new ChannelsPackageDTO(
-                $v['channel_id'],
-                $v['package_id'],
-                $v['all_department'],
-                $v['department_id'],
-                $v['town_id'],
-                $v['dt_start'],
-                $v['dt_stop'],
-            );
+        foreach ($result as $fields) {
 
-            if(isset($channelsPackageDto->all_department))
+            if(isset($fields['all_department']))
             {
-                $this->saveForAllDepartments($channelsPackageDto);
+                $this->saveForAllDepartments($fields);
             }
 
-            $this->saveChannelsPackage(new ChannelsPackage(), $channelsPackageDto);
+            $this->saveChannelsPackage(new ChannelsPackage(), $fields);
         }
 
         return true;
     }
 
-    public function update($request, $channelsPackage)
+    public function update(array $fields, ChannelsPackage $channelsPackage)
     {
-        $channelsPackageDto = $this->dto($request);
-
-        if(isset($channelsPackageDto->all_department))
+        if(isset($fields['all_department']))
         {
             $this->delete($channelsPackage);
 
-            return $this->saveForAllDepartments($channelsPackageDto);
+            return $this->saveForAllDepartments($fields);
         }
 
-        return $this->saveChannelsPackage($channelsPackage, $channelsPackageDto);
+        return $this->saveChannelsPackage($channelsPackage, $fields);
     }
 
-    public function delete($channelsPackage)
+    public function delete(ChannelsPackage $channelsPackage)
     {
         return $channelsPackage->delete();
     }
 
-    public function dto($request)
+    public function saveChannelsPackage($channelsPackage, array $fields)
     {
-        return new ChannelsPackageDTO(
-            $request->input('channel_id'),
-            $request->input('package_id'),
-            $request->input('all_department'),
-            $request->input('department_id'),
-            $request->input('town_id'),
-            $request->input('dt_start'),
-            $request->input('dt_stop'),
-        );
-    }
-
-    public function saveChannelsPackage($channelsPackage, $channelsPackageDto)
-    {
-        $channelsPackage->channel_id = $channelsPackageDto->channel_id;
-        $channelsPackage->package_id = $channelsPackageDto->package_id;
-        $channelsPackage->department_id = $channelsPackageDto->department_id;
-        $channelsPackage->town_id = $channelsPackageDto->town_id;
-        $channelsPackage->dt_start = $channelsPackageDto->dt_start;
-        $channelsPackage->dt_stop = $channelsPackageDto->dt_stop;
+        $channelsPackage->channel_id = $fields['channel_id'];
+        $channelsPackage->package_id = $fields['package_id'];
+        $channelsPackage->department_id = $fields['department_id'];
+        $channelsPackage->town_id = $fields['town_id'];
+        $channelsPackage->dt_start = $fields['dt_start'];
+        $channelsPackage->dt_stop = $fields['dt_stop'];
 
         if($this->townRepository->existTown($channelsPackage->department_id, $channelsPackage->town_id))
             return $channelsPackage->save();
@@ -222,22 +196,23 @@ class ChannelsPackageRepository
         return true;
     }
 
-    public function saveForAllDepartments($channelsPackageDto)
+    public function saveForAllDepartments(array $fields)
     {
         $departments = $this->departmentRepository->all();
         foreach ($departments as $department) {
-            $channelsPackageDto->department_id = $department->department_id;
-            $channelsPackageDto->town_id = $department->town_id;
 
-            $this->saveChannelsPackage(new ChannelsPackage(), $channelsPackageDto);
+            $fields['department_id'] = $department->department_id;
+            $fields['town_id'] = $department->town_id;
+
+            $this->saveChannelsPackage(new ChannelsPackage(), $fields);
         }
 
         return true;
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new ChannelsPackageImport, $request->file('channels_packages_import'));
+        return Excel::import(new ChannelsPackageImport, $file);
     }
 
     public function export($request)

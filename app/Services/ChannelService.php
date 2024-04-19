@@ -17,19 +17,19 @@ class ChannelService
     {
         return $this->repository->all();
     }
-    public function getAll($request)
+    public function getAll($perPage, $channelId)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getAll($perPage, $channelId);
     }
 
-    public function store($request)
+    public function store($channelDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($channelDTO);
     }
 
-    public function update($request, $channel)
+    public function update($channelDTO, $channel)
     {
-        return $this->repository->update($request, $channel);
+        return $this->repository->update($channelDTO, $channel);
     }
 
     public function delete($channel)
@@ -42,9 +42,9 @@ class ChannelService
         return $this->repository->getIdByName($name);
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return $this->repository->import($request);
+        return $this->repository->import($file);
     }
 
     public function export()

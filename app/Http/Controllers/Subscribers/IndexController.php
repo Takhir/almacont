@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Subscribers;
 
+use App\Dto\SubscribeDTO;
 use App\Http\Controllers\Controller;
-use App\Services\TownService;
+use App\Http\Requests\Subscribe\IndexRequest;
 use App\Services\PackageService;
 use App\Services\PeriodService;
 use App\Services\SubscriberService;
-use Illuminate\Http\Request;
+use App\Services\TownService;
 
 class IndexController extends Controller
 {
@@ -25,9 +26,18 @@ class IndexController extends Controller
         $this->packageService = $packageService;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(IndexRequest $request)
     {
-        $subscribers = $this->service->getAll($request);
+        $validated = $request->validated();
+
+        $subscribeDTO = new SubscribeDTO(
+            20,
+            $validated['period_id'] ?? null,
+            $validated['town_id'] ?? null,
+            $validated['package_id'] ?? null,
+        );
+
+        $subscribers = $this->service->getAll($subscribeDTO);
         $periods = $this->periodService->getAll();
         $towns = $this->townService->all();
         $packages = $this->packageService->all();

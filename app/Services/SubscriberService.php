@@ -13,9 +13,9 @@ class SubscriberService
         $this->repository = $repository;
     }
 
-    public function getAll($request)
+    public function getAll($subscribeDTO)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getAll($subscribeDTO);
     }
 
     public function delete($subscriber)
@@ -23,8 +23,8 @@ class SubscriberService
         return $this->repository->delete($subscriber);
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return $this->repository->import($request);
+        return $this->repository->import($file);
     }
 }

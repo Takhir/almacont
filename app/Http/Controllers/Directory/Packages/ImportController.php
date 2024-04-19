@@ -17,7 +17,7 @@ class ImportController extends Controller
 
     public function __invoke(Request $request)
     {
-        if ($this->service->import($request)) {
+        if ($this->service->import($request->file('packages_import'))) {
             return redirect()->route('packages.index')->with('success', 'Данные успешно загружены');
         }
 

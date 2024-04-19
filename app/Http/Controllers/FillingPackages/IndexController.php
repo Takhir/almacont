@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\FillingPackages;
 
+use App\Dto\ChannelsPackageFilterDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChannelsPackage\IndexRequest;
 use App\Services\ChannelCategoryService;
 use App\Services\ChannelService;
 use App\Services\ChannelsPackageService;
@@ -27,9 +29,24 @@ class IndexController extends Controller
         $this->departmentService = $departmentService;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(IndexRequest $request)
     {
-        $channelsPackages = count($request->all()) > 0 ? $this->service->getFilling($request) : [];
+        $validated = $request->validated();
+
+        $channelsPackageFilterDTO = new ChannelsPackageFilterDTO(
+            20,
+            $validated['channel_id'] ?? null,
+            $validated['category_id'] ?? null,
+            $validated['package_id'] ?? null,
+            $validated['department_id'] ?? null,
+            $validated['town_id'] ?? null,
+            $validated['dt_start_from'] ?? null,
+            $validated['dt_start_to'] ?? null,
+            $validated['dt_end_from'] ?? null,
+            $validated['dt_end_to'] ?? null,
+        );
+
+        $channelsPackages = count($request->all()) > 0 ? $this->service->getFilling($channelsPackageFilterDTO) : [];
         $channels = $this->channelService->all();
         $categories = $this->channelCategoryService->getAll();
         $packages = $this->packageService->all();

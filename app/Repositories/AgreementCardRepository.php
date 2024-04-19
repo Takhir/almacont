@@ -8,10 +8,8 @@ use App\Models\Currency;
 
 class AgreementCardRepository
 {
-    public function getAll($request)
+    public function getAll($perPage, $periodId)
     {
-        $perPage = $request->input('per_page', 20);
-        $periodId = $request->input('period_id');
         $query = AgreementsCard::join('periods', 'periods.id', '=', 'agreements_cards.period_id')
             ->join('counterparties', 'counterparties.id', '=', 'agreements_cards.counterparty_id')
             ->join('channels', 'channels.id', '=', 'agreements_cards.channel_id')
@@ -28,17 +26,8 @@ class AgreementCardRepository
         return $query->paginate($perPage);
     }
 
-    public function store($request)
+    public function store(AgreementCardDTO $agreementCardDto)
     {
-        $agreementCardDto = new AgreementCardDTO(
-            $request->input('channel_id'),
-            $request->input('counterparty_id'),
-            $request->input('sum'),
-            $request->input('currency_id'),
-            $request->input('period_id'),
-            $request->input('currency_presence'),
-        );
-
         $currency = Currency::find($agreementCardDto->currency_id);
 
         $agreement = new AgreementsCard();
@@ -53,17 +42,8 @@ class AgreementCardRepository
         return $agreement->save();
     }
 
-    public function update($request, $agreement)
+    public function update(AgreementCardDTO $agreementCardDto, AgreementsCard $agreement)
     {
-        $agreementCardDto = new AgreementCardDTO(
-            $request->input('channel_id'),
-            $request->input('counterparty_id'),
-            $request->input('sum'),
-            $request->input('currency_id'),
-            $request->input('period_id'),
-            $request->input('currency_presence'),
-        );
-
         $currency = Currency::find($agreementCardDto->currency_id);
 
         $agreement->channel_id = $agreementCardDto->channel_id;
@@ -77,7 +57,7 @@ class AgreementCardRepository
         return $agreement->save();
     }
 
-    public function delete($agreement)
+    public function delete(AgreementsCard $agreement)
     {
         return $agreement->delete();
     }

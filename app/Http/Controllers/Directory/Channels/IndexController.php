@@ -17,7 +17,11 @@ class IndexController extends Controller
     public function __invoke(Request $request)
     {
         $channelsFilter = $this->service->all();
-        $channels = $this->service->getAll($request);
+
+        $perPage = $request->input('per_page', 20);
+        $channelId = $request->input('channel_id');
+
+        $channels = $this->service->getAll($perPage, $channelId);
 
         return view('directory.channels.index', compact('channelsFilter', 'channels'));
     }

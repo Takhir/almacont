@@ -14,7 +14,7 @@ class PeriodRepository
 
     public function getAll()
     {
-        return Period::orderBy('name')->get();
+        return Period::orderBy('id', 'desc')->get();
     }
 
     public function getNameById($id)
@@ -27,30 +27,22 @@ class PeriodRepository
         return Period::getIdByName($name);
     }
 
-    public function store($request)
+    public function store(PeriodDTO $reportPeriodDTO)
     {
-        $reportPeriodDTO = new PeriodDTO(
-            $request->input('name'),
-        );
-
         $period = new Period();
         $period->name = $reportPeriodDTO->name;
 
         return $period->save();
     }
 
-    public function update($request, $period)
+    public function update(PeriodDTO $reportPeriodDTO, Period $period)
     {
-        $reportPeriodDTO = new PeriodDTO(
-            $request->input('name'),
-        );
-
         $period->name = $reportPeriodDTO->name;
 
         return $period->save();
     }
 
-    public function delete($period)
+    public function delete(Period $period)
     {
         return $period->delete();
     }
