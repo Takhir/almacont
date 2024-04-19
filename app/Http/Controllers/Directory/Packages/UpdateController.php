@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Packages;
 
+use App\Dto\PackageDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Package\UpdateRequest;
 use App\Models\Package;
@@ -18,7 +19,15 @@ class UpdateController extends Controller
 
     public function __invoke(UpdateRequest $request, Package $package)
     {
-        if ($this->service->update($request, $package)) {
+        $validated = $request->validated();
+
+        $packageDTO = new PackageDTO(
+            $validated['name'],
+            $validated['description'],
+            $validated['active'],
+        );
+
+        if ($this->service->update($packageDTO, $package)) {
             return redirect()->route('packages.index')->with('success', 'Данные успешно обновлены');
         }
 

@@ -23,14 +23,14 @@ class PackageService
         return $this->repository->getAll($perPage);
     }
 
-    public function store($request)
+    public function store($packageDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($packageDTO);
     }
 
-    public function update($request, $package)
+    public function update($packageDTO, $package)
     {
-        return $this->repository->update($request, $package);
+        return $this->repository->update($packageDTO, $package);
     }
 
     public function delete($package)
@@ -43,9 +43,9 @@ class PackageService
         return $this->repository->getIdByName($name);
     }
 
-    public function import($package)
+    public function import($file)
     {
-        return $this->repository->import($package);
+        return $this->repository->import($file);
     }
 
     public function export()

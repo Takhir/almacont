@@ -18,9 +18,9 @@ class DepartmentService
         return $this->repository->all();
     }
 
-    public function getAll($request)
+    public function getAll($perPage)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getAll($perPage);
     }
 
     public function getId(string $name)
