@@ -38,14 +38,14 @@ class CounterpartyRepository
         return $counterparty->save();
     }
 
-    public function delete($counterparty)
+    public function delete(Counterparty $counterparty)
     {
         return $counterparty->delete();
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new CounterpartiesImport, $request->file('counterparties_import'));
+        return Excel::import(new CounterpartiesImport, $file);
     }
 
     public function export()

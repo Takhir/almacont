@@ -42,7 +42,7 @@ class PeriodRepository
         return $period->save();
     }
 
-    public function delete($period)
+    public function delete(Period $period)
     {
         return $period->delete();
     }

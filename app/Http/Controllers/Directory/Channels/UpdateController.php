@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Channels;
 
+use App\Dto\ChannelDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Channel\UpdateRequest;
 use App\Models\Channel;
@@ -18,7 +19,15 @@ class UpdateController extends Controller
 
     public function __invoke(UpdateRequest $request, Channel $channel)
     {
-        if ($this->service->update($request, $channel)) {
+        $validated = $request->validated();
+
+        $channelDTO = new ChannelDTO(
+            $validated['name'],
+            $validated['description'],
+            $validated['category_id'],
+        );
+
+        if ($this->service->update($channelDTO, $channel)) {
             return redirect()->route('channels.index')->with('success', 'Данные успешно обновлены');
         }
 
