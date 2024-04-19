@@ -33,10 +33,9 @@ class CurrencyService
         return $this->repository->delete($currency);
     }
 
-    public function currenciesById($periodId, $request)
+    public function currenciesById($periodId, $currencyId)
     {
         $currencies = $this->repository->currenciesById($periodId);
-        $currencyId = $request->get('currency_id') ?? null;
         $result = '';
 
         foreach ($currencies as $currency)

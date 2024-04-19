@@ -24,6 +24,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'description' => 'string|nullable',
             'active' => 'required',
         ];
     }
