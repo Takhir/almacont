@@ -35,7 +35,7 @@ class PeriodRepository
         return $period->save();
     }
 
-    public function update(PeriodDTO $reportPeriodDTO, $period)
+    public function update(PeriodDTO $reportPeriodDTO, Period $period)
     {
         $period->name = $reportPeriodDTO->name;
 

@@ -19,33 +19,21 @@ class CounterpartyRepository
         return Counterparty::orderBy('name')->paginate($perPage);
     }
 
-    public function store($request)
+    public function store(ConterpartyDTO $counterpartyDTO)
     {
-        $counterpartyyDTO = new ConterpartyDTO(
-            $request->input('name'),
-            $request->input('bin'),
-            $request->input('resident')
-        );
+        $counterparty = new Counterparty();
+        $counterparty->name = $counterpartyDTO->name;
+        $counterparty->bin = $counterpartyDTO->bin;
+        $counterparty->resident = $counterpartyDTO->resident;
 
-        $counterpartyy = new Counterparty();
-        $counterpartyy->name = $counterpartyyDTO->name;
-        $counterpartyy->bin = $counterpartyyDTO->bin;
-        $counterpartyy->resident = $counterpartyyDTO->resident;
-
-        return $counterpartyy->save();
+        return $counterparty->save();
     }
 
-    public function update($request, $counterparty)
+    public function update(ConterpartyDTO $counterpartyDTO, Counterparty $counterparty)
     {
-        $counterpartyyDTO = new ConterpartyDTO(
-            $request->input('name'),
-            $request->input('bin'),
-            $request->input('resident'),
-        );
-
-        $counterparty->name = $counterpartyyDTO->name;
-        $counterparty->bin = $counterpartyyDTO->bin;
-        $counterparty->resident = $counterpartyyDTO->resident;
+        $counterparty->name = $counterpartyDTO->name;
+        $counterparty->bin = $counterpartyDTO->bin;
+        $counterparty->resident = $counterpartyDTO->resident;
 
         return $counterparty->save();
     }

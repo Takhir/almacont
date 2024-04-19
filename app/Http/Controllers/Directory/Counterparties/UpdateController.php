@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Counterparties;
 
+use App\Dto\ConterpartyDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Counterparty\UpdateRequest;
 use App\Models\Counterparty;
@@ -18,7 +19,15 @@ class UpdateController extends Controller
 
     public function __invoke(UpdateRequest $request, Counterparty $counterparty)
     {
-        if ($this->service->update($request, $counterparty)) {
+        $validated = $request->validated();
+
+        $counterpartyDTO = new ConterpartyDTO(
+            $validated['name'],
+            $validated['bin'],
+            $validated['resident'],
+        );
+
+        if ($this->service->update($counterpartyDTO, $counterparty)) {
             return redirect()->route('counterparties.index')->with('success', 'Данные успешно обновлены');
         }
 

@@ -26,7 +26,7 @@ class CurrencyRepository
         return $currency->save();
     }
 
-    public function update(CurrencyDTO $currencyDTO, $currency)
+    public function update(CurrencyDTO $currencyDTO, Currency $currency)
     {
         $currency->currency_type_id = $currencyDTO->currency_type_id;
         $currency->period_id = $currencyDTO->period_id;

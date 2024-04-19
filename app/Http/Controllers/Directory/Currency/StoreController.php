@@ -17,7 +17,6 @@ class StoreController extends Controller
 
     public function __invoke(StoreRequest $request)
     {
-
         $validated = $request->validated();
 
         $currencyDTO = new CurrencyDTO(

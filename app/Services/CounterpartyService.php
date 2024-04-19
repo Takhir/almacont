@@ -23,14 +23,14 @@ class CounterpartyService
         return $this->repository->getAll($perPage);
     }
 
-    public function store($request)
+    public function store($counterpartyDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($counterpartyDTO);
     }
 
-    public function update($request, $counterparty)
+    public function update($counterpartyDTO, $counterparty)
     {
-        return $this->repository->update($request, $counterparty);
+        return $this->repository->update($counterpartyDTO, $counterparty);
     }
 
     public function delete($counterparty)
