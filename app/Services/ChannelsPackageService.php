@@ -13,14 +13,14 @@ class ChannelsPackageService
         $this->repository = $repository;
     }
 
-    public function getFilling($request)
+    public function getFilling($channelsPackageFilterDTO)
     {
-        return $this->repository->getFilling($request);
+        return $this->repository->getFilling($channelsPackageFilterDTO);
     }
 
-    public function getAll($request)
+    public function getAll($channelsPackageFilterDTO)
     {
-        return $this->repository->getAll($request);
+        return $this->repository->getAll($channelsPackageFilterDTO);
     }
 
     public function store($request)
@@ -38,9 +38,9 @@ class ChannelsPackageService
         return $this->repository->delete($channelsPackage);
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return $this->repository->import($request);
+        return $this->repository->import($file);
     }
 
     public function export($request)

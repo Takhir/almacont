@@ -20,17 +20,17 @@ class ChannelsPackageRepository
         $this->townRepository = $townRepository;
     }
 
-    public function channelsPackage($request)
+    public function channelsPackage($channelsPackageFilterDTO)
     {
-        $channelId = $request->input('channel_id');
-        $categoryId = $request->input('category_id');
-        $packageId = $request->input('package_id');
-        $departmentId = $request->input('department_id');
-        $townId = $request->input('town_id');
-        $dtStartFrom = $request->input('dt_start_from');
-        $dtStartTo = $request->input('dt_start_to');
-        $dtStopFrom = $request->input('dt_stop_from');
-        $dtStopTo = $request->input('dt_stop_to');
+        $channelId = $channelsPackageFilterDTO->channel_id;
+        $categoryId = $channelsPackageFilterDTO->category_id;
+        $packageId = $channelsPackageFilterDTO->package_id;
+        $departmentId = $channelsPackageFilterDTO->department_id;
+        $townId = $channelsPackageFilterDTO->town_id;
+        $dtStartFrom = $channelsPackageFilterDTO->dt_start_from;
+        $dtStartTo = $channelsPackageFilterDTO->dt_start_to;
+        $dtStopFrom = $channelsPackageFilterDTO->dt_stop_from;
+        $dtStopTo = $channelsPackageFilterDTO->dt_stop_to;
 
         $query = ChannelsPackage::join('channels', 'channels.id', '=', 'channels_packages.channel_id')
             ->join('packages', 'packages.id', '=', 'channels_packages.package_id')
@@ -83,10 +83,9 @@ class ChannelsPackageRepository
         return $query;
     }
 
-    public function getFilling($request)
+    public function getFilling($channelsPackageFilterDTO)
     {
-        $perPage = $request->input('per_page', 20);
-        $query = $this->channelsPackage($request);
+        $query = $this->channelsPackage($channelsPackageFilterDTO);
 
         $query->whereHas('package', function ($query) {
             $query->where('active', 1);
@@ -100,14 +99,14 @@ class ChannelsPackageRepository
                 ->orWhereNull('dt_stop');
         });
 
-        return $query->paginate($perPage);
+        return $query->paginate($channelsPackageFilterDTO->per_page);
     }
 
-    public function getAll($request)
+    public function getAll($channelsPackageFilterDTO)
     {
-        $perPage = $request->input('per_page', 20);
-        $query = $this->channelsPackage($request);
-        return $query->paginate($perPage);
+        $query = $this->channelsPackage($channelsPackageFilterDTO);
+
+        return $query->paginate($channelsPackageFilterDTO->per_page);
     }
 
     public function store($request)
@@ -189,7 +188,7 @@ class ChannelsPackageRepository
         return $this->saveChannelsPackage($channelsPackage, $channelsPackageDto);
     }
 
-    public function delete($channelsPackage)
+    public function delete(ChannelsPackage $channelsPackage)
     {
         return $channelsPackage->delete();
     }
@@ -235,9 +234,9 @@ class ChannelsPackageRepository
         return true;
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new ChannelsPackageImport, $request->file('channels_packages_import'));
+        return Excel::import(new ChannelsPackageImport, $file);
     }
 
     public function export($request)
