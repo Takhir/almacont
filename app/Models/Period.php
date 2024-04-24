@@ -18,7 +18,7 @@ class Period extends Model
 
     public static function getIdByName($name)
     {
-        $model = static::where('name', $name)->first();
+        $model = static::whereRaw('UPPER(name) = ?', [strtoupper($name)])->first();
         return $model ? $model->id : null;
     }
 
