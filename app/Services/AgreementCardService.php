@@ -32,4 +32,9 @@ class AgreementCardService
     {
         return $this->repository->delete($agreement);
     }
+
+    public function import($file)
+    {
+        return $this->repository->import($file);
+    }
 }

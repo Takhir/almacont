@@ -52,4 +52,9 @@ class CurrencyService
         return $result;
     }
 
+    public function getId(int $currencyTypeId, int $periodId)
+    {
+        return $this->repository->getId($currencyTypeId, $periodId);
+    }
+
 }

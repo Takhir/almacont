@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Dto\AgreementCardDTO;
+use App\Imports\AgreementsCardsImport;
 use App\Models\AgreementsCard;
 use App\Models\Currency;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AgreementCardRepository
 {
@@ -15,7 +17,7 @@ class AgreementCardRepository
             ->join('channels', 'channels.id', '=', 'agreements_cards.channel_id')
             ->with('currency')
             ->with('period')
-            ->orderBy('periods.id')
+            ->orderBy('periods.id', 'desc')
             ->orderBy('counterparties.name')
             ->orderBy('channels.name');
 
@@ -69,5 +71,10 @@ class AgreementCardRepository
         $exchangeStop = (float)str_replace(',', '.', $currency->exchange_stop);
 
         return $agreementCardDto->currency_presence == 0 ? $sum * $exchangeStart :  $sum * $exchangeStop;
+    }
+
+    public function import($file)
+    {
+        return Excel::import(new AgreementsCardsImport, $file);
     }
 }

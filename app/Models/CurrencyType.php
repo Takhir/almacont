@@ -10,9 +10,15 @@ class CurrencyType extends Model
 {
     use HasFactory;
 
-    public static function getNameById($id)
+    public static function getNameById(int $id)
     {
         $model = static::find($id);
         return $model ? $model->name : null;
+    }
+
+    public static function getIdByName(string $name)
+    {
+        $model = static::where('name', $name)->first();
+        return $model ? $model->id : null;
     }
 }

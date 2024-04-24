@@ -15,4 +15,10 @@ class Counterparty extends Model
         'bin',
         'resident',
     ];
+
+    public static function getIdByName($name)
+    {
+        $model = static::where('name', $name)->first();
+        return $model ? $model->id : null;
+    }
 }

@@ -98,6 +98,7 @@ Route::group(['prefix' => 'agreements-cards'], function () {
     Route::patch('/{agreement}', \App\Http\Controllers\AgreementsCards\UpdateController::class)->name('agreements-cards.update');
     Route::delete('/{agreement}', \App\Http\Controllers\AgreementsCards\DeleteController::class)->name('agreements-cards.delete');
     Route::get('/currencies/{period_id}', \App\Http\Controllers\AgreementsCards\AjaxController::class)->name('agreements-cards.currencies');
+    Route::post('/import', \App\Http\Controllers\AgreementsCards\ImportController::class)->name('agreements-cards.import');
 });
 
 Route::group(['prefix' => 'subscribers'], function () {
