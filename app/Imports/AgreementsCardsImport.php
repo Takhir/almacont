@@ -65,16 +65,15 @@ class AgreementsCardsImport implements ToCollection
                 $periodId = $this->periodService->getIdByName(trim($row[4]));
                 if (!is_null($currencyTypeId) && !is_null($periodId)) {
                     $currencyId = $this->currencyService->getId($currencyTypeId, $periodId);
-                } else {
-                    $validator->errors()->add("{$key}.3", 'Валюта ' . $row[3] . ' не найдена, создайте Валюту');
                 }
-
                 if (is_null($channelId)) {
                     $validator->errors()->add("{$key}.1", 'Канал ' . $row[1] . ' не найден, создайте Канал');
                 } elseif (is_null($counterpartyId)) {
                     $validator->errors()->add("{$key}.0", 'Контрагент ' . $row[0] . ' не найден, создайте Контрагента');
-                }  elseif (is_null($currencyId)) {
+                } elseif (is_null($periodId)) {
                     $validator->errors()->add("{$key}.4", 'Период ' . $row[4] . ' не найден, создайте Период');
+                } elseif (is_null($currencyTypeId) || is_null($currencyId)) {
+                    $validator->errors()->add("{$key}.3", 'Валюта ' . $row[3] . ' не найдена, создайте Валюту');
                 } else {
                     $agreementCardDto = new AgreementCardDTO(
                         $channelId,

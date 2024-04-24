@@ -19,6 +19,7 @@ class CurrencyType extends Model
     public static function getIdByName(string $name)
     {
         $model = static::whereRaw('UPPER(name) = ?', [strtoupper($name)])->first();
+
         return $model ? $model->id : null;
     }
 }
