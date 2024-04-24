@@ -59,26 +59,30 @@ class AgreementsCardsImport implements ToCollection
 
         Validator::make($rows->toArray(), $rules, $messages)->after(function ($validator) use ($rows) {
             foreach ($rows as $key => $row) {
-                $channelId = $this->channelService->getIdByName($row[1]);
-                $counterpartyId = $this->counterpartyService->getIdByName($row[0]);
-                $currencyTypeId = $this->currencyTypeService->getIdByName($row[3]);
-                $periodId = $this->periodService->getIdByName($row[4]);
-                $currencyId = $this->currencyService->getId($currencyTypeId, $periodId);
+                $channelId = $this->channelService->getIdByName(trim($row[1]));
+                $counterpartyId = $this->counterpartyService->getIdByName(trim($row[0]));
+                $currencyTypeId = $this->currencyTypeService->getIdByName(trim($row[3]));
+                $periodId = $this->periodService->getIdByName(trim($row[4]));
+                if (!is_null($currencyTypeId) && !is_null($periodId)) {
+                    $currencyId = $this->currencyService->getId($currencyTypeId, $periodId);
+                } else {
+                    $validator->errors()->add("{$key}.3", 'Валюта ' . $row[3] . ' не найдена, создайте Валюту');
+                }
 
                 if (is_null($channelId)) {
                     $validator->errors()->add("{$key}.1", 'Канал ' . $row[1] . ' не найден, создайте Канал');
                 } elseif (is_null($counterpartyId)) {
-                    $validator->errors()->add("{$key}.4", 'Контрагент ' . $row[0] . ' не найден, создайте Контрагента');
+                    $validator->errors()->add("{$key}.0", 'Контрагент ' . $row[0] . ' не найден, создайте Контрагента');
                 }  elseif (is_null($currencyId)) {
                     $validator->errors()->add("{$key}.4", 'Период ' . $row[4] . ' не найден, создайте Период');
                 } else {
                     $agreementCardDto = new AgreementCardDTO(
                         $channelId,
                         $counterpartyId,
-                        $row[2],
+                        trim($row[2]),
                         $currencyId,
                         $periodId,
-                        $row[5],
+                        trim($row[5]),
                     );
 
                     $this->service->store($agreementCardDto);
