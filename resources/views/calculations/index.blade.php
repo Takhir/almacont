@@ -106,22 +106,25 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="period_id" class="col-sm-2 col-form-label">Период:</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" name="period_id" required>
-                                            <option value="" disabled selected>Не выбрано</option>
-                                            @foreach($periods as $period)
-                                                <option value="{{ $period->id }}" {{ old('period_id') == $period->id ? 'selected' : '' }}>{{ $period->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <form method="POST" action="{{ route('subscribersonchannel.export') }}">
+                                    @csrf
+                                    <div class="form-group row">
+                                        <label for="period_id" class="col-sm-2 col-form-label">Период:</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" name="period_id" required>
+                                                <option value="" disabled selected>Не выбрано</option>
+                                                @foreach($periods as $period)
+                                                    <option value="{{ $period->id }}" {{ old('period_id') == $period->id ? 'selected' : '' }}>{{ $period->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa-regular fa-file-excel"></i> Количество абонентов на канале
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <button type="button" class="btn btn-success">
-                                            <i class="fa-regular fa-file-excel"></i> Количество абонентов на канале
-                                        </button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                             <div class="col-5">
                                 <div id="progress-container">
@@ -172,7 +175,7 @@
                     $('#progress-bar').closest('.progress').show();
                     $('#progress-bar').css('width', '0%');
                     $.ajax({
-                        url: '/calculations/calculate/' + period_id,
+                        url: '/calculations/execute/' + period_id,
                         method: 'GET',
                         xhr: function() {
                             let xhr = new window.XMLHttpRequest();
@@ -194,7 +197,6 @@
                         },
                         complete: function() {
                             $('#progress-bar').css('width', '100%');
-                            $button.prop('disabled', false);
                         }
                     });
                 }

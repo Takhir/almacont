@@ -3,11 +3,13 @@
 namespace App\Repositories;
 
 use App\Dto\PeriodDTO;
+use App\Exports\SubscribersOnChannelExport;
 use App\Models\ChannelsPackage;
 use App\Models\Period;
 use App\Models\Subscriber;
 use App\Models\SubscribersOnChannel;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubscribersOnChannelRepository
 {
@@ -26,5 +28,25 @@ class SubscribersOnChannelRepository
                 );
             }
         }
+    }
+
+    public function subscribersExport(int $periodId)
+    {
+        $export = new SubscribersOnChannelExport($periodId);
+        $fileName = 'subscribers-on-channel.xlsx';
+        $filePath = 'public/' . $fileName;
+
+        Excel::store($export, $filePath);
+
+        return $fileName;
+    }
+
+    public function allByPeriod(int $periodId)
+    {
+        return SubscribersOnChannel::join('channels', 'channels.id', '=', 'subscribers_on_channels.channel_id')
+            ->join('periods', 'periods.id', '=', 'subscribers_on_channels.period_id')
+            ->where('period_id', $periodId)
+            ->orderBy('channels.name')
+            ->get();
     }
 }

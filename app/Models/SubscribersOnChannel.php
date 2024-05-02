@@ -14,4 +14,14 @@ class SubscribersOnChannel extends Model
         'period_id',
         'quantity',
     ];
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class, 'channel_id');
+    }
+
+    public function period()
+    {
+        return $this->belongsTo(Period::class, 'period_id');
+    }
 }

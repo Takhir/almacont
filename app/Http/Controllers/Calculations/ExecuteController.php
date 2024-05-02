@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Calculations;
 use App\Http\Controllers\Controller;
 use App\Services\CalculationService;
 
-class AjaxController extends Controller
+class ExecuteController extends Controller
 {
     private CalculationService $calculationService;
 

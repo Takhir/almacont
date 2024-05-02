@@ -17,4 +17,10 @@ class SubscribersOnChannelService
     {
         return $this->repository->delete($periodId);
     }
+
+    public function subscribersExport(int $periodId)
+    {
+        return $this->repository->subscribersExport($periodId);
+    }
+
 }

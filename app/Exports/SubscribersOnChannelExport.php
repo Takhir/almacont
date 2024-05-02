@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Exports;
-use App\Services\SubscriberService;
+use App\Repositories\SubscribersOnChannelRepository;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -12,10 +12,10 @@ class SubscribersOnChannelExport implements FromCollection, WithHeadings, WithSt
 {
     public $periodId;
 
-    public SubscriberService $service;
+    public SubscribersOnChannelRepository $subscribersOnChannelRepository;
     public function __construct($periodId)
     {
-        $this->service = app(SubscriberService::class);
+        $this->subscribersOnChannelRepository = app(SubscribersOnChannelRepository::class);
         $this->periodId = $periodId;
     }
     public function headings(): array
@@ -29,23 +29,21 @@ class SubscribersOnChannelExport implements FromCollection, WithHeadings, WithSt
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:С1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:C1')->getFont()->setBold(true);
     }
 
     public function map($subscribers): array
     {
-        dd($subscribers);
         return [
-            $subscribers->id,
-            $subscribers->channel_id,
             $subscribers->channel?->name,
-            $subscribers->package_id,
+            $subscribers->period?->name,
+            $subscribers->quantity,
         ];
     }
 
     public function collection()
     {
-        return $this->service->subscribersOnChannel($this->periodId);
+        return $this->subscribersOnChannelRepository->allByPeriod($this->periodId);
     }
 
 }
