@@ -27,4 +27,14 @@ class SubscriberService
     {
         return $this->repository->import($file);
     }
+
+    public function subscribersExport(int $periodId)
+    {
+        return $this->repository->subscribersExport($periodId);
+    }
+
+    public function subscribersOnChannel(int $periodId)
+    {
+        return $this->repository->subscribersOnChannel($periodId);
+    }
 }

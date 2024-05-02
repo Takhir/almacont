@@ -32,3 +32,6 @@
 .table thead th {
     vertical-align: middle !important;
 }
+.progress {
+    margin-top: 10px;
+}
