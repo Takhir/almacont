@@ -12,8 +12,13 @@ class CurrencyTypeRepository
         return CurrencyType::all();
     }
 
-    public function getNameById($id)
+    public function getNameById(int $id)
     {
         return CurrencyType::getNameById($id);
+    }
+
+    public function getIdByName(string $name)
+    {
+        return CurrencyType::getIdByName($name);
     }
 }

@@ -21,4 +21,8 @@ class CurrencyTypeService
     {
         return $this->repository->getNameById($id);
     }
+    public function getIdByName($name)
+    {
+        return $this->repository->getIdByName($name);
+    }
 }

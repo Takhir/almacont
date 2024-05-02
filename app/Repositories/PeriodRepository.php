@@ -46,4 +46,9 @@ class PeriodRepository
     {
         return $period->delete();
     }
+
+    public function findById(int $id)
+    {
+        return Period::find($id);
+    }
 }

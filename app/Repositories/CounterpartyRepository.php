@@ -43,6 +43,12 @@ class CounterpartyRepository
         return $counterparty->delete();
     }
 
+
+    public function getIdByName(string $name)
+    {
+        return Counterparty::getIdByName($name);
+    }
+
     public function import($file)
     {
         return Excel::import(new CounterpartiesImport, $file);

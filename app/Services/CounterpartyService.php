@@ -38,6 +38,11 @@ class CounterpartyService
         return $this->repository->delete($counterparty);
     }
 
+    public function getIdByName(string $name)
+    {
+        return $this->repository->getIdByName($name);
+    }
+
     public function import($file)
     {
         return $this->repository->import($file);

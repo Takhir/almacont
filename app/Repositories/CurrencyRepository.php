@@ -11,7 +11,7 @@ class CurrencyRepository
     {
         return Currency::with('type')
             ->with('period')
-            ->orderBy('id', 'desc')
+            ->orderBy('period_id', 'desc')
             ->paginate($perPage);
     }
 
@@ -45,4 +45,12 @@ class CurrencyRepository
     {
         return Currency::where('period_id', $periodId)->get();
     }
+
+    public function getId(int $currencyTypeId, int $periodId)
+    {
+        $currency = Currency::where('currency_type_id', $currencyTypeId)
+            ->where('period_id', $periodId)->first();
+        return $currency ? $currency->id : null;
+    }
+
 }

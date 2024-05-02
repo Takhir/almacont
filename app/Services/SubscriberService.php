@@ -27,4 +27,5 @@ class SubscriberService
     {
         return $this->repository->import($file);
     }
+
 }

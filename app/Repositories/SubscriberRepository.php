@@ -42,4 +42,21 @@ class SubscriberRepository
         return Excel::import(new SubscribersImport, $file);
     }
 
+    public function subscribersByPeriod($channels, int $periodId)
+    {
+        $packages = [];
+
+        foreach($channels as $channel) {
+            $packages[] = $channel->package_id;
+        }
+
+        $packages = array_unique($packages);
+
+        return Subscriber::select('period_id', 'package_id', Subscriber::raw('SUM(quantity) as total_quantity'))
+            ->where('period_id', $periodId)
+            ->whereIn('package_id', $packages)
+            ->groupBy('period_id', 'package_id')
+            ->pluck('total_quantity', 'package_id')->toArray();
+    }
+
 }
