@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ChannelsPackages;
 
+use App\Dto\ChannelsPackageDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChannelsPackage\StoreRequest;
 use App\Services\ChannelsPackageService;
@@ -17,7 +18,19 @@ class StoreController extends Controller
 
     public function __invoke(StoreRequest $request)
     {
-        if ($this->service->store($request)) {
+        $validated = $request->validated();
+
+        $channelsPackageDTO = new ChannelsPackageDTO(
+            $validated['channel_id'],
+            $validated['package_id'],
+            $validated['all_department'] ?? null,
+            $validated['department_id'] ?? null,
+            $validated['town_id'] ?? null,
+            $validated['dt_start'] ?? null,
+            $validated['dt_stop'] ?? null,
+        );
+
+        if ($this->service->store($channelsPackageDTO)) {
             return redirect()->route('channels-packages.index')->with('success', 'Данные успешно сохранены');
         }
 

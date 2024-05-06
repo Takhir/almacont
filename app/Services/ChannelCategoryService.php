@@ -28,14 +28,14 @@ class ChannelCategoryService
         return $this->repository->getIdByName($name);
     }
 
-    public function store($request)
+    public function store($channelCategoryDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($channelCategoryDTO);
     }
 
-    public function update($request, $category)
+    public function update($channelCategoryDTO, $category)
     {
-        return $this->repository->update($request, $category);
+        return $this->repository->update($channelCategoryDTO, $category);
     }
 
     public function delete($category)

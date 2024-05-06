@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Counterparties;
 
+use App\Dto\ConterpartyDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Counterparty\StoreRequest;
 use App\Services\CounterpartyService;
@@ -17,7 +18,15 @@ class StoreController extends Controller
 
     public function __invoke(StoreRequest $request)
     {
-        if ($this->service->store($request)) {
+        $validated = $request->validated();
+
+        $counterpartyDTO = new ConterpartyDTO(
+            $validated['name'],
+            $validated['bin'],
+            $validated['resident'],
+        );
+
+        if ($this->service->store($counterpartyDTO)) {
             return redirect()->route('counterparties.index')->with('success', 'Данные успешно сохранены');
         }
 

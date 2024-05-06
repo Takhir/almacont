@@ -32,14 +32,14 @@ class PeriodService
         return $this->repository->getIdByName($name);
     }
 
-    public function store($request)
+    public function store($reportPeriodDTO)
     {
-        return $this->repository->store($request);
+        return $this->repository->store($reportPeriodDTO);
     }
 
-    public function update($request, $period)
+    public function update($reportPeriodDTO, $period)
     {
-        return $this->repository->update($request, $period);
+        return $this->repository->update($reportPeriodDTO, $period);
     }
 
     public function delete($period)

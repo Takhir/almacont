@@ -10,6 +10,8 @@ class ChannelsPackage extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $table = 'channels_packages';
+
     protected $fillable = [
         'id',
         'channel_id',
@@ -33,11 +35,11 @@ class ChannelsPackage extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'department_id', 'department_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function town()
     {
-        return $this->belongsTo(Department::class, 'town_id', 'town_id');
+        return $this->belongsTo(Town::class, 'town_id');
     }
 }

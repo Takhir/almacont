@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Directory\Currency;
 
+use App\Dto\CurrencyDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Currency\UpdateRequest;
 use App\Models\Currency;
@@ -17,7 +18,16 @@ class UpdateController extends Controller
 
     public function __invoke(UpdateRequest $request, Currency $currency)
     {
-        if ($this->service->update($request, $currency))
+        $validated = $request->validated();
+
+        $currencyDTO = new CurrencyDTO(
+            $validated['currency_type_id'],
+            $validated['period_id'],
+            $validated['exchange_start'],
+            $validated['exchange_stop'],
+        );
+
+        if ($this->service->update($currencyDTO, $currency))
         {
             return redirect()->route('currency.index')->with('success', 'Данные успешно обновлены');
         }

@@ -21,3 +21,17 @@
 .form-inline label {
     justify-content: left !important;
 }
+#department_id, #town_id {
+    min-width: 150px;
+}
+
+.table thead tr.channels-packages th {
+    vertical-align: top !important;
+}
+
+.table thead th {
+    vertical-align: middle !important;
+}
+.progress {
+    margin-top: 10px;
+}

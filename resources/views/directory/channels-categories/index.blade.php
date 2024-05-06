@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Справочник категорий каналов')
+@section('title', 'Справочник тематик каналов')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4>Справочник категорий каналов</h4>
+                <h4>Справочник тематик каналов</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item active">Справочник категорий каналов</li>
+                    <li class="breadcrumb-item active">Справочник тематик каналов</li>
                 </ol>
             </div>
         </div>
@@ -28,7 +28,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Категория</th>
+                                    <th>Тематика</th>
                                     <th>
                                         <a href="{{ route('channels-categories.create') }}" class="btn btn-outline-success"><i class="fa-solid fa-plus"></i> Добавить</a>
                                     </th>

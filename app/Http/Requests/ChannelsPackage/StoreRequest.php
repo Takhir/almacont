@@ -24,15 +24,15 @@ class StoreRequest extends FormRequest
     {
         return [
             'channel_id' => 'numeric|required',
-            'package_id' => 'numeric|required',
+            'package_id' => 'array|required',
             'all_department' => 'nullable|in:on',
             'department_id' => [
-                'numeric',
+                'array',
                 'required_if:all_department,null',
                 'nullable',
             ],
             'town_id' => [
-                'numeric',
+                'array',
                 'required_if:all_department,null',
                 'nullable',
             ],

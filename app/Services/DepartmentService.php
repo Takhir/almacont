@@ -23,23 +23,9 @@ class DepartmentService
         return $this->repository->getAll($perPage);
     }
 
-    public function getTowns()
+    public function getId(string $name)
     {
-        return $this->repository->getTowns();
+        return $this->repository->getId($name);
     }
 
-    public function getDepartmentIdById(int $id)
-    {
-        return $this->repository->getDepartmentIdById($id);
-    }
-
-    public function getIdByDepartment(string $department)
-    {
-        return $this->repository->getIdByDepartment($department);
-    }
-
-    public function getTownIdByTown(string $town)
-    {
-        return $this->repository->getTownIdByTown($town);
-    }
 }

@@ -20,7 +20,9 @@ class IndexController extends Controller
 
     public function __invoke(Request $request)
     {
-        $agreements = $this->service->getAll($request);
+        $perPage = $request->input('per_page', 20);
+        $periodId = $request->input('period_id');
+        $agreements = $this->service->getAll($perPage, $periodId);
         $periods = $this->periodService->getAll();
 
         return view('agreements-cards.index', compact('agreements', 'periods'));

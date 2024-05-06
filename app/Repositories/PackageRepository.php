@@ -12,22 +12,16 @@ class PackageRepository
 {
     public function all()
     {
-        return Package::all();
+        return Package::orderBy('name')->get();
     }
 
     public function getAll($perPage)
     {
-        return Package::orderBy('id', 'desc')->paginate($perPage);
+        return Package::orderBy('name')->paginate($perPage);
     }
 
-    public function store($request)
+    public function store(PackageDTO $packageDTO)
     {
-        $packageDTO = new PackageDTO(
-            $request->input('name'),
-            $request->input('description'),
-            $request->input('active')
-        );
-
         $package = new Package();
         $package->name = $packageDTO->name;
         $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
@@ -36,14 +30,8 @@ class PackageRepository
         return $package->save();
     }
 
-    public function update($request, $package)
+    public function update(PackageDTO $packageDTO, Package $package)
     {
-        $packageDTO = new PackageDTO(
-            $request->input('name'),
-            $request->input('description'),
-            $request->input('active'),
-        );
-
         $package->name = $packageDTO->name;
         $package->description = empty($packageDTO->description) ? null : $packageDTO->description;
         $package->active = $packageDTO->active;
@@ -51,7 +39,7 @@ class PackageRepository
         return $package->save();
     }
 
-    public function delete($package)
+    public function delete(Package $package)
     {
         return $package->delete();
     }
@@ -61,9 +49,9 @@ class PackageRepository
         return Package::getIdByName($name);
     }
 
-    public function import($request)
+    public function import($file)
     {
-        return Excel::import(new PackagesImport, $request->file('packages_import'));
+        return Excel::import(new PackagesImport, $file);
     }
 
     public function export()

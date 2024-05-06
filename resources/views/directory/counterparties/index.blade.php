@@ -65,9 +65,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($counterparties as $counterparty)
+                                @foreach($counterparties as $k => $counterparty)
                                     <tr>
-                                        <td>{{ $counterparty->id }}</td>
+                                        <td>{{ $k + 1 }}</td>
                                         <td>{{ $counterparty->name }}</td>
                                         <td>{{ $counterparty->bin }}</td>
                                         <td>{{ $counterparty->resident == 1 ? Resident::Yes->value : Resident::No->value  }}</td>

@@ -17,6 +17,8 @@ class AjaxController extends Controller
 
     public function __invoke($periodId, Request $request)
     {
-        return $this->service->currenciesById($periodId, $request);
+        $currencyId = $request->get('currency_id') ?? null;
+
+        return $this->service->currenciesById($periodId, $currencyId);
     }
 }

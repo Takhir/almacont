@@ -38,7 +38,7 @@ class StoreRequest extends FormRequest
             'currency_type_id' => [
                 'required',
                 Rule::unique('currencies')->where(function ($query) use ($periodId) {
-                    return $query->where('period_id', $periodId);
+                    return $query->where('period_id', $periodId)->whereNull('deleted_at');
                 }),
             ],
             'period_id' => 'required',

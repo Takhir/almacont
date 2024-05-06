@@ -19,9 +19,9 @@ class Subscriber extends Model
         'quantity',
     ];
 
-    public function department()
+    public function town()
     {
-        return $this->belongsTo(Department::class, 'town_id', 'town_id');
+        return $this->belongsTo(Town::class, 'town_id');
     }
 
     public function period()

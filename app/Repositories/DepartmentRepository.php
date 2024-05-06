@@ -6,34 +6,26 @@ use App\Models\Department;
 
 class DepartmentRepository
 {
+    private TownRepository $townRepository;
+
+    public function __construct(TownRepository $townRepository)
+    {
+        $this->townRepository = $townRepository;
+    }
+
     public function all()
     {
-        return Department::get();
+        return Department::orderBy('name')->get();
     }
 
     public function getAll($perPage)
     {
-        return Department::orderBy('id', 'desc')->paginate($perPage);
+        return Department::with('towns')->orderBy('name')->paginate($perPage);
     }
 
-    public function getTowns()
+    public function getId(string $name)
     {
-        return Department::get()->pluck('town', 'town_id');
-    }
-
-    public function getDepartmentIdById(int $id)
-    {
-        return Department::getDepartmentIdById($id);
-    }
-
-    public function getIdByDepartment(string $department)
-    {
-        return Department::getIdByDepartment($department);
-    }
-
-    public function getTownIdByTown(string $town)
-    {
-        return Department::getTownIdByTown($town);
+        return Department::where('name', $name)->first()->id;
     }
 
 }

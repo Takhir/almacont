@@ -48,6 +48,24 @@
                             </div>
                         </form>
                         <a href="{{ route('channels.export') }}" class="btn btn-outline-success mr-2 float-right"><i class="fa-regular fa-file-excel"></i> Выгрузить</a>
+                        <div class="clearfix"></div>
+                        <form method="GET" action="{{ route('channels.index') }}" class="form-inline mb-2 float-right">
+                            <div class="form-group mr-2">
+                                <label class="mr-2" for="period_id">Наименование:</label>
+                                <select class="form-control" name="channel_id">
+                                    <option></option>
+                                    @foreach($channelsFilter as $channel)
+                                        <option value="{{ $channel->id }}" @if(request('channel_id') == $channel->id) selected @endif>{{ $channel->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-right">
+                                    <a href="{{ route('channels.index') }}" class="btn btn-secondary mr-2"><i class="fa-solid fa-rotate-right"></i> Сбросить</a>
+                                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i> Поиск</button>
+                                </div>
+                            </div>
+                        </form>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -66,7 +84,7 @@
                                         <td>{{ $channel->id }}</td>
                                         <td>{{ $channel->name }}</td>
                                         <td>{{ $channel->description }}</td>
-                                        <td>{{ is_null($channel->theme) ? $channel->category?->name : $channel->theme }}</td>
+                                        <td>{{  $channel->category?->name }}</td>
                                         <td>
                                             <a href="{{ route('channels.edit', $channel->id) }}"><i class="fa-regular fa-pen-to-square text-green mr-5" title="Редактировать"></i></a>
                                             <a href="#" data-toggle="modal" data-target="#modal-delete" data-route="{{ route('channels.delete', $channel->id) }}">

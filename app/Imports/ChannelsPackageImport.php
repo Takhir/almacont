@@ -6,6 +6,7 @@ use App\Models\ChannelsPackage;
 use App\Services\ChannelService;
 use App\Services\DepartmentService;
 use App\Services\PackageService;
+use App\Services\TownService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -16,12 +17,14 @@ class ChannelsPackageImport implements ToCollection
     private ChannelService $channelService;
     private PackageService $packageService;
     private DepartmentService $departmentService;
+    private TownService $townService;
 
     public function __construct()
     {
         $this->channelService = app(ChannelService::class);
         $this->packageService = app(PackageService::class);
         $this->departmentService = app(DepartmentService::class);
+        $this->townService = app(TownService::class);
     }
 
     public function collection(Collection $rows)
@@ -60,8 +63,8 @@ class ChannelsPackageImport implements ToCollection
             ChannelsPackage::create([
                 'channel_id' => $this->channelService->getIdByName(trim($row[0])),
                 'package_id' => $this->packageService->getIdByName(trim($row[1])),
-                'department_id' => $this->departmentService->getIdByDepartment(trim($row[2])),
-                'town_id' => $this->departmentService->getTownIdByTown(trim($row[3])),
+                'department_id' => $this->departmentService->getId(trim($row[2])),
+                'town_id' => $this->townService->getId(trim($row[3])),
                 'dt_start' => $dateStart,
                 'dt_stop' => $dateStop
             ]);

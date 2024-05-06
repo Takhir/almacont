@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->integer('department_id');
-            $table->string('department');
-            $table->unsignedBigInteger('town_id')->unique();
-            $table->string('town');
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('towns', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

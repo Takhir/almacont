@@ -6,6 +6,7 @@ use App\Models\ChannelsPackage;
 use App\Services\ChannelService;
 use App\Services\DepartmentService;
 use App\Services\PackageService;
+use App\Services\TownService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -16,12 +17,14 @@ class ChannelsPackageImportAll implements ToCollection, WithChunkReading
     private ChannelService $channelService;
     private PackageService $packageService;
     private DepartmentService $departmentService;
+    private TownService $townService;
 
     public function __construct()
     {
         $this->channelService = app(ChannelService::class);
         $this->packageService = app(PackageService::class);
         $this->departmentService = app(DepartmentService::class);
+        $this->townService = app(TownService::class);
     }
 
     public function collection(Collection $rows)
@@ -38,8 +41,8 @@ class ChannelsPackageImportAll implements ToCollection, WithChunkReading
                 'id' => trim($row[0]),
                 'channel_id' => trim($row[1]),
                 'package_id' => trim($row[2]),
-                'department_id' => $this->departmentService->getDepartmentIdById(trim($row[3])),
-                'town_id' => $this->departmentService->getTownIdByTown(trim($row[4])),
+                'department_id' => $this->departmentService->getId(trim($row[3])),
+                'town_id' => $this->townService->getId(trim($row[4])),
                 'dt_start' => $dateStart,
                 'dt_stop' => $dateStop,
                 'presence' => trim($row[7]),

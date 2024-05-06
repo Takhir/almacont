@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Subscriber;
-use App\Services\DepartmentService;
+use App\Services\TownService;
 use App\Services\PackageService;
 use App\Services\PeriodService;
 use Illuminate\Support\Collection;
@@ -13,13 +13,13 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 class SubscribersImport implements ToCollection
 {
     private PeriodService $periodService;
-    private DepartmentService $departmentService;
+    private TownService $townService;
     private PackageService $packageService;
 
     public function __construct()
     {
         $this->periodService = app(PeriodService::class);
-        $this->departmentService = app(DepartmentService::class);
+        $this->townService = app(TownService::class);
         $this->packageService = app(PackageService::class);
     }
 
@@ -49,7 +49,7 @@ class SubscribersImport implements ToCollection
         foreach ($rows as $row) {
             $data = [
                 'period_id' => $this->periodService->getIdByName(trim($row[0])),
-                'town_id' => $this->departmentService->getTownIdByTown(trim($row[1])),
+                'town_id' => $this->townService->getId(trim($row[1])),
                 'quantity' => trim($row[3]),
             ];
 

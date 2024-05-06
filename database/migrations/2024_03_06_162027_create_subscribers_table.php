@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('period_id');
             $table->foreign('period_id')->references('id')->on('periods');
             $table->unsignedBigInteger('town_id');
-            $table->foreign('town_id')->references('town_id')->on('departments');
+            $table->foreign('town_id')->references('id')->on('towns');
             $table->string('package_name')->nullable()->default(null);
             $table->unsignedBigInteger('package_id')->nullable()->default(null);
             $table->foreign('package_id')->references('id')->on('packages');

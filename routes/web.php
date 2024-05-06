@@ -73,6 +73,10 @@ Route::group(['prefix' => 'directory'], function () {
         Route::get('/', \App\Http\Controllers\Directory\Departments\IndexController::class)->name('departments.index');
     });
 
+    Route::group(['prefix' => 'towns'], function () {
+        Route::get('/{department_id}', \App\Http\Controllers\Directory\Towns\IndexController::class)->name('towns.index');
+    });
+
     Route::group(['prefix' => 'packages'], function () {
         Route::get('/', \App\Http\Controllers\Directory\Packages\IndexController::class)->name('packages.index');
         Route::get('/create', \App\Http\Controllers\Directory\Packages\CreateController::class)->name('packages.create');
@@ -94,6 +98,7 @@ Route::group(['prefix' => 'agreements-cards'], function () {
     Route::patch('/{agreement}', \App\Http\Controllers\AgreementsCards\UpdateController::class)->name('agreements-cards.update');
     Route::delete('/{agreement}', \App\Http\Controllers\AgreementsCards\DeleteController::class)->name('agreements-cards.delete');
     Route::get('/currencies/{period_id}', \App\Http\Controllers\AgreementsCards\AjaxController::class)->name('agreements-cards.currencies');
+    Route::post('/import', \App\Http\Controllers\AgreementsCards\ImportController::class)->name('agreements-cards.import');
 });
 
 Route::group(['prefix' => 'subscribers'], function () {
@@ -115,6 +120,8 @@ Route::group(['prefix' => 'channels-packages'], function () {
 
 Route::group(['prefix' => 'calculations'], function () {
     Route::get('/', \App\Http\Controllers\Calculations\IndexController::class)->name('calculations.index');
+    Route::get('/execute/{period_id}', \App\Http\Controllers\Calculations\ExecuteController::class)->name('calculations.calculate');
+    Route::post('/subscribers/export', \App\Http\Controllers\Calculations\SubscribersOnChannelExportController::class)->name('subscribersonchannel.export');
 });
 
 

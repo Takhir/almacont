@@ -53,7 +53,7 @@
                                 <label class="mr-2" for="period_id">Период:</label>
                                 <select class="form-control" name="period_id">
                                     <option></option>
-                                    @foreach($periods as $k => $period)
+                                    @foreach($periods as $period)
                                         <option value="{{ $period->id }}" @if(request('period_id') == $period->id) selected @endif>{{ $period->name }}</option>
                                     @endforeach
                                 </select>
@@ -62,17 +62,17 @@
                                 <label class="mr-2" for="town_id">Город:</label>
                                 <select class="form-control" name="town_id">
                                     <option></option>
-                                    @foreach($towns as $k => $town)
-                                        <option value="{{ $k }}" @if(request('town_id') == $k) selected @endif>{{ $town }}</option>
+                                    @foreach($towns as $town)
+                                        <option value="{{ $town->id }}" @if(request('town_id') == $town->id) selected @endif>{{ $town->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group mr-2">
                                 <label class="mr-2" for="package_name">Пакет:</label>
-                                <select class="form-control" name="package_name">
+                                <select class="form-control" name="package_id">
                                     <option></option>
-                                    @foreach($packages as $k => $package)
-                                        <option value="{{ $k }}" @if(request('package_name') == $k) selected @endif>{{ $package }}</option>
+                                    @foreach($packages as $package)
+                                        <option value="{{ $package->id }}" @if(request('package_id') == $package->id) selected @endif>{{ $package->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -99,7 +99,7 @@
                                 <tr>
                                     <td>{{ $k + 1 }}</td>
                                     <td>{{ $subscriber->period->name }}</td>
-                                    <td>{{ $subscriber->department->town }}</td>
+                                    <td>{{ $subscriber->town->name }}</td>
                                     <td>{{ is_null($subscriber->package_name) ? $subscriber->package?->name : $subscriber->package_name }}</td>
                                     <td>{{ $subscriber->quantity }}</td>
                                     <td>

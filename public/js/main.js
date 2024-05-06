@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+    const url = window.location.href.split('/').slice(0, 5).join('/');
+
+    const targetLink = $('a.nav-link[href="'+url+'"]');
+
+    if (targetLink.length > 0) {
+        targetLink.closest('.has-treeview').addClass('menu-open')
+        targetLink.closest('.has-treeview').find('a.nav-link').first().addClass('active')
+        targetLink.addClass('active');
+    }
+
     $('#modal-delete').on('show.bs.modal', function(event) {
         const button = $(event.relatedTarget);
         const url = button.data('route');

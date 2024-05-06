@@ -23,12 +23,13 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'channel_id' => 'numeric|required',
-            'package_id' => 'numeric|required',
-            'department_id' => 'numeric|required',
-            'town_id' => 'numeric|required',
-            'dt_start' => 'string',
-            'dt_stop' => 'string',
+            'channel_id' => 'integer|required',
+            'package_id' => 'integer|required',
+            'all_department' => 'nullable|in:on',
+            'department_id' => 'integer|nullable',
+            'town_id' => 'integer|nullable',
+            'dt_start' => 'nullable|string',
+            'dt_stop' => 'nullable|string',
         ];
     }
 
