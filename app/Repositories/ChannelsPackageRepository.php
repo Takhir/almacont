@@ -229,12 +229,12 @@ class ChannelsPackageRepository
     public function channelsPackageByDate(string $formattedDate)
     {
         return ChannelsPackage::select('channel_id', 'package_id')
-            ->where('dt_start', '>=', $formattedDate)
             ->where(function ($query) use ($formattedDate) {
                 $query->where('dt_stop', '<=', $formattedDate)
                     ->orWhereNull('dt_stop');
             })
             ->groupBy('channel_id', 'package_id')
+            //->toSql();
             ->get();
     }
 }
