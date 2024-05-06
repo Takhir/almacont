@@ -33,7 +33,7 @@ class CalculationRepository
 
         $monthNumber = array_search($monthName, $months) + 1;
 
-        return Carbon::createFromDate($year, $monthNumber, 1)->format('Y-m-d');
+        return Carbon::createFromDate($year, $monthNumber, 1)->endOfMonth()->toDateString();
     }
 
     public function execute(int $periodId)
